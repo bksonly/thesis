@@ -1,0 +1,78 @@
+% !TeX root = ../main.tex
+\chapter{理论设计}  
+由于四旋翼的推力方向只能向下，因此无法在不倾斜的情况下获得水平方向的推力从而改变水平位置。因此刚体的六个自由度无法同时被控制，使得四旋翼欠驱动，输入的维度是4，所以能直接控制的状态维度也是4。虽然四旋翼整体并不满足高阶全驱系统理论的要求，但是姿态环的三个自由度是全驱的，这从式\ref{equ:M}\ref{equ:dotR}可以清楚得看到。
+
+四旋翼的控制分为姿态环和位置环两部分。从物理原理角度，分模态讨论，水平面内的飞行是对称的，以向前飞为例，需要机身先向前倾斜才能获得向前的分力。因此姿态的变化先于位置的变化，在实践中，姿态环的控制频率也远大于位置环。姿态环的动力学方程涉及到更强的非线性，并且姿态环一旦能迅速地达到期望值，位置控制也就水到渠成，因此四旋翼的控制中姿态环的重要性和难度都高于位置环。
+
+\section{姿态控制}
+
+\subsection*{误差定义}
+姿态控制采用基于高阶全驱系统理论的方法，那么首先就需要定义一个合适的三维误差向量来描述当前姿态$R$到期望姿态$R_d$的差，使得控制输入矩阵可逆：
+\begin{equation}
+    e=(R_d^TR-R^TR_d)^\vee
+\end{equation}
+
+该误差定义不仅可以满足高阶全驱系统理论的要求，并且如式\ref{error}所示，具有良好的物理意义。当$e\to 0$时，$\theta \to 0$，$R$与$R_d$重合，达到期望。
+
+\subsection*{HOFA模型}
+接下来需要对误差连续两次求导，使得方程中出现控制输入，也就是力矩$M$：
+$$\begin{aligned}
+    \dot e=&[(R_d^TR \Omega-\Omega_dR_d^TR)-(R_d^TR \Omega-\Omega_dR_d^TR)^T]^\vee\\
+    =&[R_d^TR(\Omega-R^TR_d \Omega_dR_d^TR)-(R_d^TR(\Omega-R^TR_d \Omega_dR_d^TR))^T]^\vee \\
+    =&[R' \hat e_\Omega  + \hat e_\Omega R'^T]^\vee
+\end{aligned} $$
+    定义
+    $$R'=R_d^TR \quad e_\Omega=\omega -R^TR_d \omega_d$$
+进一步求二阶导：
+    $$\begin{aligned}
+        \ddot e =& [(R' \hat e_\Omega \Omega + R'\dot \Omega -\Omega_d R' \hat e_\Omega -\dot \Omega_d R')-(R' \hat e_\Omega \Omega + R'\dot \Omega -\Omega_d R' \hat e_\Omega -\dot \Omega_d R')^T]^\vee\\
+        =&[(R' \hat e_\Omega \Omega  -\Omega_d R' \hat e_\Omega -\dot \Omega_d R')-(R' \hat e_\Omega \Omega  -\Omega_d R' \hat e_\Omega -\dot \Omega_d R')^T]^\vee+[R'\dot \Omega-(R'\dot \Omega)^T]^\vee\\
+        =&A_d+ \begin{Bmatrix}
+        \begin{bmatrix}
+        R'_{11} &R'_{12}  & R'_{13} \\
+        R'_{21} & R'_{22} & R'_{23} \\
+        R'_{31} & R'_{32} &R'_{33}  \\
+        \end{bmatrix}&\begin{bmatrix}
+        0 & -\dot\omega_3 &\dot\omega_2  \\
+         \dot\omega_3& 0 &  -\dot\omega_1\\
+         -\dot\omega_2&\dot\omega_1  & 0 \\
+        \end{bmatrix}\end{Bmatrix}^\vee -\begin{Bmatrix}
+        \begin{bmatrix}
+        R'_{11} &R'_{12}  & R'_{13} \\
+        R'_{21} & R'_{22} & R'_{23} \\
+        R'_{31} & R'_{32} &R'_{33}  \\
+        \end{bmatrix}&\begin{bmatrix}
+        0 & -\dot\omega_3 &\dot\omega_2  \\
+         \dot\omega_3& 0 &  -\dot\omega_1\\
+         -\dot\omega_2&\dot\omega_1  & 0 \\
+        \end{bmatrix}\end{Bmatrix}^{T\vee}\\
+        =&A_d+\begin{bmatrix}
+        R'_{22}+R'_{33} & -R'_{21} & -R'_{31} \\
+         -R'_{12}& R'_{11}+R'_{33} & -R'_{32} \\
+         -R'_{13}&- R'_{23} & R'_{11}+R'_{22} \\
+        \end{bmatrix}\dot \omega\\
+        =&A_d+R_B\dot \omega
+        \end{aligned}  $$
+
+        $$A_d=[(R' \hat e_\Omega \Omega  -\Omega_d R' \hat e_\Omega -\dot \Omega_d R')-(R' \hat e_\Omega \Omega  -\Omega_d R' \hat e_\Omega -\dot \Omega_d R')^T]^\vee$$
+
+        $$R_B=\begin{bmatrix}
+            R'_{22}+R'_{33} & -R'_{21} & -R'_{31} \\
+             -R'_{12}& R'_{11}+R'_{33} & -R'_{32} \\
+             -R'_{13}&- R'_{23} & R'_{11}+R'_{22} \\
+            \end{bmatrix}$$
+
+    当$R_B$满秩时，符合高阶全驱的条件；不满秩的情况会在下文展开。代入\ref{equ:M},得：
+    $$\begin{aligned}
+        \ddot e=&A_d+R_B J^{-1}(-\omega \times J\omega+M)\\
+        =&A_d-B \omega\times J\omega +BM
+        \end{aligned}$$
+        $$B=R_BJ^{-1}$$
+
+    高阶全驱系统建模完成，随即立刻可以设计控制算法。由于$B$可逆，令：
+    $$M=-B^{-1} A_d+\omega \times J\omega +B^{-1}M^*$$
+    得
+    $$\ddot e=M^*$$
+
+    对于该补偿掉所有非线性部分的二阶积分器模型，可以便利地采用任何线性系统控制器设计方法，
+    暂且采用LQR控制器，得到$M^*=-kx$
