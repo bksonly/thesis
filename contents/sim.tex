@@ -4,19 +4,20 @@
 \section{Matlab仿真}
 我们在Simulink环境下构建了一个综合仿真模型，该模型不仅包含了刚体动力学和电机动态，还通过s-function实现了姿态环和位置环分离的双环控制器设计。这种设计使得后续的数据分析和研究工作能够更为便捷、高效。
 
-为了能直观地体现性能，我们设计了一个“8”字型轨迹:
-$$x_d = \begin{matrix}[4\sin(\frac{t}{3}), & 4\cos(\frac{t}{3})\sin(\frac{t}{3}), &-0.1t]\end{matrix}
+为了能直观地体现性能，我们设计了一个“8”字型轨迹，如图\ref{fig:8}:
+$$x_d = \begin{matrix}[3\sin(\frac{t}{2}), & 3\cos(\frac{t}{2})\sin(\frac{t}{3}), &-0.1t]\end{matrix}
 \quad
 \psi_d=0.01t$$
 
+\begin{figure}[!h]
+  \centering
+  \includegraphics[width=0.5\textwidth]{88.png}
+  \caption{高度匀速上升的“8”字型轨迹（北-东-地坐标系下，地面以上Z轴为负数）}
+  \label{fig:8}
+\end{figure}
+
 为了全面体现控制算法的跟踪性能，我们并没有对轨迹做特殊的平滑处理，轨迹的导数存在间断点使得高阶导数无穷大，这可以考验无人机在现实中的抗扰性能。为了模拟起飞和悬停，第一秒内轨迹保持在原点不动，否则仿真就会等同在空中释放电机无转速的无人机。
 
-\begin{figure}[!h]
-    \centering
-    \includegraphics[width=0.65\textwidth]{88.png}
-    \caption{高度匀速上升的“8”字型轨迹（北-东-地坐标系下，地面以上Z轴为负数）}
-    \label{fig:8}
-  \end{figure}
 
   无人机的刚体动力学部分由simulink中自带的“6DOF block”解决，避免了$SO(3)$群差分近似后单位化的困难。该模块会对外部输入的力和力矩做出反应，返回所需的速度、位置、姿态、角速度等信息。
 
@@ -62,23 +63,109 @@ $$x_d = \begin{matrix}[4\sin(\frac{t}{3}), & 4\cos(\frac{t}{3})\sin(\frac{t}{3})
   $$x(0)=[0,0,0],\quad v(0)=[0,0,0]$$
   $$R(0)=I , \quad \omega(0)=[0,0,0]$$
 
-  \begin{figure}[!h]
+  按照上述参数，在matlab中用0.005s的控制周期运行仿真，得到结果如图\ref{fig:result-x}，\ref{fig:result-angle}，\ref{fig:result-f}：
+  \begin{figure}[h]
     \centering
-    \includegraphics[width=0.9\textwidth]{result1.png}
-    \caption{仿真实验结果：a) X轴跟踪曲线 b) Y轴跟踪曲线 c) Z轴跟踪曲线 d) 偏航角跟踪曲线}
-    \label{fig:result1}
-  \end{figure}
+    \begin{minipage}[c]{0.33\textwidth}
+      \centering
+      \includegraphics[width=0.95\linewidth]{result-x.png}
+      \caption{位置跟踪效果}
+      \label{fig:result-x}
+    \end{minipage} \hfill
+    \begin{minipage}[c]{0.33\textwidth}
+      \centering
+      \includegraphics[width=0.95\linewidth]{result-angle.png}
+      \caption{角度跟踪效果}
+      \label{fig:result-angle}
+    \end{minipage}\hfill
+      \begin{minipage}[c]{0.33\textwidth}
+        \centering
+        \includegraphics[width=0.95\linewidth]{result-f.png}
+        \caption{四个电机输出的力}
+        \label{fig:result-f}
+    \end{minipage}
+    \end{figure}
 
-  \begin{figure}[!h]
-    \centering
-    \includegraphics[width=0.7\textwidth]{result2.png}
-    \caption{三维的跟踪效果}
-    \label{fig:result2}
-  \end{figure}
+  从以上图中可以看到本控制算法可以很好地跟踪这种有较大姿态机动的轨迹，只是由于轨迹在起始时存在阶跃，导致无人机在阶跃处需要一定的动态过程才能跟踪上。但是在实际的飞行任务中，在轨迹规划层面就需要对轨迹做光滑处理。为了避免出现执行器饱和的情况，在仿真中我们根据无人机的实际情况和电机所能输出的最大升力，设置了控制器输出力和力矩的上限。
 
-  \begin{figure}[!h]
+  \pagebreak
+  
+  三维空间下的轨迹跟踪情况如图\ref{fig:result-3d}
+
+  可以看到在起始的阶跃之后，跟踪效果都十分完美，为了量化地展示跟踪效果，我们提出了平均距离误差和平均偏航角误差：
+  $$e_d=\frac{\sum_0^{T}||x-x_d||}{T} \quad e_\psi=e_d=\frac{\sum_0^{T}|\psi-\psi_d|}{T}$$
+
+  误差曲线如图\ref{fig:result-e}
+ 
+
+  \begin{figure}[h]
     \centering
-    \includegraphics[width=0.7\textwidth]{result3.png}
-    \caption{量化跟踪效果}
-    \label{fig:result3}
-  \end{figure}
+       \begin{minipage}[c]{0.45\textwidth}
+        \centering
+        \includegraphics[width=0.9\textwidth]{result-3d.png}
+        \caption{三维空间下的轨迹跟踪情况}
+        \label{fig:result-3d}
+     \end{minipage}%
+       \begin{minipage}[c]{0.45\textwidth}
+        \centering
+        \includegraphics[width=0.9\textwidth]{result-e.png}
+        \caption{平均距离误差和平均偏航角误差}
+        \label{fig:result-e}
+     \end{minipage}
+   \end{figure}
+
+   为了体现本控制方法的优越性，设置对照组，与\cite{Lee2010}中也就是上文所说的替补姿态控制律对比（位置环相同）：
+   
+  \begin{figure}[h]
+    \centering
+    \begin{minipage}[c]{0.33\textwidth}
+      \centering
+      \includegraphics[width=0.95\linewidth]{com-x.png}
+      \caption{对照组位置跟踪效果}
+      \label{fig:com-x}
+    \end{minipage} \hfill
+    \begin{minipage}[c]{0.33\textwidth}
+      \centering
+      \includegraphics[width=0.95\linewidth]{com-angle.png}
+      \caption{对照组角度跟踪效果}
+      \label{fig:com-angle}
+    \end{minipage}\hfill
+      \begin{minipage}[c]{0.33\textwidth}
+        \centering
+        \includegraphics[width=0.95\linewidth]{com-f.png}
+        \caption{对照组四个电机输出的力}
+        \label{fig:com-f}
+    \end{minipage}
+    \end{figure}
+
+    \begin{figure}[h]
+      \centering
+         \begin{minipage}[c]{0.45\textwidth}
+          \centering
+          \includegraphics[width=0.9\textwidth]{com-3d.png}
+          \caption{对照组三维空间下的轨迹跟踪情况}
+          \label{fig:com-3d}
+       \end{minipage}%
+         \begin{minipage}[c]{0.45\textwidth}
+          \centering
+          \includegraphics[width=0.9\textwidth]{com-e.png}
+          \caption{对照组平均距离误差和平均偏航角误差}
+          \label{fig:com-e}
+       \end{minipage}
+     \end{figure}
+
+     从图\ref{fig:com-3d}中可以直观地看到其跟踪始终有误差未能弥合，在阶跃处同样需要一个动态过程。图\ref{fig:com-f}显示，其推力始终有剧烈抖动，这有可能是因为姿态环的参数调节欠缺。但这正体现了HOFA方法的优越性，相比于对照组的参数调节缺乏理论指导，只能根据经验多次尝试，HOFA方法能将非线性部分全部补偿掉，留下的线性系统对LQR参数并不敏感，权重矩阵并不需要精细地多次调解就能取得很好的控制效果。
+     \begin{table}
+      \centering
+      \begin{tabular}{ccc}
+          \toprule
+          & 平均距离误差 & 平均偏航角误差 \\
+          \midrule
+          HOFA方法 & 0.0692 & 0.0072 \\
+          对照组 & 0.1580 & 0.0065 \\
+          \bottomrule
+      \end{tabular}
+      \caption{HOFA方法与对照组的平均误差对比}
+  \end{table}
+
+  量化的误差指标同样显示，在位置跟踪上，HOFA大幅领先于对照组。在偏航角误差的指标上，有小幅落后，但两者的误差都已经很小。
