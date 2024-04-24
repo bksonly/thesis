@@ -100,7 +100,7 @@ $$\begin{aligned}
 
     在本课题中，机头的指向即偏航角相对来说没有期望位置重要，且在姿态较大时，偏航角的意义实质上并不明确：偏航角如果是Z-Y-X欧拉角定义下的第一个转角，当后两个转角较大时，偏航角也就脱离了原本的物理意义。因此首先保证期望推力方向，将其设计成反馈加前馈的形式：
     $$f_{ideal}=k_x e_x+k_v e_v-mg \vec e_3+m a_d$$
-    $$\vec b_{3d}=\frac{f_{ideal}}{||f_{ideal}||}$$
+    $$\vec b_{3d}=-\frac{f_{ideal}}{||f_{ideal}||}$$
     $$ e_x=x_d-x \quad e_v=v_d-v \quad \vec e_3=\begin{matrix}
         [0 & 0 & 1]
     \end{matrix}^T$$
