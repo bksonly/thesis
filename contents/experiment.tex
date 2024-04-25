@@ -31,7 +31,7 @@
   \label{电机表}
 \end{figure}
 
-在几番摸索后，考虑到后续的机载电脑等载荷需要有足够的安装位置，我们选择了holybro品牌的QAV250机架作为平台，以及配套的PM06电源及电调模块，TMOTOR v2207 kv1950电机和pixhawk 6c mini飞控。在装配和接线后，在QGroundControl地面站中对飞控烧写PX4 v1.14版本的固件，并进行传感器校正和遥控器设置。最后，在卫星信号良好的室外进行了遥控器控制下的飞行实验。
+在几番摸索后，考虑到后续的机载电脑等载荷需要有足够的安装位置，我们选择了holybro品牌的QAV250机架作为平台，以及配套的PM06电源及电调模块，TMOTOR v2207 kv1950电机和pixhawk 6c mini飞控。在装配和接线后，在QGroundControl地面站中对飞控烧写PX4 v1.14版本的固件，并进行传感器校正和遥控器设置。最后，在卫星信号良好的室外进行了遥控器控制下的飞行实验。无人机能够很好地执行遥控器发布的飞行指令，悬停稳定，前进后退自如，飞行效果如图\ref{室外飞行}。
 
 \begin{figure}[h]
   \centering
@@ -48,7 +48,42 @@
       \includegraphics[width=0.95\linewidth]{室外飞行3.png}
   \end{minipage}
   \caption{位置模式下四旋翼室外飞行画面}
+  \label{室外飞行}
   \end{figure}
 
   \section{搭载机载电脑的室内飞行}
-室外飞行
+室内飞行与室外飞行的主要区别在于位置信息的获得方式。由于室内没有GPS信号，位置信息的获取方式主要有动作捕捉、UWB、自主深度视觉定位和激光雷达等，其中动作捕捉的精度和稳定性最高，并且不用在飞机上增加额外的载荷，所以我们采用了动作捕捉作为本课题的定位方法。
+
+我们采用8台动捕相机吊装在实验场地上方四周，实验场地的尺寸为$5m \times 4.6m \times 2.6m$。在当前配置下，可以达到亚毫米的定位精度和400hz的采样频率\cite{qingtong}。
+\begin{figure}[!h]
+  \centering
+  \includegraphics[width=0.6\textwidth]{动捕.jpg}
+  \caption{动捕系统以及无人机防撞绳网}
+  \label{动捕}
+\end{figure}
+动捕系统使用红外相机向目标发射红外光，使目标上固连的多个反光小球反射红外光，就能使相机捕捉到，效果如图\ref{反光小球}。
+
+\begin{figure}[h]
+  \centering
+  \begin{minipage}[c]{0.48\textwidth}
+    \centering
+    \includegraphics[width=0.95\linewidth]{飞机反光球.jpg}
+  \end{minipage}\hfill
+    \begin{minipage}[c]{0.48\textwidth}
+      \centering
+      \includegraphics[width=0.95\linewidth]{动捕效果2.png}
+  \end{minipage}
+  \caption{动作捕捉定位反光小球}
+  \label{反光小球}
+  \end{figure}
+
+
+由于相机通过扫场校准已知自身位置，多台相机的二维信息融合在一起就可以解算出目标的位置和姿态，如图\ref{动捕效果}。相机在拍到反光小球后首先在内部做一次图像处理，提取反光点位置，然后通过网线传到动捕服务器上。所有的相机和东部服务器都通过网线连在一台交换机上，形成一个局域网。动捕服务器在汇总了所有信息后解算出目标刚体的位置和姿态，然后以固定的数据报协议在其所在的所有局域网内广播。动捕服务器在用网线连接交换机之外，还和机载电脑连接同一个WIFI，也就是说动捕服务器同时处在两个局域网中，而机载电脑也可以通过WIFI这个局域网收到位姿广播。
+\begin{figure}[!h]
+  \centering
+  \includegraphics[width=0.6\textwidth]{动捕效果1.png}
+  \caption{动捕效果}
+  \label{动捕效果}
+\end{figure}
+
+在ros1的架构下，飞控和电脑需要存在有线连接才能通过运行mavros包下的px4.launch将飞控虚拟化为一个ros节点
