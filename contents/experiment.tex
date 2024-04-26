@@ -27,11 +27,11 @@
 \begin{figure}[!h]
   \centering
   \includegraphics[width=0.7\textwidth]{电机表.png}
-  \caption{Tmotor v2207 kv1950电机搭配51477-3螺旋桨 油门量与电流和推力关系图\cite{Tmotor2023}}
+  \caption{Tmotor v2207 kv1950电机搭配51477-3螺旋桨 油门量与电流和推力关系图 \cite{Tmotor2023}}
   \label{电机表}
 \end{figure}
 
-在几番摸索后，考虑到后续的机载电脑等载荷需要有足够的安装位置，我们选择了holybro品牌的QAV250机架作为平台，以及配套的PM06电源及电调模块，TMOTOR v2207 kv1950电机和pixhawk 6c mini飞控。在装配和接线后，在QGroundControl地面站中对飞控烧写PX4 v1.14版本的固件，并进行传感器校正和遥控器设置。最后，在卫星信号良好的室外进行了遥控器控制下的飞行实验。无人机能够很好地执行遥控器发布的飞行指令，悬停稳定，前进后退自如，飞行效果如图\ref{室外飞行}。
+在几番摸索后，考虑到后续的机载电脑等载荷需要有足够的安装位置，我们选择了holybro品牌的QAV250机架作为平台，以及配套的PM06电源及电调模块，TMOTOR v2207 kv1950电机和pixhawk 6c mini飞控。在装配和接线后，在QGroundControl地面站中对飞控烧写PX4 v1.14版本的固件，并进行传感器校正和遥控器设置。最后，在卫星信号良好的室外进行了遥控器控制下的飞行实验。无人机能够很好地执行遥控器发布的飞行指令，悬停稳定，前进后退自如，飞行效果如图 \ref{室外飞行}。
 
 \begin{figure}[h]
   \centering
@@ -61,7 +61,10 @@
   \caption{动捕系统以及无人机防撞绳网}
   \label{动捕}
 \end{figure}
+
 动捕系统使用红外相机向目标发射红外光，使目标上固连的多个反光小球反射红外光，就能使相机捕捉到，效果如图\ref{反光小球}。
+
+\newpage
 
 \begin{figure}[h]
   \centering
@@ -78,12 +81,67 @@
   \end{figure}
 
 
-由于相机通过扫场校准已知自身位置，多台相机的二维信息融合在一起就可以解算出目标的位置和姿态，如图\ref{动捕效果}。相机在拍到反光小球后首先在内部做一次图像处理，提取反光点位置，然后通过网线传到动捕服务器上。所有的相机和东部服务器都通过网线连在一台交换机上，形成一个局域网。动捕服务器在汇总了所有信息后解算出目标刚体的位置和姿态，然后以固定的数据报协议在其所在的所有局域网内广播。动捕服务器在用网线连接交换机之外，还和机载电脑连接同一个WIFI，也就是说动捕服务器同时处在两个局域网中，而机载电脑也可以通过WIFI这个局域网收到位姿广播。
+由于相机通过扫场校准已知自身位置，多台相机的二维信息融合在一起就可以解算出目标的位置和姿态。
+
+相机在拍到反光小球后首先在内部做一次图像处理，提取反光点位置，然后通过网线传到动捕服务器上。所有的相机和东部服务器都通过网线连在一台交换机上，形成一个局域网。动捕服务器在汇总了所有信息后解算出目标刚体的位置和姿态，然后以固定的数据报协议在其所在的所有局域网内广播。动捕服务器在用网线连接交换机之外，还和机载电脑连接同一个wifi，也就是说动捕服务器同时处在两个局域网中，而机载电脑也可以通过wifi这个局域网收到位姿广播。
+
+在ros1的架构下，飞控和电脑需要存在有线连接才能通过运行mavros包下的px4.launch，经/dev/ttyACM0端口，将飞控虚拟化为一个ros节点。同时运行vrpn-client-ros包内的sample.launch，接受局域网内的位姿广播。最后运行topic-tools relay命令，将位姿信息转发到mavros节点下的vision-pose/pose话题。运行rqt-graph命令得到消息拓扑图 \ref{rqt}。
+
+\begin{figure}[!h]
+  \centering
+  \includegraphics[width=0.9\textwidth]{rqt.png}
+  \caption{消息拓扑图}
+  \label{rqt}
+\end{figure}
+
+以上的这三部分命令可以写到一个bash文件中一键运行，如图 \ref{一键}，其中运行px4.launch的参数有gcs-url，这是地面站的ip地址和端口号，mavros会通过wifi与地面站连接，地面站的QGroundControl（QGC）中就能方便地看到无人机目前的状态信息（当然也能通过rviz或rostopic等工具看到），如图 \ref{qgc}，也能够发布起飞等指令。
+
+\textbf{local这个坐标系还要再研究一下}
+
+\begin{figure}[!h]
+  \centering
+  \includegraphics[width=0.8\textwidth]{bash.png}
+  \caption{一键启动命令}
+  \label{一键}
+\end{figure}
+
+\begin{figure}[!h]
+  \centering
+  \includegraphics[width=0.5\textwidth]{qgc.png}
+  \caption{无人机向QGroundControl传回的信息}
+  \label{qgc}
+\end{figure}
+
+动捕和飞控内部会各自生成两套坐标系，它们的对齐需要着重考虑。如图 \ref{动捕效果}，动捕中无论是全局的坐标还是机身坐标，z轴都是朝上，而如1.2.1节中所说，PX4以及本课题定义的坐标系都是z轴朝下。但由PX4向ros提供的mavros包里，已经考虑了这一点，因为市面上的动捕系统大多都使用z轴朝上的配置。只需要注意飞控上电时的机头指向与动捕中的x轴对齐，就能对齐两套坐标系\cite{px4moc}。
+
+\textbf{这个网页还要再看看。要调一个时延}
+\newpage
+
 \begin{figure}[!h]
   \centering
   \includegraphics[width=0.6\textwidth]{动捕效果1.png}
-  \caption{动捕效果}
+  \caption{动捕坐标系设定}
   \label{动捕效果}
 \end{figure}
 
-在ros1的架构下，飞控和电脑需要存在有线连接才能通过运行mavros包下的px4.launch将飞控虚拟化为一个ros节点
+在所有坐标信息确认后。。。。。
+
+可以选择在QGC中一键起飞，也可以在位置模式下的遥控器上拨动摇杆起飞。飞行的效果如图 \ref{室内飞行} 所示，可以很好地跟踪遥控前后左右和偏航的指令。
+
+\begin{figure}[h]
+  \centering
+  \begin{minipage}[c]{0.33\textwidth}
+    \centering
+    \includegraphics[width=0.95\linewidth]{室内飞行1.png}
+  \end{minipage} \hfill
+  \begin{minipage}[c]{0.33\textwidth}
+    \centering
+    \includegraphics[width=0.95\linewidth]{室内飞行2.png}
+  \end{minipage}\hfill
+    \begin{minipage}[c]{0.33\textwidth}
+      \centering
+      \includegraphics[width=0.95\linewidth]{室内飞行3.png}
+  \end{minipage}
+  \caption{位置模式下四旋翼室内飞行画面}
+  \label{室内飞行}
+  \end{figure}
