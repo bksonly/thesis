@@ -171,3 +171,10 @@ $$x_d = \begin{matrix}[3\sin(\frac{t}{2}), & 3\cos(\frac{t}{2})\sin(\frac{t}{3})
   量化的误差指标同样显示，在位置跟踪上，HOFA大幅领先于对照组。在偏航角误差的指标上，有小幅落后，但两者的误差都已经很小。
 
 \section{软件在环仿真}
+Matlab仿真只是初步验证了HOFA方法的有效性，既没有考虑实际的飞控固件中异步的采样周期、进程管理等因素，也没有考虑内部和外部传感器信息融合的因素。而在ros+gazebo下的软件在环仿真会考虑以上因素，进一步贴近实际情况。
+
+首先配置环境，由于当前ros2适配的各种依赖库包括PX4的版本都还在不停迭代，因此目前还是选择更为稳定、资料更多的ros1。在ubuntu20.04中安装ros1 noetic以及配套的mavros和gazebo11 classic，然后从GitHub上clone最近的发行版PX4 v1.14.0，注意要使用递归将所有子项目克隆下来。
+
+git clone -b v1.14.0 https://github.com/PX4/PX4-Autopilot.git --recursive
+
+然后运行Tools/setup/ubuntu.sh，解决编译的依赖。最后运行软件在环仿真命令：make px4_sitl gazebo-classic。运行成功后会进入gazebo仿真界面，打开QGC会自动连接地面站，在地面站中可以方便地看到回传的位姿信息并且发布起飞和指点飞行命令。
