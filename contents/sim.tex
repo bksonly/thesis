@@ -173,8 +173,73 @@ $$x_d = \begin{matrix}[3\sin(\frac{t}{2}), & 3\cos(\frac{t}{2})\sin(\frac{t}{3})
 \section{软件在环仿真}
 Matlab仿真只是初步验证了HOFA方法的有效性，既没有考虑实际的飞控固件中异步的采样周期、进程管理等因素，也没有考虑内部和外部传感器信息融合的因素。而在ros+gazebo下的软件在环仿真会考虑以上因素，进一步贴近实际情况。
 
-首先配置环境，由于当前ros2适配的各种依赖库包括PX4的版本都还在不停迭代，因此目前还是选择更为稳定、资料更多的ros1。在ubuntu20.04中安装ros1 noetic以及配套的mavros和gazebo11 classic，然后从GitHub上clone最近的发行版PX4 v1.14.0，注意要使用递归将所有子项目克隆下来。
+\subsection{环境配置}
+由于当前ros2适配的各种依赖库包括PX4的版本都还在不停迭代，因此目前还是选择更为稳定、资料更多的ros1。在ubuntu20.04中安装ros1 noetic以及配套的mavros和gazebo11 classic，然后从GitHub上clone最近的发行版PX4 v1.14.0，注意要使用递归将所有子项目克隆下来。
+\begin{lstlisting}[language=Bash, basicstyle=\footnotesize, linewidth=\linewidth]
+  git clone -b v1.14.0 https://github.com/PX4/PX4-Autopilot.git --recursive
+\end{lstlisting}
 
-git clone -b v1.14.0 https://github.com/PX4/PX4-Autopilot.git --recursive
+然后运行以下命令以解决依赖。
 
-然后运行Tools/setup/ubuntu.sh，解决编译的依赖。最后运行软件在环仿真命令：make px4_sitl gazebo-classic。运行成功后会进入gazebo仿真界面，打开QGC会自动连接地面站，在地面站中可以方便地看到回传的位姿信息并且发布起飞和指点飞行命令。
+\begin{lstlisting}[language=Bash, basicstyle=\footnotesize, linewidth=\linewidth]
+  Bash Tools/setup/ubuntu.sh
+\end{lstlisting}
+
+最后运行软件在环仿真命令：
+
+\begin{lstlisting}[language=Bash, basicstyle=\footnotesize, linewidth=\linewidth]
+  make px4_sitl gazebo-classic
+\end{lstlisting}
+
+运行成功后会进入gazebo仿真界面，打开QGC会自动连接地面站，在地面站中可以方便地看到回传的位姿信息并且发布起飞和指点飞行命令，如图 \ref{sitl}。
+
+\begin{figure}[h]
+  \centering
+     \begin{minipage}[c]{0.45\textwidth}
+      \centering
+      \includegraphics[width=0.9\textwidth]{sitl1.png}
+   \end{minipage}%
+     \begin{minipage}[c]{0.45\textwidth}
+      \centering
+      \includegraphics[width=0.9\textwidth]{sitl2.png}
+   \end{minipage}
+   \caption{SITL gazebo界面以及QGC指点控制}
+   \label{sitl}
+ \end{figure}
+
+ 这里默认使用的是内置的iris无人机模型，有关该模型的具体参数可以在源码\cite{iris}中查到:
+ \begin{lstlisting}[language=Bash, basicstyle=\footnotesize, linewidth=\linewidth]
+  <inertial>
+    <pose>0 0 0 0 0 0</pose>
+    <mass>1.5</mass>
+    <inertia>
+      <ixx>0.029125</ixx>
+      <ixy>0</ixy>
+      <ixz>0</ixz>
+      <iyy>0.029125</iyy>
+      <iyz>0</iyz>
+      <izz>0.055225</izz>
+    </inertia>
+  </inertial>
+
+...
+
+<box>
+  <size>0.47 0.47 0.11</size>
+</box>
+ \end{lstlisting}
+ 
+ 但因为gazebo下的软件以及硬件在环仿真都只是为了验证算法并且生成在实机上使用的固件，因此不会关注iris模型本身。由于HOFA方法对模型参数的精确性要求不高，且iris和本课题中搭建的四旋翼尺寸重量也大致相当，下一小节中代码里会使用实机重量和转动惯量作为参数。
+
+ \subsection{HOFA算法植入}
+在环境配置完成后，接下来就要在PX4源码的基础上修改多旋翼运动控制部分的代码，将其原本的“位置-速度-角度-角速度”四环PID控制 \cite{px4控制}改为HOFA控制。PX4是一个适用于固定翼、直升机、四旋翼、地面车辆乃至于船舶等多种形式机器人的自动驾驶仪，既可以进行软件仿真，也能将固件烧写到硬件中进行实机实验，其架构十分复杂。在多旋翼部分中，就包含多渠道的传感器信息订阅和融合、多个节点间信息的传递，支持实时在地面站修改各种控制参数，支持包含自稳、高度、位置和offboard等多种飞行模式。因此PX4拥有庞大的规模和错综复杂的上层架构，因此在算法植入时，我们将尽可能不改动上层架构，在相应的包内尽量保持输入输出接口不变，避免引起未知的错误。
+
+\subsubsection{位置环}
+PX4的多旋翼位置环控制位于src/modules/mc-pos-control包中，包内层次结构如图\ref{mc_pos}。MulticopterPositionControl.cpp和MulticopterPositionControl.hpp主要负责与外部的消息传递，用其run()函数启动一个位置环（包括位置和速度）控制的进程，其真正的控制代码在mc-pos-control/PositionControl/PositionControl.cpp以及其对应的头文件中。
+
+\begin{figure}[!h]
+  \centering
+  \includegraphics[width=0.3\textwidth]{mc_pos.png}
+  \caption{mc-pos-control包结构}
+  \label{mc_pos}
+\end{figure}
