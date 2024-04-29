@@ -191,7 +191,7 @@ Matlab仿真只是初步验证了HOFA方法的有效性，既没有考虑实际�
   make px4_sitl gazebo-classic
 \end{lstlisting}
 
-运行成功后会进入gazebo仿真界面，打开QGC会自动连接地面站，在地面站中可以方便地看到回传的位姿信息并且发布起飞和指点飞行命令，如图 \ref{sitl}。
+运行成功后会进入gazebo仿真界面，打开QGC会自动连接地面站，在地面站中可以方便地看到回传的位姿信息并且发布起飞和指点飞行命令，如图 \ref{sitl}。在使用gazebo仿真时，需要安装显卡驱动，否则画面渲染将完全使用CPU，这会导致严重的卡顿。
 
 \begin{figure}[h]
   \centering
@@ -234,12 +234,65 @@ Matlab仿真只是初步验证了HOFA方法的有效性，既没有考虑实际�
  \subsection{HOFA算法植入}
 在环境配置完成后，接下来就要在PX4源码的基础上修改多旋翼运动控制部分的代码，将其原本的“位置-速度-角度-角速度”四环PID控制 \cite{px4控制}改为HOFA控制。PX4是一个适用于固定翼、直升机、四旋翼、地面车辆乃至于船舶等多种形式机器人的自动驾驶仪，既可以进行软件仿真，也能将固件烧写到硬件中进行实机实验，其架构十分复杂。在多旋翼部分中，就包含多渠道的传感器信息订阅和融合、多个节点间信息的传递，支持实时在地面站修改各种控制参数，支持包含自稳、高度、位置和offboard等多种飞行模式。因此PX4拥有庞大的规模和错综复杂的上层架构，因此在算法植入时，我们将尽可能不改动上层架构，在相应的包内尽量保持输入输出接口不变，避免引起未知的错误。
 
-\subsubsection{位置环}
-PX4的多旋翼位置环控制位于src/modules/mc-pos-control包中，包内层次结构如图\ref{mc_pos}。MulticopterPositionControl.cpp和MulticopterPositionControl.hpp主要负责与外部的消息传递，用其run()函数启动一个位置环（包括位置和速度）控制的进程，其真正的控制代码在mc-pos-control/PositionControl/PositionControl.cpp以及其对应的头文件中。
+\textbf{位置环}
+
+PX4的多旋翼位置环控制位于src/modules/mc\_pos\_control包中，包内层次结构如图\ref{mc_pos}。MulticopterPositionControl.cpp和MulticopterPositionControl.hpp主要负责与外部的消息传递，用其Run()函数启动一个位置环（包括位置和速度）控制的进程，其真正的控制代码在mc\_pos\_control/PositionControl/PositionControl.cpp以及其对应的头文件中。
 
 \begin{figure}[!h]
   \centering
   \includegraphics[width=0.3\textwidth]{mc_pos.png}
-  \caption{mc-pos-control包结构}
+  \caption{mc\_pos\_control包结构}
   \label{mc_pos}
+\end{figure}
+
+位置环的植入较为容易，不需要新定义任何变量，即可在原来的架构上修改。无人机质量直接在代码中写入，因为原本PX4的控制方法并不需要质量信息，因此没有预留可供地面站中可以实时修改的质量参数。而位置和速度的控制律，也就是LQR结算得到的K（只在对角线有非零值），因此可以借MPC\_XY\_P、MPC\_Z\_P、MPC\_XY\_VEL\_P\_ACC、MPC\_Z\_VEL\_P\_ACC这四个参数作为变量载体。由于实机的前后和左右也基本对称，xy轴可以使用同样的参数。这么做的好处在于可以在地面站对这些参数进行实时的调整。
+
+位置环的输出除了期望的推力矢量，还有根据期望推力矢量和期望偏航角生成的期望姿态，这部分函数在ControlMath.cpp中。PX4这部分算法的逻辑与HOFA中的完全一致，也就不需要更改。
+
+\textbf{姿态环}
+
+PX4的多旋翼姿态环控制分别在mc\_att\_control和mc\_rate\_control两个包内，两者间通信的管道是mc\_att\_control向mc\_rate\_control发布期望的角速度“rate\_setpoint”，为了尽量不更改架构，我们接下来也将沿用这一通信管道。
+
+原本的控制算法不需要前一时刻的期望姿态，因此首先要在AttitudeControl.hpp中定义新的变量，包括前一时刻的期望姿态，以及期望姿态订阅时的时间，使用全局配置的drv\_hrt.h中的hrt\_absolute\_time()获得当前函数执行时的时刻。
+
+然后在AttitudeControl.cpp中植入HOFA的核心部分。四元数和旋转矩阵的运算函数在namespace matrix下都有定义，不用自己定义。最终将计算得出的除了$\omega \times J\omega$的期望力矩通过“rate\_setpoint”的传输通道，传递给mc\_rate\_control。无人机的转动惯量参数和姿态控制律的具体数字，直接在AttitudeControl.cpp中定义。如果后续需要调试，则要在源码上进行修改。
+
+进一步在mc\_rate\_control阅读代码，发现包内的MulticopterRateControl.cpp主要做了线程管理和消息更新的工作，真正的控制算法在其Run()函数中调用的RateControl::update()中，这个类函数位于src/lib/rate\_control/rate\_control.cpp。然后就在这个函数中略加修改，完成整个HOFA算法的植入。
+
+\textbf{总结}
+
+总共在四个代码文件中做了修改，分别是：
+\begin{itemize}
+  \item src/modules/mc\_pos\_control/PositionControl/PositionControl.cpp
+  \item src/modules/mc\_att\_control/AttitudeControl/AttitudeControl.hpp
+  \item src/modules/mc\_att\_control/AttitudeControl/AttitudeControl.cpp
+  \item src/lib/rate\_control/rate\_control.cpp
+\end{itemize}
+
+用修改过的这四个文件替换先前环境配置环节中编译完成的包中对应的文件（由于用于修改的代码文件下载时没有递归下载子项目，无法直接编译，且在原本已经过编译的文件夹上修改会更稳妥），再运行make px4\_sitl gazebo-classic命令即可，效果与图\ref{sitl} 基本相同。两种控制方法的定量对比会在实机实验时展开，此处只是粗略验证可行性。
+
+\subsection{硬件在环仿真}
+硬件在环仿真的主要目的在于，在gazebo仿真环境中初步测试生成的固件代码，防止直接进行实机实验可能出现的破坏性故障。硬件在环仿真也要首先配置环境，用PX4的发行版跑通流程；然后向飞控刷入植入HOFA的固件，进行硬件在环仿真。
+
+\textbf{环境配置}
+
+硬件在环仿真在软件在环仿真已经跑通的基础上并不困难，PX4的官方文档也提供了相对全面的流程\cite{px4hitl}。
+
+首先用USB连上飞控，在QGC中进行设置：使能HITL；机架选择HITL兼容的Generic Quadcopter，重启；在应用设置中的自动连接选项，仅选择UDP，这一步做完后，直接用USB连接飞控将无法自动连入地面站。以上步骤做完后，断开飞控连接并关闭地面站。
+
+然后是在PX4\_Autopilot包内做软件上的配置，具体代码如下\cite{px4hitl}。
+
+\begin{lstlisting}[language=Bash, basicstyle=\footnotesize, linewidth=\linewidth, breaklines=true]
+  cd PX4_Autopilot
+  source Tools/simulation/gazebo-classic/setup_gazebo.bash $(pwd) $(pwd)/build/px4_sitl_default
+  gazebo Tools/simulation/gazebo-classic/sitl_gazebo-classic/worlds/hitl_iris.world
+\end{lstlisting}
+
+
+需要注意的是，在最后一步run gazebo时，飞控需要已经通过USB连在电脑上。然后打开QGC，即可进行起飞和指点飞行，如图\ref{hitl}所示。
+\begin{figure}[!h]
+  \centering
+  \includegraphics[width=0.6\textwidth]{hitl.jpg}
+  \caption{硬件在环仿真示意图}
+  \label{hitl}
 \end{figure}
