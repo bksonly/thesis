@@ -30,7 +30,7 @@ $$x_d = \begin{matrix}[3\sin(\frac{t}{2}), & 3\cos(\frac{t}{2})\sin(\frac{t}{3})
     \label{fig:sim}
   \end{figure}
 
-  四旋翼无人机的参数由测量和理论计算共同得到：
+  四旋翼无人机的质量参数在这一阶段并不重要，因此只是大概估计：
   $$m=0.8kg \quad d=0.125m \quad J=\begin{bmatrix}
     0.0024   &      0  &       0\\
     0 &   0.0025      &   0\\
@@ -174,7 +174,7 @@ $$x_d = \begin{matrix}[3\sin(\frac{t}{2}), & 3\cos(\frac{t}{2})\sin(\frac{t}{3})
 Matlab仿真只是初步验证了HOFA方法的有效性，既没有考虑实际的飞控固件中异步的采样周期、进程管理等因素，也没有考虑内部和外部传感器信息融合的因素。而在ros+gazebo下的软件在环仿真会考虑以上因素，进一步贴近实际情况。
 
 \subsection{环境配置}
-由于当前ros2适配的各种依赖库包括PX4的版本都还在不停迭代，因此目前还是选择更为稳定、资料更多的ros1。在ubuntu20.04中安装ros1 noetic以及配套的mavros和gazebo11 classic，然后从GitHub上clone最近的发行版PX4 v1.14.0，注意要使用递归将所有子项目克隆下来。
+由于当前ros2适配的各种依赖库包括PX4的版本都还在不停迭代，因此目前还是选择更为稳定、资料更多的ros1。在ubuntu20.04中安装ros1 noetic以及配套的gazebo11 classic（使用鱼香ros一键安装\cite{fishros}时会同步安装），然后从GitHub上clone最近的发行版PX4 v1.14.0，注意要使用递归将所有子项目克隆下来。
 \begin{lstlisting}[language=Bash, basicstyle=\footnotesize, linewidth=\linewidth]
   git clone -b v1.14.0 https://github.com/PX4/PX4-Autopilot.git --recursive
 \end{lstlisting}
@@ -229,12 +229,46 @@ Matlab仿真只是初步验证了HOFA方法的有效性，既没有考虑实际�
 </box>
  \end{lstlisting}
  
- 但因为gazebo下的软件以及硬件在环仿真都只是为了验证算法并且生成在实机上使用的固件，因此不会关注iris模型本身。由于HOFA方法对模型参数的精确性要求不高，且iris和本课题中搭建的四旋翼尺寸重量也大致相当，下一小节中代码里会使用实机重量和转动惯量作为参数。
+由于SDF文件的特殊性，不建议修改iris模型参数去匹配控制器中的设定，而是修改控制算法中的参数来匹配iris模型。HOFA算法对于转动惯量参数有一定鲁棒性，但如果有数量级的差距还是会导致严重问题。
+
+其实到此为止只完成了gazebo下的仿真，并没有接入ros的框架，也就无法使用rostopic等命令进行进一步调试。接入ros框架还需要运行以下命令：
+
+\begin{lstlisting}[language=Bash, basicstyle=\footnotesize, linewidth=\linewidth, breaklines=true]
+  sudo apt-get install ros-noetic-mavros ros-noetic-mavros-extras
+
+  wget https://raw.githubusercontent.com/mavlink/mavros/master/mavros/scripts/install_geographiclib_datasets.sh
+  bash install_geographiclib_datasets.sh
+
+  cd PX4-Autopilot
+  make px4_sitl_default gazebo
+
+  source Tools/simulation/gazebo-classic/setup_gazebo.bash $(pwd) $(pwd)/build/px4_sitl_default
+  export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:$(pwd)
+  export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:$(pwd)/Tools/simulation/gazebo-classic/sitl_gazebo-classic
+
+  roslaunch px4 mavros_posix_sitl.launch
+\end{lstlisting}
+
+安装mavros包并运行官方的bash文件解决依赖；重新编译（命令与gazebo中有细微差别，但生成的build文件名相同），配置ros环境变量使roslaunch能找到PX4包内的文件：launch文件中包含了仿真的各种可调节参数，包括gazebo环境和初始位置等。
+
+运行后可以用rqt\_graph命令看到节点和消息，如图\ref{sitlrqt}所示。mavros将整个飞控虚拟化为一个节点，我们可以通过mavlink stream命令修改imu等数据发布的频率。但是，这不是飞控内部的控制频率，仅仅是通过mavros向外部发送信息的频率。所以，无法直接用该命令改变控制周期。
+\begin{figure}[!h]
+  \centering
+  \includegraphics[width=0.6\textwidth]{sitlrqt.png}
+  \caption{软件在环仿真ros节点和话题示意图}
+  \label{sitlrqt}
+\end{figure}
 
  \subsection{HOFA算法植入}
-在环境配置完成后，接下来就要在PX4源码的基础上修改多旋翼运动控制部分的代码，将其原本的“位置-速度-角度-角速度”四环PID控制 \cite{px4控制}改为HOFA控制。PX4是一个适用于固定翼、直升机、四旋翼、地面车辆乃至于船舶等多种形式机器人的自动驾驶仪，既可以进行软件仿真，也能将固件烧写到硬件中进行实机实验，其架构十分复杂。在多旋翼部分中，就包含多渠道的传感器信息订阅和融合、多个节点间信息的传递，支持实时在地面站修改各种控制参数，支持包含自稳、高度、位置和offboard等多种飞行模式。因此PX4拥有庞大的规模和错综复杂的上层架构，因此在算法植入时，我们将尽可能不改动上层架构，在相应的包内尽量保持输入输出接口不变，避免引起未知的错误。
+在环境配置完成后，接下来就要在PX4源码的基础上修改多旋翼运动控制部分的代码，将其原本的“位置-速度-角度-角速度”四环PID控制 \cite{px4控制}改为HOFA控制。
+
+PX4是一个适用于固定翼、直升机、四旋翼、地面车辆乃至于船舶等多种形式机器人的自动驾驶仪，既可以进行软件仿真，也能将固件烧写到硬件中进行实机实验，其架构十分复杂。在多旋翼部分中，就包含多渠道的传感器信息订阅和融合、多个节点间信息的传递，支持实时在地面站修改各种控制参数，支持包含自稳、高度、位置和offboard等多种飞行模式。因此PX4拥有庞大的规模和错综复杂的上层架构，因此在算法植入时，我们将尽可能不改动上层架构，在相应的包内尽量保持输入输出接口不变，避免引起未知的错误。
+
+PX4运行在嵌入式系统上，通常使用Nuttx操作系统，这是一个实时操作系统（RTOS），专为微控制器设计。由于不同类型的传感器采样周期不同，不同环节的控制器周期也不同，PX4采用异步的线程管理方法以尽量减少时延。传感器采样并处理得到估计后，标记更新，轮询的控制器进程判断数据已经更新过，就进入控制，发布新的控制量到下一环节：姿态环在姿态更新后控制，位置环在位置更新后控制。因此控制频率的上限取决于传感器的采样频率，设定值（setpoint）的更新频率不会制约控制频率，在下一个设定值更新前，将沿用之前的设定值。
 
 \textbf{位置环}
+
+如理论设计一章末尾所提到的，PX4原本的位置环不需要做任何更改，只需要在地面站中调节相应的参数数值就能实现我提出的位置环控制方法。以下对位置环软件包做简单介绍：
 
 PX4的多旋翼位置环控制位于src/modules/mc\_pos\_control包中，包内层次结构如图\ref{mc_pos}。MulticopterPositionControl.cpp和MulticopterPositionControl.hpp主要负责与外部的消息传递，用其Run()函数启动一个位置环（包括位置和速度）控制的进程，其真正的控制代码在mc\_pos\_control/PositionControl/PositionControl.cpp以及其对应的头文件中。
 
@@ -245,31 +279,35 @@ PX4的多旋翼位置环控制位于src/modules/mc\_pos\_control包中，包内�
   \label{mc_pos}
 \end{figure}
 
-位置环的植入较为容易，不需要新定义任何变量，即可在原来的架构上修改。无人机质量直接在代码中写入，因为原本PX4的控制方法并不需要质量信息，因此没有预留可供地面站中可以实时修改的质量参数。而位置和速度的控制律，也就是LQR结算得到的K（只在对角线有非零值），因此可以借MPC\_XY\_P、MPC\_Z\_P、MPC\_XY\_VEL\_P\_ACC、MPC\_Z\_VEL\_P\_ACC这四个参数作为变量载体。由于实机的前后和左右也基本对称，xy轴可以使用同样的参数。这么做的好处在于可以在地面站对这些参数进行实时的调整。
+而位置和速度的控制律，也就是LQR解算得到的K（只在对角线有非零值），可以借MPC\_XY\_P、MPC\_Z\_P、MPC\_XY\_VEL\_P\_ACC、MPC\_Z\_VEL\_P\_ACC这四个参数作为变量载体。由于实机的前后和左右也基本对称，xy轴可以使用同样的参数。可以在地面站对这些参数进行实时的调整。
 
-位置环的输出除了期望的推力矢量，还有根据期望推力矢量和期望偏航角生成的期望姿态，这部分函数在ControlMath.cpp中。PX4这部分算法的逻辑与HOFA中的完全一致，也就不需要更改。
+位置环的输出除了期望的推力矢量，还有根据期望推力矢量和期望偏航角生成的期望姿态，这部分函数在ControlMath.cpp中。PX4这部分算法的逻辑与HOFA中的完全一致。
 
 \textbf{姿态环}
 
 PX4的多旋翼姿态环控制分别在mc\_att\_control和mc\_rate\_control两个包内，两者间通信的管道是mc\_att\_control向mc\_rate\_control发布期望的角速度“rate\_setpoint”，为了尽量不更改架构，我们接下来也将沿用这一通信管道。
 
-原本的控制算法不需要前一时刻的期望姿态，因此首先要在AttitudeControl.hpp中定义新的变量，包括前一时刻的期望姿态，以及期望姿态订阅时的时间，使用全局配置的drv\_hrt.h中的hrt\_absolute\_time()获得当前函数执行时的时刻。
+原本的控制算法不需要前一时刻的期望姿态，因此首先要在AttitudeControl.hpp中定义新的变量，包括前一时刻的期望姿态，以及期望姿态生成时的时间（包含在期望姿态结构体中）。原本的mc\_att\_control不需要角速度信息，因此需要额外添加uORB::SubscriptionCallbackWorkItem函数订阅角速度信息。
 
-然后在AttitudeControl.cpp中植入HOFA的核心部分。四元数和旋转矩阵的运算函数在namespace matrix下都有定义，不用自己定义。最终将计算得出的除了$\omega \times J\omega$的期望力矩通过“rate\_setpoint”的传输通道，传递给mc\_rate\_control。无人机的转动惯量参数和姿态控制律的具体数字，直接在AttitudeControl.cpp中定义。如果后续需要调试，则要在源码上进行修改。
+然后在AttitudeControl.cpp中植入HOFA的核心部分。四元数和旋转矩阵的运算函数在namespace matrix下已有定义。$R$和$R_d$的更新频率并不相同，$R$的更新频率取决于imu等传感器的估计值的发布频率，$R_d$的更新频率取决于位置环产生期望姿态的频率。$R$的更新频率要高于$R_d$，也就是说，前后多个控制周期内，控制计算会根据同一个$R_d$和不同的$R$进行。误差向量$e$的导数估计会根据前后两个$e$的差分除以$R$的更新周期来近似。
+
+最终将计算得出的除了$\omega \times J\omega$的期望力矩通过“rate\_setpoint”的传输通道，传递给mc\_rate\_control。无人机的转动惯量参数和姿态控制律的具体数字，直接在AttitudeControl.cpp中定义。如果后续需要调试，则要在源码上进行修改。
 
 进一步在mc\_rate\_control阅读代码，发现包内的MulticopterRateControl.cpp主要做了线程管理和消息更新的工作，真正的控制算法在其Run()函数中调用的RateControl::update()中，这个类函数位于src/lib/rate\_control/rate\_control.cpp。然后就在这个函数中略加修改，完成整个HOFA算法的植入。
 
 \textbf{总结}
 
-总共在四个代码文件中做了修改，分别是：
+总共在五个代码文件中做了修改，分别是：
 \begin{itemize}
-  \item src/modules/mc\_pos\_control/PositionControl/PositionControl.cpp
+ % \item src/modules/mc\_pos\_control/PositionControl/PositionControl.cpp
+  \item src/modules/mc\_att\_control/mc\_att\_control\_main.cpp
+  \item src/modules/mc\_att\_control/mc\_att\_control.hpp
   \item src/modules/mc\_att\_control/AttitudeControl/AttitudeControl.hpp
   \item src/modules/mc\_att\_control/AttitudeControl/AttitudeControl.cpp
   \item src/lib/rate\_control/rate\_control.cpp
 \end{itemize}
 
-用修改过的这四个文件替换先前环境配置环节中编译完成的包中对应的文件（由于用于修改的代码文件下载时没有递归下载子项目，无法直接编译，且在原本已经过编译的文件夹上修改会更稳妥），再运行make px4\_sitl gazebo-classic命令即可，效果与图\ref{sitl} 基本相同。两种控制方法的定量对比会在实机实验时展开，此处只是粗略验证可行性。
+用修改过的这五个文件替换先前环境配置环节中编译完成的包中对应的文件（由于用于修改的代码文件下载时没有递归下载子项目，无法直接编译，且在原本已经过编译的文件夹上修改会更稳妥），再运行make px4\_sitl\_default gazebo命令即可，效果与图\ref{sitl} 基本相同。两种控制方法的定量对比会在实机实验时展开，此处只是粗略验证可行性。
 
 \subsection{硬件在环仿真}
 硬件在环仿真的主要目的在于，在gazebo仿真环境中初步测试生成的固件代码，防止直接进行实机实验可能出现的破坏性故障。硬件在环仿真也要首先配置环境，用PX4的发行版跑通流程；然后向飞控刷入植入HOFA的固件，进行硬件在环仿真。
@@ -278,9 +316,23 @@ PX4的多旋翼姿态环控制分别在mc\_att\_control和mc\_rate\_control两�
 
 硬件在环仿真在软件在环仿真已经跑通的基础上并不困难，PX4的官方文档也提供了相对全面的流程\cite{px4hitl}。
 
-首先用USB连上飞控，在QGC中进行设置：使能HITL；机架选择HITL兼容的Generic Quadcopter，重启；在应用设置中的自动连接选项，仅选择UDP，这一步做完后，直接用USB连接飞控将无法自动连入地面站。以上步骤做完后，断开飞控连接并关闭地面站。
+首先用USB连上飞控，在QGC中进行设置：机架选择HITL兼容的Generic Quadcopter，重启；使能HITL；在应用设置中的自动连接选项，仅选择UDP（这一步做完后，直接用USB连接飞控将无法自动连入地面站）。以上步骤做完后，断开飞控连接并关闭地面站。
 
-然后是在PX4\_Autopilot包内做软件上的配置，具体代码如下\cite{px4hitl}。
+然后是在PX4\_Autopilot包内做软件上的配置\cite{px4hitl}：
+
+确保QGC关闭的情况下，编译并且不运行仿真固件：
+\begin{lstlisting}[language=Bash, basicstyle=\footnotesize, linewidth=\linewidth, breaklines=true]
+  cd <Firmware_clone>
+  DONT_RUN=1 make px4_sitl_default gazebo-classic
+\end{lstlisting}
+
+打开模型的sdf文件:
+
+Tools/simulation/gazebo-classic/sitl\_gazebo-classic/models/iris\_hitl/iris\_hitl.sdf
+
+找到文件的mavlink\_interface plugin分区，将 serialEnabled 和 hil\_mode 参数更改为 true。
+
+接下来执行如下命令：
 
 \begin{lstlisting}[language=Bash, basicstyle=\footnotesize, linewidth=\linewidth, breaklines=true]
   cd PX4_Autopilot
@@ -296,3 +348,21 @@ PX4的多旋翼姿态环控制分别在mc\_att\_control和mc\_rate\_control两�
   \caption{硬件在环仿真示意图}
   \label{hitl}
 \end{figure}
+
+在飞控接有遥控接收机时，也可以使用遥控器对gazebo中的虚拟飞机进行操控。
+
+\textbf{固件烧写}
+
+在环境配置完成后，将HOFA版本的固件编译并烧写进飞控硬件中，只需要执行以下命令：
+
+\begin{lstlisting}[language=Bash, basicstyle=\footnotesize, linewidth=\linewidth, breaklines=true]
+  cd PX4_Autopilot
+  make px4_fmu-v6c_default
+  make px4_fmu-v6c_default upload
+\end{lstlisting}
+
+接下来运行gazebo即可完成HOFA算法的硬件在环仿真。其效果从仿真画面来看与PX4大致相似，飞行都很稳定。量化的对比将在实机实验里展开。
+
+
+
+

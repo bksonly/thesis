@@ -61,7 +61,8 @@ $$\begin{aligned}
              -R'_{12}& R'_{11}+R'_{33} & -R'_{32} \\
              -R'_{13}&- R'_{23} & R'_{11}+R'_{22} \\
             \end{bmatrix}$$
-\subsubsection*{$R_B$满秩}
+\textbf{$R_B$满秩}
+
     当$R_B$满秩时，符合高阶全驱的条件；不满秩时则短暂采用替补控制律。代入\ref{equ:M},得：
     $$\begin{aligned}
         \ddot e=&A_d+R_B J^{-1}(-\omega \times J\omega+M)\\
@@ -84,9 +85,15 @@ $$\begin{aligned}
     $$x=\begin{bmatrix}
         e \\ \dot e
     \end{bmatrix}$$
-    在此基础上可以便利地采用任何线性系统控制器设计方法，
-    暂且采用LQR控制器，得到$M^*=-kx$
-    \subsubsection*{$R_B$不满秩}
+    在此基础上可以便利地采用任何线性系统控制器设计方法，采用LQR控制器，得到$M^*=-kx$
+
+   $$ \begin{aligned}
+        M=&-J R_B^{-1} [(R' \hat e_\Omega \Omega  -\Omega_d R' \hat e_\Omega -\dot \Omega_d R')-(R' \hat e_\Omega \Omega  -\Omega_d R' \hat e_\Omega -\dot \Omega_d R')^T]^\vee \\
+         &+\omega \times J\omega + J R_B^{-1}(-kx)
+    \end{aligned}$$
+
+    \textbf{$R_B$不满秩}
+
     $R_B$不满秩时，上述高阶全驱方法就不在成立，但是不满秩的点在$\mathbb{R^{3 \times 3}}$是无处稠密的，因此在实验中几乎不会遇到。但是为了理论的完备，设置替补控制律\cite{Lee2010}：
     $$M=-k_R e_R-k_\omega e_\omega+\omega \times J \omega -J(\Omega R'^T \omega_d-R'^T \dot \omega_d) $$
     $$ e_R=\frac{1}{2} (R'-R'^T)^\vee $$
@@ -132,3 +139,5 @@ $$\begin{aligned}
         x_d -x \\ v_d -v
     \end{bmatrix}$$
       将$f$写作补偿掉前馈的形式：$f=f^*-mg \vec e_3 +m a_d$。接下来就可以运用LQR方法得到控制律$f^*=-kx$。
+
+    $f^*$的控制律并不是四旋翼运动控制的关键，只要期望姿态生成合理并且姿态环能迅速收敛，位置环的控制难度很低。因此在后面的ros仿真以及实机实验中，位置环将不对PX4的代码做更改（PX4的位置环控制算法事实上完全包含了上述算法，将I和D置0即可退化为本文中的方法），以避免架构上不必要的麻烦。
