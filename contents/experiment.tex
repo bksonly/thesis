@@ -156,41 +156,44 @@
 
   \section{HOFA固件飞行}
 
-  \textbf{转动惯量测定}
+  在仿真实验一章的硬件在环仿真节中得到的飞控固件就可以直接用于实机飞行，但在起飞前需要精确测量无人机的质量和转动惯量参数，以获得更好的飞行效果。
 
-  HOFA算法需要知道无人机的转动惯量矩阵作为先验信息。经过仿真，HOFA算法可以容忍较大的转动惯量误差，但如果误差达到十倍的程度，还是会带来破坏性的影响。因此，需要对无人机进行较为精确的转动惯量测定。
+  \textbf{参数测定}
 
-  由于四旋翼大体是中心对称结构，因此只考虑转动惯量矩阵对角线上的元素，即中心主转动惯量。主转动惯量可以采用双线摆方法测量\cite{转动惯量}：用两条长度为 $L$ 的细线悬垂待测物体，两细线竖直，间隔为$d$，使待测转轴与两线竖直中心线重合，绕转轴轻轻拨动待测物体，使其有 $10 ^\circ$ 以下的转角，记录其五十个周期的时间，重复三次。
+  HOFA算法需要知道无人机的转动惯量矩阵作为先验信息。经过仿真发现，HOFA算法可以容忍较大的转动惯量误差，但如果误差达到十倍的程度，还是会带来破坏性的影响。因此，需要对无人机进行较为精确的转动惯量测定。
 
-  转动惯量与周期的关系为：
+  由于四旋翼大体是中心对称结构，因此只考虑转动惯量矩阵对角线上的元素，即中心主转动惯量。主转动惯量可以采用双线摆方法测量\cite{转动惯量}：用两条长度为 $L$ 的细线悬垂待测物体，两细线竖直，间隔距离为$d$，使待测转轴与两线竖直中心线重合，绕转轴轻轻拨动待测物体，使其有 $10 ^\circ$ 以下的转角，记录其摆动五十个周期的时间，重复三次。
+
+  双线摆动能势能之和对时间求导为$0$，得到形如$kx+m\ddot x=0$的方程。易得，转动惯量与周期之间的关系为：
 
   $$
   J_{ii}=\frac{mgd^2}{16 \pi^2 L} T^2
   $$
 
-  无人机质量$m$由电子天平测得为$0.8771kg$，上海地区重力加速度取$9.794 m/s^2$。
+  无人机质量$m$由电子天平测得为$0.8771kg$，上海地区重力加速度为$9.794 m/s^2$。
 
-  用以上方法分别测量绕无人机x轴，y轴，z轴的主转动惯量，如图\ref{双线法}所示。
+  用双线法分别测量无人机绕x轴，y轴，z轴的主转动惯量，如图\ref{双线法}所示。
 
   \begin{figure}[h]
     \centering
     \begin{minipage}[c]{0.33\textwidth}
       \centering
-      \includegraphics[width=0.95\linewidth]{x.jpg}
-    \end{minipage} \hfill
+      \includegraphics[width=0.95\linewidth, angle=270]{x.jpg}  % 确保角度为0
+    \end{minipage}\hfill
     \begin{minipage}[c]{0.33\textwidth}
       \centering
-      \includegraphics[width=0.95\linewidth]{y.jpg}
+      \includegraphics[width=0.95\linewidth, angle=270]{y.jpg}  % 确保角度为0
     \end{minipage}\hfill
-      \begin{minipage}[c]{0.33\textwidth}
-        \centering
-        \includegraphics[width=0.95\linewidth]{z.jpg}
+    \begin{minipage}[c]{0.33\textwidth}
+      \centering
+      \includegraphics[width=0.95\linewidth, angle=270]{z.jpg}  % 确保角度为0
     \end{minipage}
     \caption{双线法测量无人机主转动惯量}
     \label{双线法}
-    \end{figure}
+\end{figure}
 
-用以上方法重复测量三次，得到表格\ref{三次}：
+
+用以上方法重复测量三次并计算，得到表格\ref{三次}：
   
   \begin{table}
     \centering
@@ -198,17 +201,17 @@
         \toprule
         组别&d/m  & L/m & 50T/s (1) & 50T/s (2) &50T/s (3) & T/s & $J_{ii} / kg \cdot m^2$\\
         \midrule
-        xx& 0.209 &0.67 & 46.46 & 46.36 & 46.40 &0.9281 &0.0031\\
-        yy& 0.170 &0.66 & 58.40 & 57.96 & 58.37 &1.1649 &0.0032\\
-        zz& 0.271 & 0.65& 42.50 & 42.75 & 42.75 &0.8533 &0.0045\\
+        $J_{xx}$ & 0.209 &0.67 & 46.46 & 46.36 & 46.40 &0.9281 &0.0031\\
+        $J_{yy}$ & 0.170 &0.66 & 58.40 & 57.96 & 58.37 &1.1649 &0.0032\\
+        $J_{zz}$ & 0.271 & 0.65& 42.50 & 42.75 & 42.75 &0.8533 &0.0045\\
         \bottomrule
     \end{tabular}
     \caption{无人机转动惯量矩阵主值测量记录表}
     \label{三次}
 \end{table}
 
-最后的结论$J=\begin{bmatrix}
+最后得到结论$J=\begin{bmatrix}
   0.0031 &0&0\\
   0&0.0032&0\\
   0&0& 0.0045
-\end{bmatrix}$与matlab仿真阶段的估计差异不大。
+\end{bmatrix}kg \cdot m^2$，这与matlab仿真阶段的估计差异不大。
