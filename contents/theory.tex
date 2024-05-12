@@ -27,7 +27,8 @@ $$\begin{aligned}
     $$\begin{aligned}
         \ddot e =& [(R' \hat e_\Omega \Omega + R'\dot \Omega -\Omega_d R' \hat e_\Omega -\dot \Omega_d R')-(R' \hat e_\Omega \Omega + R'\dot \Omega -\Omega_d R' \hat e_\Omega -\dot \Omega_d R')^T]^\vee\\
         =&[(R' \hat e_\Omega \Omega  -\Omega_d R' \hat e_\Omega -\dot \Omega_d R')-(R' \hat e_\Omega \Omega  -\Omega_d R' \hat e_\Omega -\dot \Omega_d R')^T]^\vee+[R'\dot \Omega-(R'\dot \Omega)^T]^\vee\\
-        =&A_d+ \begin{Bmatrix}
+        =&[(R' \hat e_\Omega \Omega  -\Omega_d R' \hat e_\Omega -\dot \Omega_d R')-(R' \hat e_\Omega \Omega  -\Omega_d R' \hat e_\Omega -\dot \Omega_d R')^T]^\vee\\
+        & + \begin{Bmatrix}
         \begin{bmatrix}
         R'_{11} &R'_{12}  & R'_{13} \\
         R'_{21} & R'_{22} & R'_{23} \\
@@ -46,7 +47,8 @@ $$\begin{aligned}
          \dot\omega_3& 0 &  -\dot\omega_1\\
          -\dot\omega_2&\dot\omega_1  & 0 \\
         \end{bmatrix}\end{Bmatrix}^{T\vee}\\
-        =&A_d+\begin{bmatrix}
+        =&[(R' \hat e_\Omega \Omega  -\Omega_d R' \hat e_\Omega -\dot \Omega_d R')-(R' \hat e_\Omega \Omega  -\Omega_d R' \hat e_\Omega -\dot \Omega_d R')^T]^\vee \\
+        & +        \begin{bmatrix}
         R'_{22}+R'_{33} & -R'_{21} & -R'_{31} \\
          -R'_{12}& R'_{11}+R'_{33} & -R'_{32} \\
          -R'_{13}&- R'_{23} & R'_{11}+R'_{22} \\
@@ -72,7 +74,7 @@ $$\begin{aligned}
 
     高阶全驱系统建模完成，随即立刻可以设计控制算法。由于$B$可逆，令：
     $$M=-B^{-1} A_d+\omega \times J\omega +B^{-1}M^*$$
-    得
+    使得
     $$\ddot e=M^*$$
 
     对于该补偿掉所有非线性部分的二阶积分器模型，得到状态空间表示下的方程：

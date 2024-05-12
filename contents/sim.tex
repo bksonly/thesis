@@ -406,4 +406,51 @@ Offboard包配置完成，后续无论是SITL、HITL还是实机实验，只要�
   rosrun offboard_run offboard_run_node
 \end{lstlisting}
 
-轨迹跟踪的控制效果可以从飞行日志记录的原始数据中得到。通过QGC下载.ulog文件，有多种方式可以直接可视化地查看飞行数据，如在线的Flight Review、本地的PlotJuggler等。为了数据分析的灵活性，也可以用ulog2csv命令将飞行日志转成csv文件，在matlab中绘图和分析。
+轨迹跟踪的控制效果可以从飞行日志记录的原始数据中得到。通过QGC下载.ulog文件，有多种方式可以直接可视化地查看飞行数据，如在线的Flight Review、本地的PlotJuggler等，都能直观快捷地看到大量数据曲线。
+
+为了能够定量地分析轨迹跟踪的效果，用ulog2csv命令将飞行日志转成csv文件，提取其中位置和期望位置的文件，在Matlab中绘图和分析。
+
+\begin{figure}[htb]
+  \centering
+  \begin{minipage}[b]{0.49\linewidth}
+      \includegraphics[width=\linewidth]{sitl_px4_3d.png}
+      \caption{SITL下PX4三维轨迹跟踪效果}
+  \end{minipage}
+  \hfill % 在图片之间添加一些空间
+  \begin{minipage}[b]{0.49\linewidth}
+      \includegraphics[width=\linewidth]{sitl_hofa_3d.png}
+      \caption{SITL下HOFA三维轨迹跟踪效果}
+  \end{minipage}
+
+  %\vspace{1cm} % 在行之间添加一些垂直空间
+
+  \begin{minipage}[b]{0.49\linewidth}
+      \includegraphics[width=\linewidth]{sitl_px4_xyzyaw.png}
+      \caption{SITL下PX4各轴跟踪效果}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[b]{0.49\linewidth}
+      \includegraphics[width=\linewidth]{sitl_hofa_xyzyaw.png}
+      \caption{SITL下HOFA各轴跟踪效果}
+  \end{minipage}
+\end{figure}
+
+两者都能很好地跟踪“8”字型轨迹，对跟踪误差定量分析，计算每个时刻位置和期望位置的欧拉距离得到曲线如图\ref{sitl量化}、图\ref{sitl量化hofa}。
+
+\begin{figure}[htb]
+  \centering
+  \begin{minipage}[b]{0.49\linewidth}
+    \includegraphics[width=\linewidth]{sitl_px4_e.png}
+    \caption{SITL下PX4量化跟踪误差}
+    \label{sitl量化}
+\end{minipage}
+\hfill
+\begin{minipage}[b]{0.49\linewidth}
+    \includegraphics[width=\linewidth]{sitl_hofa_e.png}
+    \caption{SITL下HOFA量化跟踪误差}
+    \label{sitl量化hofa}
+\end{minipage}
+
+\end{figure}
+
+从图\ref{sitl量化}、图\ref{sitl量化hofa}中标注的平均误差来看，在位置跟踪上HOFA略微优于PX4，两者的成绩都相当优秀，这从轨迹的形态上也可以看出。两者偏差都达到$0.32m$的原因在于偏差的计算方法是同一个时刻的位置和期望位置作差，而在速度不可以忽略的情况下，期望位置必然有相当的领先。在偏航角的控制上HOFA虽然不如PX4，但$0.0207 Rad$也是相当小的偏差。这是因为，在控制设计时就没有把偏航角作为主要的被控量，在LQR的参数选取上，偏航模态的权重要远小于滚转和俯仰。
