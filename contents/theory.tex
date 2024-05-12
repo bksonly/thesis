@@ -78,20 +78,20 @@ $$\begin{aligned}
     $$\ddot e=M^*$$
 
     对于该补偿掉所有非线性部分的二阶积分器模型，得到状态空间表示下的方程：
-    $$\dot x=\begin{bmatrix}
+    $$\dot x_\omega=\begin{bmatrix}
         0_{3\times 3} & I_{3\times 3} \\
         0_{3\times 3} & 0_{3\times 3}
-    \end{bmatrix} x+\begin{bmatrix}
+    \end{bmatrix} x_\omega+\begin{bmatrix}
         0_{3\times 3} \\ I_{3\times 3}
     \end{bmatrix} M^* $$
-    $$x=\begin{bmatrix}
+    $$x_\omega=\begin{bmatrix}
         e \\ \dot e
     \end{bmatrix}$$
-    在此基础上可以便利地采用任何线性系统控制器设计方法，采用LQR控制器，得到$M^*=-kx$
+    在此基础上可以便利地采用任何线性系统控制器设计方法，采用LQR控制器，得到$M^*=-kx_\omega$
 
    $$ \begin{aligned}
         M=&-J R_B^{-1} [(R' \hat e_\Omega \Omega  -\Omega_d R' \hat e_\Omega -\dot \Omega_d R')-(R' \hat e_\Omega \Omega  -\Omega_d R' \hat e_\Omega -\dot \Omega_d R')^T]^\vee \\
-         &+\omega \times J\omega + J R_B^{-1}(-kx)
+         &+\omega \times J\omega + J R_B^{-1}(-kx_\omega)
     \end{aligned}$$
 
     \textbf{$R_B$不满秩}
@@ -129,15 +129,15 @@ $$\begin{aligned}
       $$m \dot v=mge_3-f$$
 
       那么位置控制环节就变成了简单的线性系统，可以写作六阶状态空间表示
-      $$\dot x=\begin{bmatrix}
+      $$\dot x_p=\begin{bmatrix}
         0_{3\times 3} & I_{3\times 3} \\
         0_{3\times 3} & 0_{3\times 3}
-    \end{bmatrix} x+\begin{bmatrix}
+    \end{bmatrix} x_p+\begin{bmatrix}
         0_{3\times 3} \\ \frac{1}{m} I_{3\times 3}
     \end{bmatrix} f +\begin{bmatrix}
         0_{3 \times 1} \\ a_d-g \vec e_3 
     \end{bmatrix}$$
-    $$x=\begin{bmatrix}
+    $$x_p=\begin{bmatrix}
         x_d -x \\ v_d -v
     \end{bmatrix}$$
       将$f$写作补偿掉前馈的形式：$f=f^*-mg \vec e_3 +m a_d$。接下来就可以运用LQR方法得到控制律$f^*=-kx$。
