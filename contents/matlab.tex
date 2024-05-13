@@ -61,7 +61,7 @@ $$x_d = \begin{matrix}[5\sin(\frac{t}{2}), & 5\cos(\frac{t}{2})\sin(\frac{t}{2})
     0&0&0&3&0&0\\
     0&0&0&0&3&0\\
     0&0&0&0&0&3\\
-  \end{bmatrix} \quad R_x=\begin{bmatrix}
+  \end{bmatrix}, \quad R_x=\begin{bmatrix}
     0.1 &0 &0\\
     0 &0.1 &0\\
     0 &0 &0.1\\
@@ -74,7 +74,7 @@ $$x_d = \begin{matrix}[5\sin(\frac{t}{2}), & 5\cos(\frac{t}{2})\sin(\frac{t}{2})
     0&0&0&0.1&0&0\\
     0&0&0&0&0.1&0\\
     0&0&0&0&0&0.1\\
-  \end{bmatrix} \quad R=\begin{bmatrix}
+  \end{bmatrix}, \quad R=\begin{bmatrix}
     0.01 &0 &0\\
     0 &0.01 &0\\
     0 &0 &0.01\\
@@ -101,16 +101,19 @@ $$x_d = \begin{matrix}[5\sin(\frac{t}{2}), & 5\cos(\frac{t}{2})\sin(\frac{t}{2})
     \begin{minipage}[t]{0.33\textwidth}
       \centering
       \raisebox{-\height}{\includegraphics[width=\linewidth]{hofa_1.png}}
+      \caption*{(a) HOFA}
     \end{minipage}\hfill
     \begin{minipage}[t]{0.33\textwidth}
       \centering
       \raisebox{-\height}{\includegraphics[width=\linewidth]{px4_1.png}}
+      \caption*{(b) PID}
     \end{minipage}\hfill
     \begin{minipage}[t]{0.33\textwidth}
       \centering
       \raisebox{-\height}{\includegraphics[width=\linewidth]{so3_1.png}}
+      \caption*{(c) SO(3)}
     \end{minipage}
-    \caption{x轴位置单位阶跃响应对比：HOFA，PID，SO(3)}
+    \caption{x轴位置单位阶跃响应对比}
     \label{matlab_阶跃}
 \end{figure}
 
@@ -119,6 +122,7 @@ $$x_d = \begin{matrix}[5\sin(\frac{t}{2}), & 5\cos(\frac{t}{2})\sin(\frac{t}{2})
 
 \begin{table}[h]
   \centering
+  \caption{单位阶跃响应性能对比}
   \begin{tabular}{cccc}
       \toprule
       & HOFA & PID & SO(3) \\
@@ -127,7 +131,7 @@ $$x_d = \begin{matrix}[5\sin(\frac{t}{2}), & 5\cos(\frac{t}{2})\sin(\frac{t}{2})
     调整时间（$\Delta = 5\%$） & 1.940s & 2.005s &2.145s \\
       \bottomrule
   \end{tabular}
-  \caption{单位阶跃响应性能对比}
+
   \label{matlab阶跃对比}
 \end{table}
 由表\ref{matlab阶跃对比}可知，HOFA的收敛速度要略微优于PID和SO(3)。
@@ -141,16 +145,19 @@ $$x_d = \begin{matrix}[5\sin(\frac{t}{2}), & 5\cos(\frac{t}{2})\sin(\frac{t}{2})
   \begin{minipage}[t]{0.33\textwidth}
     \centering
     \raisebox{-\height}{\includegraphics[width=\linewidth]{hofa_t.png}}
+    \caption*{(a) HOFA}
   \end{minipage}\hfill
   \begin{minipage}[t]{0.33\textwidth}
     \centering
     \raisebox{-\height}{\includegraphics[width=\linewidth]{px4_t.png}}
+    \caption*{(b) PID}
   \end{minipage}\hfill
   \begin{minipage}[t]{0.33\textwidth}
     \centering
     \raisebox{-\height}{\includegraphics[width=\linewidth]{so3_t.png}}
+    \caption*{(c) SO(3)}
   \end{minipage}
-  \caption{x轴位置单位斜坡响应对比：HOFA，PID，SO(3)}
+  \caption{x轴位置单位斜坡响应对比}
   \label{matlab_t}
 \end{figure}
 
@@ -158,6 +165,7 @@ $$x_d = \begin{matrix}[5\sin(\frac{t}{2}), & 5\cos(\frac{t}{2})\sin(\frac{t}{2})
 
 \begin{table}[h]
   \centering
+  \caption{单位斜坡响应性能对比}
   \begin{tabular}{cccc}
       \toprule
       & HOFA & PID & SO(3) \\
@@ -169,31 +177,35 @@ $$x_d = \begin{matrix}[5\sin(\frac{t}{2}), & 5\cos(\frac{t}{2})\sin(\frac{t}{2})
     速度调整时间（$\Delta = 5\%$） & 1.67s &2.815s  & 2.09s\\
       \bottomrule
   \end{tabular}
-  \caption{单位斜坡响应性能对比}
+
   \label{matlab斜坡对比}
 \end{table}
 
 \textbf{综合测试}
 
 
-  输入“8”字型轨迹测试控制器的综合性能，得到结果如图\ref{matlab_3d}。可以看出，三种控制方法都能较好地跟上期望轨迹，其中PID在开头处的偏差较大，HOFA和SO(3)在三维轨迹图中难以用肉眼分辨性能的高下。
+  输入“8”字型轨迹测试控制器的综合性能，得到结果如图\ref{matlab_3d}。可以看出，三种控制方法都能较好地跟上期望轨迹，其中PID仅在开头处的偏差较大，HOFA和SO(3)在三维轨迹图中难以用肉眼分辨性能的高下。
 
+  \newpage
   
   \begin{figure}[h]
       \centering
       \begin{minipage}[t]{0.33\textwidth}
         \centering
         \raisebox{-\height}{\includegraphics[width=\linewidth]{hofa_3d.png}}
+        \caption*{(a) HOFA}
       \end{minipage}\hfill
       \begin{minipage}[t]{0.33\textwidth}
         \centering
         \raisebox{-\height}{\includegraphics[width=\linewidth]{px4_3d.png}}
+        \caption*{(b) PID}
       \end{minipage}\hfill
       \begin{minipage}[t]{0.33\textwidth}
         \centering
         \raisebox{-\height}{\includegraphics[width=\linewidth]{so3_3d.png}}
+        \caption*{(c) SO(3)}
       \end{minipage}
-      \caption{三维轨迹跟踪效果对比：HOFA，PID，SO(3)}
+      \caption{三维轨迹跟踪效果对比}
       \label{matlab_3d}
   \end{figure}
  
@@ -204,16 +216,19 @@ $$x_d = \begin{matrix}[5\sin(\frac{t}{2}), & 5\cos(\frac{t}{2})\sin(\frac{t}{2})
     \begin{minipage}[t]{0.33\textwidth}
       \centering
       \raisebox{-\height}{\includegraphics[width=\linewidth]{hofa_x.png}}
+      \caption*{(a) HOFA}
     \end{minipage}\hfill
     \begin{minipage}[t]{0.33\textwidth}
       \centering
       \raisebox{-\height}{\includegraphics[width=\linewidth]{px4_x.png}}
+      \caption*{(b) PID}
     \end{minipage}\hfill
     \begin{minipage}[t]{0.33\textwidth}
       \centering
       \raisebox{-\height}{\includegraphics[width=\linewidth]{so3_x.png}}
+      \caption*{(c) SO(3)}
     \end{minipage}
-    \caption{三轴位置跟踪效果对比：HOFA，PID，SO(3)}
+    \caption{三轴位置跟踪效果对比}
     \label{matlab_x}
 \end{figure}
 
@@ -222,16 +237,19 @@ $$x_d = \begin{matrix}[5\sin(\frac{t}{2}), & 5\cos(\frac{t}{2})\sin(\frac{t}{2})
   \begin{minipage}[t]{0.33\textwidth}
     \centering
     \raisebox{-\height}{\includegraphics[width=\linewidth]{hofa_rad.png}}
+    \caption*{(a) HOFA}
   \end{minipage}\hfill
   \begin{minipage}[t]{0.33\textwidth}
     \centering
     \raisebox{-\height}{\includegraphics[width=\linewidth]{px4_angle.png}}
+    \caption*{(b) PID}
   \end{minipage}\hfill
   \begin{minipage}[t]{0.33\textwidth}
     \centering
     \raisebox{-\height}{\includegraphics[width=\linewidth]{so3_angle.png}}
+    \caption*{(c) SO(3)}
   \end{minipage}
-  \caption{三轴姿态角跟踪效果对比：HOFA，PID，SO(3)}
+  \caption{三轴姿态角跟踪效果对比}
   \label{matlab_angle}
 \end{figure}
 
@@ -246,6 +264,7 @@ $$x_d = \begin{matrix}[5\sin(\frac{t}{2}), & 5\cos(\frac{t}{2})\sin(\frac{t}{2})
   \end{bmatrix}$$
   \begin{table}[h]
     \centering
+    \caption{HOFA方法与对照组的平均误差对比}
     \begin{tabular}{cccc}
         \toprule
         & 平均距离误差：$e_d$ (m)& 平均角度误差：$e_{angle}(Rad)$  & 最优控制指标：$J$ \\
@@ -255,7 +274,7 @@ $$x_d = \begin{matrix}[5\sin(\frac{t}{2}), & 5\cos(\frac{t}{2})\sin(\frac{t}{2})
         SO(3) &0.0408  &0.0143 &50277 \\
         \bottomrule
     \end{tabular}
-    \caption{HOFA方法与对照组的平均误差对比}
+
     \label{matlab对比}
 \end{table}
 
@@ -267,16 +286,19 @@ $$x_d = \begin{matrix}[5\sin(\frac{t}{2}), & 5\cos(\frac{t}{2})\sin(\frac{t}{2})
   \begin{minipage}[t]{0.33\textwidth}
     \centering
     \raisebox{-\height}{\includegraphics[width=\linewidth]{hofa_fM.png}}
+    \caption*{(a) HOFA}
   \end{minipage}\hfill
   \begin{minipage}[t]{0.33\textwidth}
     \centering
     \raisebox{-\height}{\includegraphics[width=\linewidth]{px4_fM.png}}
+    \caption*{(b) PID}
   \end{minipage}\hfill
   \begin{minipage}[t]{0.33\textwidth}
     \centering
     \raisebox{-\height}{\includegraphics[width=\linewidth]{so3_fM.png}}
+    \caption*{(c) SO(3)}
   \end{minipage}
-  \caption{期望拉力与力矩对比：HOFA，PID，SO(3)}
+  \caption{期望拉力与力矩对比}
   \label{matlab_fM}
 \end{figure}
 
@@ -300,3 +322,18 @@ $$x_d = \begin{matrix}[5\sin(\frac{t}{2}), & 5\cos(\frac{t}{2})\sin(\frac{t}{2})
 % \end{figure}
 
 % %%
+\section{力矩组分分析}
+姿态环的输出的期望力矩由三部分组成，前两项可以视作前馈补偿，第三项可以视作反馈。除$wJw$外，都含有期望角速度，这会在外部输入出现不连续时带来冲击，$A_d$甚至含有期望角加速度，冲击更为剧烈。三部分均含有角速度，Matlab阶段较为理想，但在实机实验中角速度受电机振动影响，很容易出现高频的剧烈抖动，这也会带来不良影响，因此要降低角速度的反馈权重。
+$$M=-B^{-1}(R_d,R) A_d(R_d,\omega_d,\dot \omega_d,R,\omega)+\omega \times J\omega +B^{-1}(R_d,R)M^*(R_d,\omega_d,R,\omega)$$
+
+Matlab中虽然无法模拟角速度的高频抖动，但是能体现外部位置阶跃输入带来的期望角速度冲击给期望力矩计算带来的影响，如图\ref{fig:com}所示。在位置阶跃输入时，确实给$A_d$和$M^*$部分带来了冲击。在角速度很小的情况下，第二部分的数值几乎可以忽略。在大部分情况下，反馈项和整体的趋势相同，或者说反馈项主导了整体的走势。$A_d$和整体的吻合程度略低一些，$wJw$的走势则几乎与整体无关。
+
+\begin{figure}[!h]
+  \centering
+  \includegraphics[width=0.65\textwidth]{component.png}
+  \caption{姿态环输出期望力矩组成}
+  \label{fig:com}
+\end{figure}
+
+\section{本章小结}
+本章介绍了在Matlab中的实验设计，将HOFA与经典的控制方法对比并根据实验数据展开分析。在单位阶跃和单位斜坡信号的输入下，HOFA具有更快的收敛速度和追踪性能。在“8”字型轨迹的综合测试下，HOFA具有更高的跟踪精度，并且在优化指标上，验证了LQR的最优性能。总而言之，在较为接近理想化模型的Matlab仿真中，HOFA展现出了相较于PID和SO(3)两种经典控制方法的优势。

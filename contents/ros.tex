@@ -6,7 +6,7 @@
 
 硬件在环仿真（HITL，hardware in the loop），将上一阶段修改后的PX4固件烧写到pixhawk飞控板中，使得控制器从仿真变为实物（也是后续实机实验的真实控制器）。接入gazebo仿真环境，验证固件在飞控板的nuttx实时操作系统中能否正常运行。但需要说明的是，HITL并不支持接入ROS，那么也就不能进行offboard控制，这一步只能通过仿真动画做定性验证。
 
-offboard轨迹跟踪实验在软件在环仿真下进行，通过offboard控制程序向无人机发布一连串的期待位置，与PX4原生固件对比控制效果。
+Offboard轨迹跟踪实验在软件在环仿真下进行，通过offboard控制程序向无人机发布一连串的期待位置，与PX4原生固件对比控制效果。
 
 ROS框架下的仿真实验，控制器和被控对象都会更贴近现实，会有来自传感器的噪声等影响，控制器的控制周期也不再是Matlab中理想的同步固定周期，而是要依赖多个异步异周期的反馈信号，还会受到计算速度波动的影响。
 
@@ -14,7 +14,7 @@ ROS框架下的仿真实验，控制器和被控对象都会更贴近现实，�
 Matlab仿真只是初步验证了HOFA方法的有效性，既没有考虑实际的飞控固件中异步的采样周期、进程管理等因素，也没有考虑内部和外部传感器信息融合的因素。而在ROS+gazebo下的软件在环仿真会考虑以上因素，进一步贴近实际情况。
 
 \subsection{环境配置}
-由于当前ros2适配的各种依赖库包括PX4的版本都还在不停迭代，因此目前还是选择更为稳定、资料更多的ros1。在ubuntu20.04中安装ros1 noetic以及配套的gazebo11 classic（使用鱼香ros一键安装\cite{fishros}时会同步安装），然后从GitHub上clone最近的发行版PX4 v1.14.0，注意要使用递归将所有子项目克隆下来。
+由于当前ROS2适配的各种依赖库包括PX4的版本都还在不停迭代，因此目前还是选择更为稳定、资料更多的ROS1。在ubuntu20.04中安装ROS1 noetic以及配套的gazebo11 classic（使用鱼香ROS一键安装\cite{fishros}时会同步安装），然后从GitHub上clone最近的发行版PX4 v1.14.0，注意要使用递归将所有子项目克隆下来。
 \begin{lstlisting}[language=Bash, basicstyle=\footnotesize, linewidth=\linewidth]
   git clone -b v1.14.0 https://github.com/PX4/PX4-Autopilot.git --recursive
 \end{lstlisting}
@@ -71,7 +71,7 @@ Matlab仿真只是初步验证了HOFA方法的有效性，既没有考虑实际�
  
 由于SDF文件的特殊性，不建议修改iris模型参数去匹配控制器中的设定，而是修改控制算法中的参数来匹配iris模型。HOFA算法对于转动惯量参数有一定鲁棒性，但如果有数量级的差距还是会导致严重问题。
 
-其实到此为止只完成了gazebo下的仿真，并没有接入ros的框架，也就无法使用rostopic等命令进行进一步调试。接入ros框架还需要运行以下命令：
+其实到此为止只完成了gazebo下的仿真，并没有接入ROS的框架，也就无法使用rostopic等命令进行进一步调试。接入ROS框架还需要运行以下命令：
 
 \begin{lstlisting}[language=Bash, basicstyle=\footnotesize, linewidth=\linewidth, breaklines=true]
   sudo apt-get install ros-noetic-mavros ros-noetic-mavros-extras
@@ -93,7 +93,7 @@ Matlab仿真只是初步验证了HOFA方法的有效性，既没有考虑实际�
   roslaunch px4 mavros_posix_sitl.launch
 \end{lstlisting}
 
-在每一次打开新终端后都需要执行：配置ros环境变量使roslaunch能找到PX4包内的文件；launch文件中包含了仿真的各种可调节参数，包括gazebo环境和初始位置等。
+在每一次打开新终端后都需要执行：配置ROS环境变量使roslaunch能找到PX4包内的文件；launch文件中包含了仿真的各种可调节参数，包括gazebo环境和初始位置等。
 
 运行后可以用rqt\_graph命令看到节点和消息，如图\ref{sitlrqt}所示。mavros将整个飞控虚拟化为一个节点，我们可以通过mavlink stream命令修改imu等数据发布的频率。但是，这不是飞控内部的控制频率，仅仅是通过mavros向外部发送信息的频率。所以，无法直接用该命令改变控制周期。
 \begin{figure}[!h]
@@ -246,51 +246,188 @@ Offboard包配置完成，后续无论是SITL、HITL还是实机实验，只要�
   rosrun offboard_run offboard_run_node
 \end{lstlisting}
 
+\section{实验结果分析}
+用HOFA和PX4运行相同的Offboard控制程序，对比轨迹跟踪的效果。
 轨迹跟踪的控制效果可以从飞行日志记录的原始数据中得到。通过QGC下载.ulog文件，有多种方式可以直接可视化地查看飞行数据，如在线的Flight Review、本地的PlotJuggler等，都能直观快捷地看到大量数据曲线。
 
-为了能够定量地分析轨迹跟踪的效果，用ulog2csv命令将飞行日志转成csv文件，提取其中位置和期望位置的文件，在Matlab中绘图和分析。
+为了能够定量地分析轨迹跟踪的效果，用ulog2csv命令将飞行日志转成csv文件，提取其中位置、姿态、角速度和期望力矩的文件，在Matlab中绘图和分析。
 
-\begin{figure}[htb]
+\begin{figure}[H]
   \centering
   \begin{minipage}[b]{0.49\linewidth}
       \includegraphics[width=\linewidth]{sitl_px4_3d.png}
-      \caption{SITL下PX4三维轨迹跟踪效果}
+      \caption*{PX4}
   \end{minipage}
   \hfill % 在图片之间添加一些空间
   \begin{minipage}[b]{0.49\linewidth}
       \includegraphics[width=\linewidth]{sitl_hofa_3d.png}
-      \caption{SITL下HOFA三维轨迹跟踪效果}
+      \caption*{HOFA}
   \end{minipage}
+  \caption{SITL三维轨迹跟踪效果对比}
+\end{figure}
 
-  %\vspace{1cm} % 在行之间添加一些垂直空间
+\newpage
 
+
+  \begin{figure}[H]
+    \centering
   \begin{minipage}[b]{0.49\linewidth}
-      \includegraphics[width=\linewidth]{sitl_px4_xyzyaw.png}
-      \caption{SITL下PX4各轴跟踪效果}
+      \includegraphics[width=\linewidth]{sitl_px4_xyz.png}
+      \caption*{PX4}
   \end{minipage}
   \hfill
   \begin{minipage}[b]{0.49\linewidth}
-      \includegraphics[width=\linewidth]{sitl_hofa_xyzyaw.png}
-      \caption{SITL下HOFA各轴跟踪效果}
+      \includegraphics[width=\linewidth]{sitl_hofa_xyz.png}
+      \caption*{HOFA}
   \end{minipage}
+  \caption{SITL位置跟踪效果对比}
 \end{figure}
 
-两者都能很好地跟踪“8”字型轨迹，对跟踪误差定量分析，计算每个时刻位置和期望位置的欧拉距离得到曲线如图\ref{sitl量化}、图\ref{sitl量化hofa}。
-
-\begin{figure}[htb]
+\begin{figure}[H]
   \centering
-  \begin{minipage}[b]{0.49\linewidth}
-    \includegraphics[width=\linewidth]{sitl_px4_e.png}
-    \caption{SITL下PX4量化跟踪误差}
-    \label{sitl量化}
+\begin{minipage}[b]{0.49\linewidth}
+    \includegraphics[width=\linewidth]{sitl_px4_R.png}
+    \caption*{PX4}
 \end{minipage}
 \hfill
 \begin{minipage}[b]{0.49\linewidth}
-    \includegraphics[width=\linewidth]{sitl_hofa_e.png}
-    \caption{SITL下HOFA量化跟踪误差}
-    \label{sitl量化hofa}
+    \includegraphics[width=\linewidth]{sitl_hofa_R.png}
+    \caption*{HOFA}
 \end{minipage}
-
+\caption{SITL姿态跟踪效果}
 \end{figure}
 
-从图\ref{sitl量化}、图\ref{sitl量化hofa}中标注的平均误差来看，在位置跟踪上HOFA略微优于PX4，两者的成绩都相当优秀，这从轨迹的形态上也可以看出。两者偏差都达到$0.32m$的原因在于偏差的计算方法是同一个时刻的位置和期望位置作差，而在速度不可以忽略的情况下，期望位置必然有相当的领先。在偏航角的控制上HOFA虽然不如PX4，但$0.0207 Rad$也是相当小的偏差。这是因为，在控制设计时就没有把偏航角作为主要的被控量，在LQR的参数选取上，偏航模态的权重要远小于滚转和俯仰。
+\begin{figure}[H]
+  \centering
+\begin{minipage}[b]{0.49\linewidth}
+    \includegraphics[width=\linewidth]{sitl_px4_w.png}
+    \caption{PX4}
+\end{minipage}
+\hfill
+\begin{minipage}[b]{0.49\linewidth}
+    \includegraphics[width=\linewidth]{sitl_hofa_w.png}
+    \caption*{HOFA}
+\end{minipage}
+\caption{SITL角速度曲线}
+\end{figure}
+
+
+\begin{figure}[H]
+  \centering
+\begin{minipage}[b]{0.49\linewidth}
+    \includegraphics[width=\linewidth]{sitl_px4_M.png}
+    \caption*{PX4}
+\end{minipage}
+\hfill
+\begin{minipage}[b]{0.49\linewidth}
+    \includegraphics[width=\linewidth]{sitl_hofa_M.png}
+    \caption*{HOFA}
+\end{minipage}
+\caption{SITL期望力矩曲线}
+\end{figure}
+
+HOFA在SITL中远远不如PX4，这与Matlab仿真中的结果完全颠倒。对比两者的不同，从变量来源方面看，两者都用到反馈信号$x,v,R,w$，因此可以排除传感器噪声影响；从期望变量方面来看，$x_d,v_d,R_d$的生成方式也完全相同，不同的点就在于$\omega_d,\dot \omega_d$的生成方式，是否会产生冲击。从期望姿态来看。期望角速度不至于产生冲击，但其二阶导期望角加速度则有可能进一步放大噪声。另一种可能则是，HOFA的前馈项中含有角速度和期望角速度的二次项，这也有可能使延迟和噪声带来的不利影响放大。
+
+
+
+\textbf{HOFA工程改进}
+
+根据上述分析，对HOFA做两种工程上的改进：一，将角加速度置零；二，仅保留反馈项$M^*$。
+
+
+\begin{figure}[H]
+  \centering
+  \begin{minipage}[b]{0.49\linewidth}
+      \includegraphics[width=\linewidth]{sitl_hofadwd_3d.png}
+      \caption*{$\dot \omega_d =0$}
+  \end{minipage}
+  \hfill % 在图片之间添加一些空间
+  \begin{minipage}[b]{0.49\linewidth}
+      \includegraphics[width=\linewidth]{sitl_hofa0_3d.png}
+      \caption*{$M^*$}
+  \end{minipage}
+  \caption{SITL三维轨迹跟踪效果对比:HOFA改进}
+\end{figure}
+
+
+
+  \begin{figure}[H]
+    \centering
+  \begin{minipage}[b]{0.49\linewidth}
+      \includegraphics[width=\linewidth]{sitl_hofadwd_xyz.png}
+      \caption*{$\dot \omega_d =0$}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[b]{0.49\linewidth}
+      \includegraphics[width=\linewidth]{sitl_hofa0_xyz.png}
+      \caption*{$M^*$}
+  \end{minipage}
+  \caption{SITL位置跟踪效果对比:HOFA改进}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+\begin{minipage}[b]{0.49\linewidth}
+    \includegraphics[width=\linewidth]{sitl_hofadwd_R.png}
+    \caption*{$\dot \omega_d =0$}
+\end{minipage}
+\hfill
+\begin{minipage}[b]{0.49\linewidth}
+    \includegraphics[width=\linewidth]{sitl_hofa0_R.png}
+    \caption*{$M^*$}
+\end{minipage}
+\caption{SITL姿态跟踪效果:HOFA改进}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+\begin{minipage}[b]{0.49\linewidth}
+    \includegraphics[width=\linewidth]{sitl_hofadwd_w.png}
+    \caption*{$\dot \omega_d =0$}
+\end{minipage}
+\hfill
+\begin{minipage}[b]{0.49\linewidth}
+    \includegraphics[width=\linewidth]{sitl_hofa0_w.png}
+    \caption*{$M^*$}
+\end{minipage}
+\caption{SITL角速度曲线:HOFA改进}
+\end{figure}
+
+
+\begin{figure}[H]
+  \centering
+\begin{minipage}[b]{0.49\linewidth}
+    \includegraphics[width=\linewidth]{sitl_hofadwd_M.png}
+    \caption*{$\dot \omega_d =0$}
+\end{minipage}
+\hfill
+\begin{minipage}[b]{0.49\linewidth}
+    \includegraphics[width=\linewidth]{sitl_hofa0_M.png}
+    \caption*{$M^*$}
+\end{minipage}
+\caption{SITL期望力矩曲线:HOFA改进}
+\end{figure}
+
+两种改进方法都带来了立竿见影的效果，无论是位置跟踪还是姿态跟踪都获得了极大改善，为了量化地比较以上四种方法的控制效果，定义：
+$$e_d=\frac{\sum_0^{T}||x-x_d||}{T} \quad e_{angle}=\frac{\sum_0^{T}|\phi-\phi_d+\theta-\theta_d+\psi-\psi_d|}{T}$$
+
+\begin{table}[H]
+  \centering
+  \caption{HOFA及其改进型与PX4的平均误差对比}
+  \label{HOFA改}
+  \begin{tabular}{ccc}
+      \toprule
+      & 平均距离误差：$e_d$ (m)& 平均角度误差：$e_{angle}(Rad)$  \\
+      \midrule
+      HOFA &0.5406  & 0.1731\\
+      PX4 & 0.3130 &  0.0037\\
+      HOFA $\dot \omega_d=0$ & 0.3271 & 0.0185\\
+      HOFA $M^*$ &0.3206  & 0.0183\\
+      \bottomrule
+  \end{tabular}
+\end{table}
+表\ref{HOFA改}的结果说明，两种HOFA改进型的效果极其接近，表明使得HOFA在SITL中表现劣化的主要原因在于角加速度项，但其他前馈项也并没有起到正面作用，只是负面效果较小，几乎可以忽略。HOFA的改型在控制效果上仍然逊色于PX4，位置环的差距不大，但姿态环的差距明显。尤其是$HOFA M^*$，已经去除了所有的前馈项，与PX4可以说只是姿态偏差的计算方法不同，但仍然存在较大差异。最大的可能性是我在固件代码改写时，拖慢了姿态环和角速度环的控制频率，这是后续在进程管理上需要优化的地方。
+\newpage
+
+\section{本章小结}
+本章节搭建了SITL、HITL和Offboard控制的环境，并且在SITL中对HOFA和PX4进行了轨迹跟踪效果的对比。分析了HOFA性能劣化的原因后进行了两种工程改良，取得了良好的进步，并且对下一步的优化方向进行了讨论。
