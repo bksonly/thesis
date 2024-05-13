@@ -1,8 +1,17 @@
 % !TeX root = ../main.tex
-\chapter{ROS下的半实物仿真}
-ROS（robot operating system）框架下的仿真实验，控制器和被控对象都会更贴近现实，硬件在环阶段的控制器就是实机实验中真实的飞控。这部分实验分为软件在环仿真和硬件在环仿真：前者是基于PX4固件，修改其运动控制部分的代码，在ROS+gazebo中进行软件在环仿真（SITL，software in the loop），并运行offboard控制程序，与PX4对比轨迹跟踪效果；后者将修改后的PX4固件烧写到pixhawk飞控板中，进行硬件在环仿真（HITL，hardware in the loop），这个版本的固件可以直接用于后续的实机实验。
+\chapter{ROS与半实物仿真}
+本章分为ROS（robot operating system）下的软件在环仿真、半实物的硬件在环仿真以及软件在环仿真下的offboard轨迹跟踪对比实验。
+
+软件在环仿真（SITL，software in the loop），软件是基于PX4固件改动其运动控制部分的代码后编译而来的。仿真在ROS+gazebo环境中进行，支持运行offboard控制程序，使无人机跟踪指定轨迹。
+
+硬件在环仿真（HITL，hardware in the loop），将上一阶段修改后的PX4固件烧写到pixhawk飞控板中，使得控制器从仿真变为实物（也是后续实机实验的真实控制器）。接入gazebo仿真环境，验证固件在飞控板的nuttx实时操作系统中能否正常运行。但需要说明的是，HITL并不支持接入ROS，那么也就不能进行offboard控制，这一步只能通过仿真动画做定性验证。
+
+offboard轨迹跟踪实验在软件在环仿真下进行，通过offboard控制程序向无人机发布一连串的期待位置，与PX4原生固件对比控制效果。
+
+ROS框架下的仿真实验，控制器和被控对象都会更贴近现实，会有来自传感器的噪声等影响，控制器的控制周期也不再是Matlab中理想的同步固定周期，而是要依赖多个异步异周期的反馈信号，还会受到计算速度波动的影响。
+
 \section{软件在环仿真}
-Matlab仿真只是初步验证了HOFA方法的有效性，既没有考虑实际的飞控固件中异步的采样周期、进程管理等因素，也没有考虑内部和外部传感器信息融合的因素。而在ros+gazebo下的软件在环仿真会考虑以上因素，进一步贴近实际情况。
+Matlab仿真只是初步验证了HOFA方法的有效性，既没有考虑实际的飞控固件中异步的采样周期、进程管理等因素，也没有考虑内部和外部传感器信息融合的因素。而在ROS+gazebo下的软件在环仿真会考虑以上因素，进一步贴近实际情况。
 
 \subsection{环境配置}
 由于当前ros2适配的各种依赖库包括PX4的版本都还在不停迭代，因此目前还是选择更为稳定、资料更多的ros1。在ubuntu20.04中安装ros1 noetic以及配套的gazebo11 classic（使用鱼香ros一键安装\cite{fishros}时会同步安装），然后从GitHub上clone最近的发行版PX4 v1.14.0，注意要使用递归将所有子项目克隆下来。
@@ -144,7 +153,7 @@ PX4的多旋翼姿态环控制分别在mc\_att\_control和mc\_rate\_control两�
 
 用修改过的这五个文件替换先前环境配置环节中编译完成的包中对应的文件（由于用于修改的代码文件下载时没有递归下载子项目，无法直接编译，且在原本已经过编译的文件夹上修改会更稳妥），再运行make px4\_sitl\_default gazebo命令即可，效果与图\ref{sitl} 基本相同。两种控制方法的定量对比会在实机实验时展开，此处只是粗略验证可行性。
 
-\subsection{硬件在环仿真}
+\section{硬件在环仿真}
 硬件在环仿真的主要目的在于，在gazebo仿真环境中初步测试生成的固件代码，防止直接进行实机实验可能出现的破坏性故障。硬件在环仿真也要首先配置环境，用PX4的发行版跑通流程；然后向飞控刷入植入HOFA的固件，进行硬件在环仿真。
 
 \textbf{环境配置}
@@ -202,7 +211,7 @@ Tools/simulation/gazebo-classic/sitl\_gazebo-classic/models/iris\_hitl/iris\_hit
 
 在PX4中，Offboard控制模式是一种允许无人机通过外部计算设备进行控制的飞行模式，而非常规的遥控器。在Offboard模式下，无人机的所有飞行控制决策（如起飞、降落、航向、速度和姿态调整）可以通过MAVLink协议从外部计算设备发送指令来实现。因而，可以在Offboard模式下任意指定无人机要跟踪的轨迹。
 
-由于上述的SITL和HITL都是在ros框架下，只需要编写一个Offboard控制的软件包即可通过mavros发布位置指令。
+由于SITL是在ROS框架下，只需要编写一个Offboard控制的软件包即可通过mavros发布位置指令。
 
 \begin{lstlisting}[language=Bash, basicstyle=\footnotesize, linewidth=\linewidth, breaklines=true]
   mkdir -p offboard_ws/src

@@ -1,6 +1,6 @@
 % !TeX root = ../main.tex
 \chapter{Matlab仿真实验}
-仿真实验分为两部分，Matlab和Ros。Matlab中的模型更接近于理想，而Ros中的模型和控制器更接近于实际。Matlab中基于s-function和simulink的仿真，主要是为了在理论层面验证控制算法的性能。在这一章中，我们将与经典的SO(3)控制和PX4中的PID控制对比，说明HOFA方法的优越性。
+仿真实验分为两部分，Matlab和ROS。Matlab中的模型更接近于理想，而Ros中的模型和控制器更接近于实际。Matlab中基于s-function和simulink的仿真，主要是为了在理论层面验证控制算法的性能。在这一章中，我们将与经典的SO(3)控制和PX4中的四环PID控制（后简称PID）对比，说明HOFA方法的优越性。
 
 
 
@@ -23,7 +23,7 @@ $$x_d = \begin{matrix}[5\sin(\frac{t}{2}), & 5\cos(\frac{t}{2})\sin(\frac{t}{2})
 
 为了全面体现控制算法的跟踪性能，我们并没有对轨迹做特殊的平滑处理，轨迹的导数存在间断点使得高阶导数无穷大，这可以考验无人机在现实中的抗扰性能。为了模拟起飞和悬停，第一秒内轨迹保持在原点不动，否则仿真就会等同在空中释放电机无转速的无人机。
 
-\textbf{模型架构}
+\textbf{被控对象}
 
   无人机的刚体动力学部分由simulink中自带的“6DOF block”解决，避免了$SO(3)$群差分近似后单位化的困难。该模块会对外部输入的力和力矩做出反应，返回所需的速度、位置、姿态、角速度等信息。
 
@@ -84,29 +84,33 @@ $$x_d = \begin{matrix}[5\sin(\frac{t}{2}), & 5\cos(\frac{t}{2})\sin(\frac{t}{2})
   $$x(0)=[0,0,0],\quad v(0)=[0,0,0]$$
   $$R(0)=I , \quad \omega(0)=[0,0,0]$$
 
+  \textbf{限幅}
+
+  期望值的传递链路是$x_d \to v_d \to R_d \to \omega_d \to \alpha_d$。在这条链路中，除了$ v_d \to R_d$的传递，其他三次都会带来微分，会放大上一环节的噪声。如果放任冲击信号进入控制器，会对系统造成不良影响，因此需要做相应的限幅。但因为期望拉力最大不过接近水平，所以$R_d$这一环节本身就带有限幅，在Matlab仿真中就不做额外限幅以获得更激进的控制效果，同时也能更好地测试姿态环的鲁棒性。
+
   \section{实验结果与分析}
 
-  按照上述参数，在Matlab中用0.005s的控制周期分别运行HOFA、PX4和SO(3)控制。输入典型的阶跃和斜坡信号对比其控制性能，由于俯仰与滚转对称，仅选择俯仰模态（x轴）进行实验。
+  按照上述参数，在Matlab中用0.005s的控制周期分别运行HOFA、PID和SO(3)控制。输入典型的阶跃和斜坡信号对比其控制性能，由于俯仰与滚转对称，仅选择俯仰模态（x轴）进行实验。
 
   \textbf{单位阶跃输入}
 
-  在$t=1s$时对x轴输入单位阶跃信号，对比x轴位置、速度、角度和期望扭矩，如图\ref{matlab_阶跃}。由于另外两轴仅受到轻微的耦合影响，且不是研究对象，为精简篇幅，不在此罗列实验数据。
+  在$t=1s$时对x轴输入单位阶跃信号，对比x轴位置、速度、角度、角速度和期望扭矩，如图\ref{matlab_阶跃}。由于另外两轴仅受到轻微的耦合影响，且不是研究对象，为精简篇幅，不在此罗列实验数据。
 
   \begin{figure}[h]
     \centering
     \begin{minipage}[t]{0.33\textwidth}
       \centering
-      \raisebox{-\height}{\includegraphics[width=\linewidth]{hofa_阶跃.png}}
+      \raisebox{-\height}{\includegraphics[width=\linewidth]{hofa_1.png}}
     \end{minipage}\hfill
     \begin{minipage}[t]{0.33\textwidth}
       \centering
-      \raisebox{-\height}{\includegraphics[width=\linewidth]{px4_阶跃.png}}
+      \raisebox{-\height}{\includegraphics[width=\linewidth]{px4_1.png}}
     \end{minipage}\hfill
     \begin{minipage}[t]{0.33\textwidth}
       \centering
-      \raisebox{-\height}{\includegraphics[width=\linewidth]{so3_阶跃.png}}
+      \raisebox{-\height}{\includegraphics[width=\linewidth]{so3_1.png}}
     \end{minipage}
-    \caption{x轴位置单位阶跃响应对比：HOFA，PX4，SO(3)}
+    \caption{x轴位置单位阶跃响应对比：HOFA，PID，SO(3)}
     \label{matlab_阶跃}
 \end{figure}
 
@@ -117,22 +121,62 @@ $$x_d = \begin{matrix}[5\sin(\frac{t}{2}), & 5\cos(\frac{t}{2})\sin(\frac{t}{2})
   \centering
   \begin{tabular}{cccc}
       \toprule
-      & HOFA & PX4 & SO(3) \\
+      & HOFA & PID & SO(3) \\
       \midrule
     上升时间 & 1.585s & 1.810s & 1.775s\\
-    调整时间 & 1.940s & 2.005s &2.145s \\
+    调整时间（$\Delta = 5\%$） & 1.940s & 2.005s &2.145s \\
       \bottomrule
   \end{tabular}
   \caption{单位阶跃响应性能对比}
   \label{matlab阶跃对比}
 \end{table}
-由表\ref{matlab阶跃对比}可知，HOFA的收敛速度要略微优于PX4和SO(3)。
+由表\ref{matlab阶跃对比}可知，HOFA的收敛速度要略微优于PID和SO(3)。
 
 \textbf{单位斜坡输入}
 
+接下来向x轴输入单位斜坡信号，对比x轴位置、速度、角度、角速度和期望扭矩，如图\ref{matlab_t}。
+
+\begin{figure}[h]
+  \centering
+  \begin{minipage}[t]{0.33\textwidth}
+    \centering
+    \raisebox{-\height}{\includegraphics[width=\linewidth]{hofa_t.png}}
+  \end{minipage}\hfill
+  \begin{minipage}[t]{0.33\textwidth}
+    \centering
+    \raisebox{-\height}{\includegraphics[width=\linewidth]{px4_t.png}}
+  \end{minipage}\hfill
+  \begin{minipage}[t]{0.33\textwidth}
+    \centering
+    \raisebox{-\height}{\includegraphics[width=\linewidth]{so3_t.png}}
+  \end{minipage}
+  \caption{x轴位置单位斜坡响应对比：HOFA，PID，SO(3)}
+  \label{matlab_t}
+\end{figure}
+
+位置的斜坡输入给速度和姿态角带来了阶跃输入，对于HOFA和SO(3)这两种依赖姿态微分来产生期望角速度的控制器，就使期望角速度和期望力矩饱和，而PID在这一环节只用了比例反馈就相对温和。在匀速飞行阶段，三者的姿态和角速度都保持稳定，这是仿真环境中没有噪声才能做到的。由于位置跟踪的静态误差都是0，因此进一步比较速度曲线，如表\ref{matlab斜坡对比}。三者的速度响应曲线都是欠阻尼，PID的波动更大，当然这可能是参数选择的问题，更快的响应速度意味着更大的超调，反之亦然。HOFA的上升时间小于其他两种控制器，超调量则略微大于SO(3)。调整时间是最优，说明HOFA的非线性前馈补偿项还是给动态过程带来了不小的优化。
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{cccc}
+      \toprule
+      & HOFA & PID & SO(3) \\
+      \midrule
+    位置静态误差                  & 0    & 0 & 0 \\
+    速度上升时间                   & 0.37s & 0.385s &0.48s \\
+    速度峰值时间                  & 0.66s &0.70s  & 0.90s\\
+    速度最大超调量                & $32.0\%$ & $64.7\%$  & $23.7\%$\\
+    速度调整时间（$\Delta = 5\%$） & 1.67s &2.815s  & 2.09s\\
+      \bottomrule
+  \end{tabular}
+  \caption{单位斜坡响应性能对比}
+  \label{matlab斜坡对比}
+\end{table}
+
+\textbf{综合测试}
 
 
-  输入“8”字型轨迹测试控制器的综合性能，得到结果如图\ref{matlab_3d}。可以看出，三种控制方法都能较好地跟上期望轨迹，其中PX4在开头处的偏差较大，HOFA和SO(3)在三维轨迹图中难以用肉眼分辨性能的高下。
+  输入“8”字型轨迹测试控制器的综合性能，得到结果如图\ref{matlab_3d}。可以看出，三种控制方法都能较好地跟上期望轨迹，其中PID在开头处的偏差较大，HOFA和SO(3)在三维轨迹图中难以用肉眼分辨性能的高下。
 
   
   \begin{figure}[h]
@@ -149,7 +193,7 @@ $$x_d = \begin{matrix}[5\sin(\frac{t}{2}), & 5\cos(\frac{t}{2})\sin(\frac{t}{2})
         \centering
         \raisebox{-\height}{\includegraphics[width=\linewidth]{so3_3d.png}}
       \end{minipage}
-      \caption{三维轨迹跟踪效果对比：HOFA，PX4，SO(3)}
+      \caption{三维轨迹跟踪效果对比：HOFA，PID，SO(3)}
       \label{matlab_3d}
   \end{figure}
  
@@ -169,7 +213,7 @@ $$x_d = \begin{matrix}[5\sin(\frac{t}{2}), & 5\cos(\frac{t}{2})\sin(\frac{t}{2})
       \centering
       \raisebox{-\height}{\includegraphics[width=\linewidth]{so3_x.png}}
     \end{minipage}
-    \caption{三轴位置跟踪效果对比：HOFA，PX4，SO(3)}
+    \caption{三轴位置跟踪效果对比：HOFA，PID，SO(3)}
     \label{matlab_x}
 \end{figure}
 
@@ -187,7 +231,7 @@ $$x_d = \begin{matrix}[5\sin(\frac{t}{2}), & 5\cos(\frac{t}{2})\sin(\frac{t}{2})
     \centering
     \raisebox{-\height}{\includegraphics[width=\linewidth]{so3_angle.png}}
   \end{minipage}
-  \caption{三轴姿态角跟踪效果对比：HOFA，PX4，SO(3)}
+  \caption{三轴姿态角跟踪效果对比：HOFA，PID，SO(3)}
   \label{matlab_angle}
 \end{figure}
 
@@ -207,7 +251,7 @@ $$x_d = \begin{matrix}[5\sin(\frac{t}{2}), & 5\cos(\frac{t}{2})\sin(\frac{t}{2})
         & 平均距离误差：$e_d$ (m)& 平均角度误差：$e_{angle}(Rad)$  & 最优控制指标：$J$ \\
         \midrule
         HOFA & 0.0296 & 0.0051 &49731 \\
-        PX4 & 0.0710 & 0.0628 &54410 \\
+        PID & 0.0710 & 0.0628 &54410 \\
         SO(3) &0.0408  &0.0143 &50277 \\
         \bottomrule
     \end{tabular}
@@ -215,7 +259,7 @@ $$x_d = \begin{matrix}[5\sin(\frac{t}{2}), & 5\cos(\frac{t}{2})\sin(\frac{t}{2})
     \label{matlab对比}
 \end{table}
 
-从表\ref{matlab对比}中可以看到，HOFA相较于PX4和SO(3)均有不小的优势，尤其是在姿态控制上，HOFA能做到更高的跟踪精度。
+从表\ref{matlab对比}中可以看到，HOFA相较于PID和SO(3)均有不小的优势，尤其是在姿态控制上，HOFA能做到更高的跟踪精度。
 
 在实践中，执行器的能力存在上限，并且轨迹中的不连续点会引起微分冲击，因此在控制器中必然要做限幅处理以避免极端大的控制量对系统造成不良影响。而限幅的具体数值也要根据控制器的输出做调整。从图\ref{matlab_fM}可知，除了在开头的阶跃处，当飞行进入稳定阶段时，期望的力矩非常小，远远不会达到设定的上限。
 \begin{figure}[h]
@@ -232,23 +276,27 @@ $$x_d = \begin{matrix}[5\sin(\frac{t}{2}), & 5\cos(\frac{t}{2})\sin(\frac{t}{2})
     \centering
     \raisebox{-\height}{\includegraphics[width=\linewidth]{so3_fM.png}}
   \end{minipage}
-  \caption{期望拉力与力矩对比：HOFA，PX4，SO(3)}
+  \caption{期望拉力与力矩对比：HOFA，PID，SO(3)}
   \label{matlab_fM}
 \end{figure}
-\begin{figure}[h]
-  \centering
-  \begin{minipage}[t]{0.33\textwidth}
-    \centering
-    \raisebox{-\height}{\includegraphics[width=\linewidth]{hofa_f1234.png}}
-  \end{minipage}\hfill
-  \begin{minipage}[t]{0.33\textwidth}
-    \centering
-    \raisebox{-\height}{\includegraphics[width=\linewidth]{px4_f1234.png}}
-  \end{minipage}\hfill
-  \begin{minipage}[t]{0.33\textwidth}
-    \centering
-    \raisebox{-\height}{\includegraphics[width=\linewidth]{so3_f1234.png}}
-  \end{minipage}
-  \caption{电机期望拉力对比：HOFA，PX4，SO(3)}
-  \label{matlab_f1234}
-\end{figure}
+
+% %%
+% \begin{figure}[h]
+%   \centering
+%   \begin{minipage}[t]{0.33\textwidth}
+%     \centering
+%     \raisebox{-\height}{\includegraphics[width=\linewidth]{hofa_f1234.png}}
+%   \end{minipage}\hfill
+%   \begin{minipage}[t]{0.33\textwidth}
+%     \centering
+%     \raisebox{-\height}{\includegraphics[width=\linewidth]{px4_f1234.png}}
+%   \end{minipage}\hfill
+%   \begin{minipage}[t]{0.33\textwidth}
+%     \centering
+%     \raisebox{-\height}{\includegraphics[width=\linewidth]{so3_f1234.png}}
+%   \end{minipage}
+%   \caption{电机期望拉力对比：HOFA，PX4，SO(3)}
+%   \label{matlab_f1234}
+% \end{figure}
+
+% %%
