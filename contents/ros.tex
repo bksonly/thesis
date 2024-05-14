@@ -15,40 +15,46 @@ Matlab仿真只是初步验证了HOFA方法的有效性，既没有考虑实际�
 
 \subsection{环境配置}
 由于当前ROS2适配的各种依赖库包括PX4的版本都还在不停迭代，因此目前还是选择更为稳定、资料更多的ROS1。在ubuntu20.04中安装ROS1 noetic以及配套的gazebo11 classic（使用鱼香ROS一键安装\cite{fishros}时会同步安装），然后从GitHub上clone最近的发行版PX4 v1.14.0，注意要使用递归将所有子项目克隆下来。
-\begin{lstlisting}[language=Bash, basicstyle=\footnotesize, linewidth=\linewidth]
+\begin{codeblock}[language=C]
   git clone -b v1.14.0 https://github.com/PX4/PX4-Autopilot.git --recursive
-\end{lstlisting}
+\end{codeblock}
+
+
 
 然后运行以下命令以解决依赖。
 
-\begin{lstlisting}[language=Bash, basicstyle=\footnotesize, linewidth=\linewidth]
+\begin{codeblock}[language=C]
   Bash Tools/setup/ubuntu.sh
-\end{lstlisting}
+\end{codeblock}
+
 
 最后运行软件在环仿真命令：
 
-\begin{lstlisting}[language=Bash, basicstyle=\footnotesize, linewidth=\linewidth]
+\begin{codeblock}[language=C]
   make px4_sitl gazebo-classic
-\end{lstlisting}
+\end{codeblock}
+
+
 
 运行成功后会进入gazebo仿真界面，打开QGC会自动连接地面站，在地面站中可以方便地看到回传的位姿信息并且发布起飞和指点飞行命令，如图 \ref{sitl}。在使用gazebo仿真时，需要安装显卡驱动，否则画面渲染将完全使用CPU，这会导致严重的卡顿。
 
 \begin{figure}[h]
   \centering
-     \begin{minipage}[c]{0.45\textwidth}
+     \begin{subfigure}[c]{0.45\textwidth}
       \centering
       \includegraphics[width=0.9\textwidth]{sitl1.png}
-   \end{minipage}%
-     \begin{minipage}[c]{0.45\textwidth}
+   \end{subfigure}%
+     \begin{subfigure}[c]{0.45\textwidth}
       \centering
       \includegraphics[width=0.9\textwidth]{sitl2.png}
-   \end{minipage}
+   \end{subfigure}
    \caption{SITL gazebo界面以及QGC指点控制}
    \label{sitl}
  \end{figure}
 
  这里默认使用的是内置的iris无人机模型，有关该模型的具体参数可以在源码\cite{iris}中查到:
- \begin{lstlisting}[language=Bash, basicstyle=\footnotesize, linewidth=\linewidth]
+
+ \begin{codeblock}[language=C]
   <inertial>
     <pose>0 0 0 0 0 0</pose>
     <mass>1.5</mass>
@@ -67,13 +73,13 @@ Matlab仿真只是初步验证了HOFA方法的有效性，既没有考虑实际�
 <box>
   <size>0.47 0.47 0.11</size>
 </box>
- \end{lstlisting}
+ \end{codeblock}
+
  
 由于SDF文件的特殊性，不建议修改iris模型参数去匹配控制器中的设定，而是修改控制算法中的参数来匹配iris模型。HOFA算法对于转动惯量参数有一定鲁棒性，但如果有数量级的差距还是会导致严重问题。
 
 其实到此为止只完成了gazebo下的仿真，并没有接入ROS的框架，也就无法使用rostopic等命令进行进一步调试。接入ROS框架还需要运行以下命令：
-
-\begin{lstlisting}[language=Bash, basicstyle=\footnotesize, linewidth=\linewidth, breaklines=true]
+\begin{codeblock}
   sudo apt-get install ros-noetic-mavros ros-noetic-mavros-extras
 
   wget https://raw.githubusercontent.com/mavlink/mavros/master/mavros/scripts/install_geographiclib_datasets.sh
@@ -81,17 +87,17 @@ Matlab仿真只是初步验证了HOFA方法的有效性，既没有考虑实际�
 
   cd PX4-Autopilot
   make px4_sitl_default gazebo
-\end{lstlisting}
+\end{codeblock}
 
 安装mavros包并运行官方的bash文件解决依赖；重新编译SITL固件（命令与gazebo中有细微差别，但生成的build文件名相同）。
-
-  \begin{lstlisting}[language=Bash, basicstyle=\footnotesize, linewidth=\linewidth, breaklines=true]
+\begin{codeblock}[language=C]
   source Tools/simulation/gazebo-classic/setup_gazebo.bash $(pwd) $(pwd)/build/px4_sitl_default
   export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:$(pwd)
   export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:$(pwd)/Tools/simulation/gazebo-classic/sitl_gazebo-classic
 
   roslaunch px4 mavros_posix_sitl.launch
-\end{lstlisting}
+\end{codeblock}
+
 
 在每一次打开新终端后都需要执行：配置ROS环境变量使roslaunch能找到PX4包内的文件；launch文件中包含了仿真的各种可调节参数，包括gazebo环境和初始位置等。
 
@@ -165,10 +171,12 @@ PX4的多旋翼姿态环控制分别在mc\_att\_control和mc\_rate\_control两�
 然后是在PX4\_Autopilot包内做软件上的配置\cite{px4hitl}：
 
 确保QGC关闭的情况下，编译并且不运行仿真固件：
-\begin{lstlisting}[language=Bash, basicstyle=\footnotesize, linewidth=\linewidth, breaklines=true]
+
+\begin{codeblock}[language=C]
   cd <Firmware_clone>
   DONT_RUN=1 make px4_sitl_default gazebo-classic
-\end{lstlisting}
+\end{codeblock}
+
 
 打开模型的sdf文件:
 
@@ -177,12 +185,12 @@ Tools/simulation/gazebo-classic/sitl\_gazebo-classic/models/iris\_hitl/iris\_hit
 找到文件的mavlink\_interface plugin分区，将 serialEnabled 和 hil\_mode 参数更改为 true。
 
 接下来是在每个新的终端中都要执行的命令：
-
-\begin{lstlisting}[language=Bash, basicstyle=\footnotesize, linewidth=\linewidth, breaklines=true]
+\begin{codeblock}[language=C]
   cd PX4_Autopilot
   source Tools/simulation/gazebo-classic/setup_gazebo.bash $(pwd) $(pwd)/build/px4_sitl_default
   gazebo Tools/simulation/gazebo-classic/sitl_gazebo-classic/worlds/hitl_iris.world
-\end{lstlisting}
+\end{codeblock}
+
 
 
 需要注意的是，在最后一步run gazebo时，飞控需要已经通过USB连在电脑上。然后打开QGC，即可进行起飞和指点飞行，如图\ref{hitl}所示。
@@ -198,12 +206,12 @@ Tools/simulation/gazebo-classic/sitl\_gazebo-classic/models/iris\_hitl/iris\_hit
 \textbf{固件烧写}
 
 在环境配置完成后，将HOFA版本的固件编译并烧写进飞控硬件中，只需要执行以下命令：
-
-\begin{lstlisting}[language=Bash, basicstyle=\footnotesize, linewidth=\linewidth, breaklines=true]
+\begin{codeblock}[language=C]
   cd PX4_Autopilot
   make px4_fmu-v6c_default
   make px4_fmu-v6c_default upload
-\end{lstlisting}
+\end{codeblock}
+
 
 接下来运行gazebo即可完成HOFA算法的硬件在环仿真。从仿真视频来看，控制效果良好。接下来要进入Offboard模式，用mavros发布“8”字型轨迹，分析飞行日志得到量化的结果。
 
@@ -212,8 +220,7 @@ Tools/simulation/gazebo-classic/sitl\_gazebo-classic/models/iris\_hitl/iris\_hit
 在PX4中，Offboard控制模式是一种允许无人机通过外部计算设备进行控制的飞行模式，而非常规的遥控器。在Offboard模式下，无人机的所有飞行控制决策（如起飞、降落、航向、速度和姿态调整）可以通过MAVLink协议从外部计算设备发送指令来实现。因而，可以在Offboard模式下任意指定无人机要跟踪的轨迹。
 
 由于SITL是在ROS框架下，只需要编写一个Offboard控制的软件包即可通过mavros发布位置指令。
-
-\begin{lstlisting}[language=Bash, basicstyle=\footnotesize, linewidth=\linewidth, breaklines=true]
+\begin{codeblock}[language=C]
   mkdir -p offboard_ws/src
   cd offboard_ws/src
 
@@ -221,13 +228,12 @@ Tools/simulation/gazebo-classic/sitl\_gazebo-classic/models/iris\_hitl/iris\_hit
   
   cd offboard_run/src
   gedit offboard_run_node.cpp
-\end{lstlisting}
+\end{codeblock}
 
 该文件就是Offboard控制的核心，PX4官网提供了基础的样例\cite{Offboard}。该样例的功能是使无人机悬停在$2m$的空中，在其基础上修改，使无人机跟踪“8”字型轨迹。由于该文件要在后续实机实验中复用，而实验场地的空间有限，轨迹相较于Matlab中的做了等比缩小处理，高度也固定在$1.2m$。
 
 保存更改后在CMakeLists.txt中加入编译指向，并编译工作空间。
-
-\begin{lstlisting}[language=Bash, basicstyle=\footnotesize, linewidth=\linewidth, breaklines=true]
+\begin{codeblock}[language=C]
   cd offboard_run
   gedit CMakeLists.txt
   
@@ -236,15 +242,17 @@ Tools/simulation/gazebo-classic/sitl\_gazebo-classic/models/iris\_hitl/iris\_hit
   
   cd ~/Desktop/offboard_ws
   catkin_make
-\end{lstlisting}
+\end{codeblock}
+
+
   
 Offboard包配置完成，后续无论是SITL、HITL还是实机实验，只要在mavros节点打开的情况下，就可以用以下命令运行Offboard控制，使无人机跟踪“8”字型轨迹。
-
-\begin{lstlisting}[language=Bash, basicstyle=\footnotesize, linewidth=\linewidth, breaklines=true]
+\begin{codeblock}[language=C]
   cd ~/Desktop/offboard_ws
   source ./devel/setup.bash
   rosrun offboard_run offboard_run_node
-\end{lstlisting}
+\end{codeblock}
+
 
 \section{实验结果分析}
 用HOFA和PX4运行相同的Offboard控制程序，对比轨迹跟踪的效果。
@@ -254,15 +262,15 @@ Offboard包配置完成，后续无论是SITL、HITL还是实机实验，只要�
 
 \begin{figure}[H]
   \centering
-  \begin{minipage}[b]{0.49\linewidth}
+  \begin{subfigure}[b]{0.49\linewidth}
       \includegraphics[width=\linewidth]{sitl_px4_3d.png}
-      \caption*{PX4}
-  \end{minipage}
+      \caption{PX4}
+  \end{subfigure}
   \hfill % 在图片之间添加一些空间
-  \begin{minipage}[b]{0.49\linewidth}
+  \begin{subfigure}[b]{0.49\linewidth}
       \includegraphics[width=\linewidth]{sitl_hofa_3d.png}
-      \caption*{HOFA}
-  \end{minipage}
+      \caption{HOFA}
+  \end{subfigure}
   \caption{SITL三维轨迹跟踪效果对比}
 \end{figure}
 
@@ -271,58 +279,58 @@ Offboard包配置完成，后续无论是SITL、HITL还是实机实验，只要�
 
   \begin{figure}[H]
     \centering
-  \begin{minipage}[b]{0.49\linewidth}
+  \begin{subfigure}[b]{0.49\linewidth}
       \includegraphics[width=\linewidth]{sitl_px4_xyz.png}
-      \caption*{PX4}
-  \end{minipage}
+      \caption{PX4}
+  \end{subfigure}
   \hfill
-  \begin{minipage}[b]{0.49\linewidth}
+  \begin{subfigure}[b]{0.49\linewidth}
       \includegraphics[width=\linewidth]{sitl_hofa_xyz.png}
-      \caption*{HOFA}
-  \end{minipage}
+      \caption{HOFA}
+  \end{subfigure}
   \caption{SITL位置跟踪效果对比}
 \end{figure}
 
 \begin{figure}[H]
   \centering
-\begin{minipage}[b]{0.49\linewidth}
+\begin{subfigure}[b]{0.49\linewidth}
     \includegraphics[width=\linewidth]{sitl_px4_R.png}
-    \caption*{PX4}
-\end{minipage}
+    \caption{PX4}
+\end{subfigure}
 \hfill
-\begin{minipage}[b]{0.49\linewidth}
+\begin{subfigure}[b]{0.49\linewidth}
     \includegraphics[width=\linewidth]{sitl_hofa_R.png}
-    \caption*{HOFA}
-\end{minipage}
+    \caption{HOFA}
+\end{subfigure}
 \caption{SITL姿态跟踪效果}
 \end{figure}
 
 \begin{figure}[H]
   \centering
-\begin{minipage}[b]{0.49\linewidth}
+\begin{subfigure}[b]{0.49\linewidth}
     \includegraphics[width=\linewidth]{sitl_px4_w.png}
     \caption{PX4}
-\end{minipage}
+\end{subfigure}
 \hfill
-\begin{minipage}[b]{0.49\linewidth}
+\begin{subfigure}[b]{0.49\linewidth}
     \includegraphics[width=\linewidth]{sitl_hofa_w.png}
-    \caption*{HOFA}
-\end{minipage}
+    \caption{HOFA}
+\end{subfigure}
 \caption{SITL角速度曲线}
 \end{figure}
 
 
 \begin{figure}[H]
   \centering
-\begin{minipage}[b]{0.49\linewidth}
+\begin{subfigure}[b]{0.49\linewidth}
     \includegraphics[width=\linewidth]{sitl_px4_M.png}
-    \caption*{PX4}
-\end{minipage}
+    \caption{PX4}
+\end{subfigure}
 \hfill
-\begin{minipage}[b]{0.49\linewidth}
+\begin{subfigure}[b]{0.49\linewidth}
     \includegraphics[width=\linewidth]{sitl_hofa_M.png}
-    \caption*{HOFA}
-\end{minipage}
+    \caption{HOFA}
+\end{subfigure}
 \caption{SITL期望力矩曲线}
 \end{figure}
 
@@ -337,15 +345,15 @@ HOFA在SITL中远远不如PX4，这与Matlab仿真中的结果完全颠倒。对
 
 \begin{figure}[H]
   \centering
-  \begin{minipage}[b]{0.49\linewidth}
+  \begin{subfigure}[b]{0.49\linewidth}
       \includegraphics[width=\linewidth]{sitl_hofadwd_3d.png}
-      \caption*{$\dot \omega_d =0$}
-  \end{minipage}
+      \caption{$\dot \omega_d =0$}
+  \end{subfigure}
   \hfill % 在图片之间添加一些空间
-  \begin{minipage}[b]{0.49\linewidth}
+  \begin{subfigure}[b]{0.49\linewidth}
       \includegraphics[width=\linewidth]{sitl_hofa0_3d.png}
-      \caption*{$M^*$}
-  \end{minipage}
+      \caption{$M^*$}
+  \end{subfigure}
   \caption{SITL三维轨迹跟踪效果对比:HOFA改进}
 \end{figure}
 
@@ -353,58 +361,58 @@ HOFA在SITL中远远不如PX4，这与Matlab仿真中的结果完全颠倒。对
 
   \begin{figure}[H]
     \centering
-  \begin{minipage}[b]{0.49\linewidth}
+  \begin{subfigure}[b]{0.49\linewidth}
       \includegraphics[width=\linewidth]{sitl_hofadwd_xyz.png}
-      \caption*{$\dot \omega_d =0$}
-  \end{minipage}
+      \caption{$\dot \omega_d =0$}
+  \end{subfigure}
   \hfill
-  \begin{minipage}[b]{0.49\linewidth}
+  \begin{subfigure}[b]{0.49\linewidth}
       \includegraphics[width=\linewidth]{sitl_hofa0_xyz.png}
-      \caption*{$M^*$}
-  \end{minipage}
+      \caption{$M^*$}
+  \end{subfigure}
   \caption{SITL位置跟踪效果对比:HOFA改进}
 \end{figure}
 
 \begin{figure}[H]
   \centering
-\begin{minipage}[b]{0.49\linewidth}
+\begin{subfigure}[b]{0.49\linewidth}
     \includegraphics[width=\linewidth]{sitl_hofadwd_R.png}
-    \caption*{$\dot \omega_d =0$}
-\end{minipage}
+    \caption{$\dot \omega_d =0$}
+\end{subfigure}
 \hfill
-\begin{minipage}[b]{0.49\linewidth}
+\begin{subfigure}[b]{0.49\linewidth}
     \includegraphics[width=\linewidth]{sitl_hofa0_R.png}
-    \caption*{$M^*$}
-\end{minipage}
+    \caption{$M^*$}
+\end{subfigure}
 \caption{SITL姿态跟踪效果:HOFA改进}
 \end{figure}
 
 \begin{figure}[H]
   \centering
-\begin{minipage}[b]{0.49\linewidth}
+\begin{subfigure}[b]{0.49\linewidth}
     \includegraphics[width=\linewidth]{sitl_hofadwd_w.png}
-    \caption*{$\dot \omega_d =0$}
-\end{minipage}
+    \caption{$\dot \omega_d =0$}
+\end{subfigure}
 \hfill
-\begin{minipage}[b]{0.49\linewidth}
+\begin{subfigure}[b]{0.49\linewidth}
     \includegraphics[width=\linewidth]{sitl_hofa0_w.png}
-    \caption*{$M^*$}
-\end{minipage}
+    \caption{$M^*$}
+\end{subfigure}
 \caption{SITL角速度曲线:HOFA改进}
 \end{figure}
 
 
 \begin{figure}[H]
   \centering
-\begin{minipage}[b]{0.49\linewidth}
+\begin{subfigure}[b]{0.49\linewidth}
     \includegraphics[width=\linewidth]{sitl_hofadwd_M.png}
-    \caption*{$\dot \omega_d =0$}
-\end{minipage}
+    \caption{$\dot \omega_d =0$}
+\end{subfigure}
 \hfill
-\begin{minipage}[b]{0.49\linewidth}
+\begin{subfigure}[b]{0.49\linewidth}
     \includegraphics[width=\linewidth]{sitl_hofa0_M.png}
-    \caption*{$M^*$}
-\end{minipage}
+    \caption{$M^*$}
+\end{subfigure}
 \caption{SITL期望力矩曲线:HOFA改进}
 \end{figure}
 

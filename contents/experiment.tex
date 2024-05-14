@@ -1,22 +1,25 @@
 % !TeX root = ../main.tex
 \chapter{实机实验}
-仿真实验与实机实验同步进行，也可以分成三个阶段：首先是搭建飞行平台，使得无人机可以在室外的GPS定位下进行遥控飞行，并且其动力足以应对后续的载荷增加；然后是在室内动作捕捉（motion capture）的外部定位下进行遥控飞行和轨迹跟踪，此时无人机上搭载机载电脑（companion computer）来提供动捕位姿信息和控制指令，控制算法仍然是PX4的四环pid控制；最后，在得到改成高阶全驱控制方法的飞控固件后，将其烧写进飞控板中，完成室内的遥控飞行和轨迹跟踪。
+仿真实验与实机实验同步进行，也可以分成三个阶段：首先是搭建飞行平台，使得无人机可以在室外的GPS定位下进行遥控飞行，并且其动力足以应对后续的载荷增加；然后是在室内动作捕捉（motion capture）的外部定位下进行遥控飞行和轨迹跟踪，此时无人机上搭载机载电脑（companion computer）来提供动捕位姿信息和控制指令，控制算法仍然是PX4的四环PID控制；最后，在得到改成高阶全驱控制方法的飞控固件后，将其烧写进飞控板中，完成室内的遥控飞行和轨迹跟踪。
 \section{飞行平台搭建}
 一架用于室外GPS下飞行的无人机的基本组成部分有机架、螺旋桨、电机、电子调速器（简称电调）、飞控、GPS接收器、遥控接收机、与地面站通信的sik电台或wifi热点和电池。而动力套件指的是其中的螺旋桨、电机和电调，它们合在一起决定一架无人机的动力性能。
 \begin{figure}[h]
   \centering
-  \begin{minipage}[c]{0.33\textwidth}
+  \begin{subfigure}[c]{0.33\textwidth}
     \centering
     \includegraphics[width=0.95\linewidth]{GPS飞机.jpg}
-  \end{minipage} \hfill
-  \begin{minipage}[c]{0.33\textwidth}
+    \caption{顶面}
+  \end{subfigure} \hfill
+  \begin{subfigure}[c]{0.33\textwidth}
     \centering
     \includegraphics[width=0.95\linewidth]{GPS侧面.jpg}
-  \end{minipage}\hfill
-    \begin{minipage}[c]{0.33\textwidth}
+    \caption{侧面}
+  \end{subfigure}\hfill
+    \begin{subfigure}[c]{0.33\textwidth}
       \centering
       \includegraphics[width=0.95\linewidth]{GPS底部.jpg}
-  \end{minipage}
+      \caption{底面}
+  \end{subfigure}
   \caption{用于室外飞行的四旋翼无人机多角度照片}
   \end{figure}
 
@@ -35,18 +38,18 @@
 
 \begin{figure}[h]
   \centering
-  \begin{minipage}[c]{0.33\textwidth}
+  \begin{subfigure}[c]{0.33\textwidth}
     \centering
     \includegraphics[width=0.95\linewidth]{室外飞行1.png}
-  \end{minipage} \hfill
-  \begin{minipage}[c]{0.33\textwidth}
+  \end{subfigure} \hfill
+  \begin{subfigure}[c]{0.33\textwidth}
     \centering
     \includegraphics[width=0.95\linewidth]{室外飞行2.png}
-  \end{minipage}\hfill
-    \begin{minipage}[c]{0.33\textwidth}
+  \end{subfigure}\hfill
+    \begin{subfigure}[c]{0.33\textwidth}
       \centering
       \includegraphics[width=0.95\linewidth]{室外飞行3.png}
-  \end{minipage}
+  \end{subfigure}
   \caption{位置模式下四旋翼室外飞行画面}
   \label{室外飞行}
   \end{figure}
@@ -62,21 +65,23 @@
   \label{动捕}
 \end{figure}
 
-动捕系统使用红外相机向目标发射红外光，使目标上固连的多个反光小球反射红外光，就能使相机捕捉到，效果如图\ref{反光小球}。
+动捕系统使用红外相机向目标发射红外光，使目标上固连的多个反光小球（marker）反射红外光，就能使相机捕捉到，效果如图\ref{反光小球}。
 
 \newpage
 
 \begin{figure}[h]
   \centering
-  \begin{minipage}[c]{0.48\textwidth}
+  \begin{subfigure}[c]{0.48\textwidth}
     \centering
     \includegraphics[width=0.95\linewidth]{飞机反光球.jpg}
-  \end{minipage}\hfill
-    \begin{minipage}[c]{0.48\textwidth}
+    \caption{marker安装方式}
+  \end{subfigure}\hfill
+    \begin{subfigure}[c]{0.48\textwidth}
       \centering
       \includegraphics[width=0.95\linewidth]{动捕效果2.png}
-  \end{minipage}
-  \caption{动作捕捉定位反光小球}
+      \caption{动捕系统界面}
+  \end{subfigure}
+  \caption{动作捕捉系统定位marker}
   \label{反光小球}
   \end{figure}
 
@@ -96,7 +101,6 @@
 
 以上的这三部分命令可以写到一个bash文件中一键运行，如图 \ref{一键}，其中运行px4.launch的参数有gcs-url，这是地面站的ip地址和端口号，mavros会通过wifi与地面站连接，地面站的QGroundControl（QGC）中就能方便地看到无人机目前的状态信息（当然也能通过rviz或rostopic等工具看到），如图 \ref{qgc}，也能够发布起飞等指令。
 
-\textbf{local这个坐标系还要再研究一下}
 
 \begin{figure}[!h]
   \centering
@@ -128,7 +132,7 @@
 \begin{figure}[!h]
   \centering
   \includegraphics[width=0.7\textwidth]{mocpx4坐标.png}
-  \caption{左图为PX4内坐标系，右图为动捕系统坐标系}
+  \caption{左侧为PX4内坐标系 右侧为动捕系统坐标系}
   \label{mocpx4}
 \end{figure}
 
@@ -138,27 +142,25 @@
 
 \begin{figure}[h]
   \centering
-  \begin{minipage}[c]{0.33\textwidth}
+  \begin{subfigure}[c]{0.33\textwidth}
     \centering
     \includegraphics[width=0.95\linewidth]{室内飞行1.png}
-  \end{minipage} \hfill
-  \begin{minipage}[c]{0.33\textwidth}
+  \end{subfigure} \hfill
+  \begin{subfigure}[c]{0.33\textwidth}
     \centering
     \includegraphics[width=0.95\linewidth]{室内飞行2.png}
-  \end{minipage}\hfill
-    \begin{minipage}[c]{0.33\textwidth}
+  \end{subfigure}\hfill
+    \begin{subfigure}[c]{0.33\textwidth}
       \centering
       \includegraphics[width=0.95\linewidth]{室内飞行3.png}
-  \end{minipage}
+  \end{subfigure}
   \caption{位置模式下四旋翼室内飞行画面}
   \label{室内飞行}
   \end{figure}
 
-  \section{HOFA固件飞行}
+  \section{转动惯量测定}
 
   在仿真实验一章的硬件在环仿真节中得到的飞控固件就可以直接用于实机飞行，但在起飞前需要精确测量无人机的质量和转动惯量参数，以获得更好的飞行效果。
-
-  \textbf{参数测定}
 
   HOFA算法需要知道无人机的转动惯量矩阵作为先验信息。经过仿真发现，HOFA算法可以容忍较大的转动惯量误差，但如果误差达到十倍的程度，还是会带来破坏性的影响。因此，需要对无人机进行较为精确的转动惯量测定。
 
@@ -171,23 +173,26 @@
   $$
 
   无人机质量$m$由电子天平测得为$0.8771kg$，上海地区重力加速度为$9.794 m/s^2$。
+\newpage
+  用双线法分别测量无人机绕X轴，Y轴，Z轴的主转动惯量，如图\ref{双线法}所示。
 
-  用双线法分别测量无人机绕x轴，y轴，z轴的主转动惯量，如图\ref{双线法}所示。
-
-  \begin{figure}[h]
+  \begin{figure}[H]
     \centering
-    \begin{minipage}[c]{0.33\textwidth}
+    \begin{subfigure}[c]{0.33\textwidth}
       \centering
       \includegraphics[width=0.95\linewidth, angle=270]{x.jpg}  % 确保角度为0
-    \end{minipage}\hfill
-    \begin{minipage}[c]{0.33\textwidth}
+      \caption{X轴}
+    \end{subfigure}\hfill
+    \begin{subfigure}[c]{0.33\textwidth}
       \centering
       \includegraphics[width=0.95\linewidth, angle=270]{y.jpg}  % 确保角度为0
-    \end{minipage}\hfill
-    \begin{minipage}[c]{0.33\textwidth}
+      \caption{Y轴}
+    \end{subfigure}\hfill
+    \begin{subfigure}[c]{0.33\textwidth}
       \centering
       \includegraphics[width=0.95\linewidth, angle=270]{z.jpg}  % 确保角度为0
-    \end{minipage}
+      \caption{Z轴}
+    \end{subfigure}
     \caption{双线法测量无人机主转动惯量}
     \label{双线法}
 \end{figure}
@@ -195,8 +200,10 @@
 
 用以上方法重复测量三次并计算，得到表格\ref{三次}：
   
-  \begin{table}
+  \begin{table}[H]
     \centering
+    \caption{无人机转动惯量矩阵主值测量记录表}
+    \label{三次}
     \begin{tabular}{cccccccc}
         \toprule
         组别&d/m  & L/m & 50T/s (1) & 50T/s (2) &50T/s (3) & T/s & $J_{ii} / kg \cdot m^2$\\
@@ -206,12 +213,115 @@
         $J_{zz}$ & 0.271 & 0.65& 42.50 & 42.75 & 42.75 &0.8533 &0.0045\\
         \bottomrule
     \end{tabular}
-    \caption{无人机转动惯量矩阵主值测量记录表}
-    \label{三次}
 \end{table}
 
 最后得到结论$J=\begin{bmatrix}
   0.0031 &0&0\\
   0&0.0032&0\\
   0&0& 0.0045
-\end{bmatrix}kg \cdot m^2$，这与matlab仿真阶段的估计差异不大。
+\end{bmatrix}kg \cdot m^2$，这与理论计算的估计差异不大。
+\newpage
+\section{PX4实飞信号分析}
+由于时间的限制，我们尚未能解决HOFA实飞实验中遇到的一系列工程问题，仅仅完成了PX4原生固件的Offboard实飞。但通过分析其飞行日志记录的各种数据，也能得到对后续HOFA工程改进的有效意见。
+
+\begin{figure}[!h]
+  \centering
+    \includegraphics[width=0.5\textwidth]{real_px4_3d.png}
+    \caption{PX4实飞轨迹曲线}
+    \label{real_px4_3d}
+  \end{figure}
+  \begin{figure}[!h]
+    \centering
+      \includegraphics[width=0.6\linewidth]{real_px4_v.png}
+      \caption{PX4实飞速度曲线}
+      \label{real_px4_v}
+
+\end{figure}
+
+
+
+如图\ref{real_px4_3d}和图\ref{real_px4_v}所示，PX4对“8”字型轨迹有良好的跟踪效果，速度和期望速度都较为平稳。
+
+接下来，我们从中分析HOFA在实飞中会遇到的问题以及原因，并尝试给出下一步的解决方案。由于HOFA与PX4的位置环相同，这也意味着在姿态环表现良好时，$x_d,v_d,x,v$都会是性质良好的平滑曲线，故而有理由推测解算出的期望姿态也是较为平滑的。在图\ref{real_px4_wdw}中也确实可以看到，此时产生的期望姿态是大体平稳的，波动的幅度可以接受。但对期望姿态做一次微分得到的期望角速度就已经有了不小的抖动，如果再做一次微分得到期望角加速度，信号中的噪声必然会更严重。加之两次微分在实际操作中是由前后两次的上级信号差分而来，得到的期望角加速度就会有叠加的延迟，加剧前馈补偿的失真。另外，角速度的估计存在剧烈的波动，无论这是因为传感器的采样噪声还是电机的振动使得IMU确实有高频的角速度变化，这种高频且幅值较大的波动都会对HOFA控制提出挑战。一方面是HOFA的前馈补偿中存在角速度和期望角速度的二次项，大的赋值会被二次项放大，另一方面，角速度的快速变动对控制频率和延迟也有很高的要求。
+
+
+\begin{figure}[!h]
+  \centering
+  \begin{subfigure}[b]{0.49\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{real_px4_w1.png}
+      \caption{$\omega_1$}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.49\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{real_px4_dw1.png}
+      \caption{$\dot \omega_1$}
+  \end{subfigure}
+  
+  \begin{subfigure}[b]{0.49\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{real_px4_w2.png}
+      \caption{$\omega_2$}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.49\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{real_px4_dw2.png}
+      \caption{$\dot \omega_2$}
+  \end{subfigure}
+  
+  \begin{subfigure}[b]{0.49\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{real_px4_w3.png}
+      \caption{$\omega_3$}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.49\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{real_px4_dw3.png}
+      \caption{$\dot \omega_3$}
+  \end{subfigure}
+  \caption{PX4实飞角度和角速度曲线}
+  \label{real_px4_wdw}
+\end{figure}
+
+最后来看输出，如图\ref{real_px4_fM}和图\ref{real_px4_f1234}，力矩一直有高频波动但幅值不超过$0.1N\cdot m$，这可以作为限幅的参考。
+\begin{figure}[!h]
+  \centering
+  \begin{minipage}[b]{0.49\linewidth}
+      \includegraphics[width=\linewidth]{real_px4_fM.png}
+      \caption{PX4实飞运动控制输出}
+      \label{real_px4_fM}
+  \end{minipage}
+  \hfill % 在图片之间添加一些空间
+  \begin{minipage}[b]{0.49\linewidth}
+      \includegraphics[width=\linewidth]{real_px4_f1234.png}
+      \caption{PX4实飞电机指令}
+      \label{real_px4_f1234}
+  \end{minipage}
+\end{figure}
+电机的控制指令也一直没有超过$50\%$，因此在控制器足够好的情况下，这台无人机能够进行更为激进的飞行。
+
+PX4的官方文档中称其位置环的控制频率为50Hz，姿态控制频率为250Hz，角速度为1000Hz\cite{px4控制}。但因为其架构过于复杂，我始终未能找到其进程安排的代码，故而只能在飞行日志的数据中根据时间戳来看一下各环节的频率作为参考，如表\ref{频率}。这里的频率是飞控向外发布记录数据的频率，并不是内部实际的控制频率。
+\begin{table}[!h]
+  \centering
+  \caption{PX4实飞各信号发布频率}
+  \label{频率}
+  \begin{tabular}{cccccccccc}
+      \toprule
+      信号&$x$ & $x_d$ & $v$ &$v_d$ &$R$ &$R_d$& $\omega$ &$\omega_d$ &$M$\\
+      \midrule
+频率（Hz）&10& 10& 10& 10& 20&20& 50 & 50&50\\
+      \bottomrule
+  \end{tabular}
+\end{table}
+
+
+\section{本章小节}
+本章描述了实机飞行平台的完整搭建过程，从室外飞行，到室内基于动捕的飞行，到用Offboard程序发布轨迹。虽然HOFA的实机飞行由于时间有限，还有工程问题需要解决，但也通过PX4原生固件的飞行数据，结合前文的仿真结果，给出了分析和改进方法。当前实机HOFA飞行效果不佳的可能原因有以下三点：
+\begin{itemize}
+  \item 两阶微分求得的期望角加速度会放大噪声的延迟的不良影响
+  \item 高频大幅度波动的角速度会被前馈补偿中的二次项放大
+  \item 对PX4固件的改写在线程管理上尚有优化余地，控制频率还能进一步提高
+\end{itemize}

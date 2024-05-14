@@ -96,25 +96,25 @@ $$x_d = \begin{matrix}[5\sin(\frac{t}{2}), & 5\cos(\frac{t}{2})\sin(\frac{t}{2})
 
   在$t=1s$时对x轴输入单位阶跃信号，对比x轴位置、速度、角度、角速度和期望扭矩，如图\ref{matlab_阶跃}。由于另外两轴仅受到轻微的耦合影响，且不是研究对象，为精简篇幅，不在此罗列另外两轴的数据。
 
-  \begin{figure}[h]
+\begin{figure}[h]
+  \centering
+  \begin{subfigure}[t]{0.33\textwidth}
     \centering
-    \begin{minipage}[t]{0.33\textwidth}
-      \centering
-      \raisebox{-\height}{\includegraphics[width=\linewidth]{hofa_1.png}}
-      \caption*{(a) HOFA}
-    \end{minipage}\hfill
-    \begin{minipage}[t]{0.33\textwidth}
-      \centering
-      \raisebox{-\height}{\includegraphics[width=\linewidth]{px4_1.png}}
-      \caption*{(b) PID}
-    \end{minipage}\hfill
-    \begin{minipage}[t]{0.33\textwidth}
-      \centering
-      \raisebox{-\height}{\includegraphics[width=\linewidth]{so3_1.png}}
-      \caption*{(c) SO(3)}
-    \end{minipage}
-    \caption{x轴位置单位阶跃响应对比}
-    \label{matlab_阶跃}
+    \includegraphics[width=\linewidth]{hofa_1.png}
+    \caption{HOFA}
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.33\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{px4_1.png}
+    \caption{PID}
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.33\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{so3_1.png}
+    \caption{SO(3)}
+  \end{subfigure}
+  \caption{x轴位置单位阶跃响应对比}
+  \label{matlab_阶跃}
 \end{figure}
 
 位置的阶跃给速度的期望值带来了微分冲击，这个冲击进一步传导给期望俯仰角，导致期望转矩饱和，PX4在这种情况下出现了震荡。HOFA的扭矩饱和持续时间最小，并且对俯仰角的跟踪也是最好的。三种控制器最终都能无静差地收敛到单位值。定量比较三种控制器分别使位置到达稳态值$90\%$的上升时间和调整时间（$\Delta = 5\%$）：
@@ -142,21 +142,21 @@ $$x_d = \begin{matrix}[5\sin(\frac{t}{2}), & 5\cos(\frac{t}{2})\sin(\frac{t}{2})
 
 \begin{figure}[h]
   \centering
-  \begin{minipage}[t]{0.33\textwidth}
+  \begin{subfigure}[t]{0.33\textwidth}
     \centering
     \raisebox{-\height}{\includegraphics[width=\linewidth]{hofa_t.png}}
-    \caption*{(a) HOFA}
-  \end{minipage}\hfill
-  \begin{minipage}[t]{0.33\textwidth}
+    \caption{HOFA}
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.33\textwidth}
     \centering
     \raisebox{-\height}{\includegraphics[width=\linewidth]{px4_t.png}}
-    \caption*{(b) PID}
-  \end{minipage}\hfill
-  \begin{minipage}[t]{0.33\textwidth}
+    \caption{PID}
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.33\textwidth}
     \centering
     \raisebox{-\height}{\includegraphics[width=\linewidth]{so3_t.png}}
-    \caption*{(c) SO(3)}
-  \end{minipage}
+    \caption{SO(3)}
+  \end{subfigure}
   \caption{x轴位置单位斜坡响应对比}
   \label{matlab_t}
 \end{figure}
@@ -190,21 +190,21 @@ $$x_d = \begin{matrix}[5\sin(\frac{t}{2}), & 5\cos(\frac{t}{2})\sin(\frac{t}{2})
   
   \begin{figure}[h]
       \centering
-      \begin{minipage}[t]{0.33\textwidth}
+      \begin{subfigure}[t]{0.33\textwidth}
         \centering
         \raisebox{-\height}{\includegraphics[width=\linewidth]{hofa_3d.png}}
-        \caption*{(a) HOFA}
-      \end{minipage}\hfill
-      \begin{minipage}[t]{0.33\textwidth}
+        \caption{HOFA}
+      \end{subfigure}\hfill
+      \begin{subfigure}[t]{0.33\textwidth}
         \centering
         \raisebox{-\height}{\includegraphics[width=\linewidth]{px4_3d.png}}
-        \caption*{(b) PID}
-      \end{minipage}\hfill
-      \begin{minipage}[t]{0.33\textwidth}
+        \caption{PID}
+      \end{subfigure}\hfill
+      \begin{subfigure}[t]{0.33\textwidth}
         \centering
         \raisebox{-\height}{\includegraphics[width=\linewidth]{so3_3d.png}}
-        \caption*{(c) SO(3)}
-      \end{minipage}
+        \caption{SO(3)}
+      \end{subfigure}
       \caption{三维轨迹跟踪效果对比}
       \label{matlab_3d}
   \end{figure}
@@ -213,42 +213,42 @@ $$x_d = \begin{matrix}[5\sin(\frac{t}{2}), & 5\cos(\frac{t}{2})\sin(\frac{t}{2})
 
   \begin{figure}[h]
     \centering
-    \begin{minipage}[t]{0.33\textwidth}
+    \begin{subfigure}[t]{0.33\textwidth}
       \centering
       \raisebox{-\height}{\includegraphics[width=\linewidth]{hofa_x.png}}
-      \caption*{(a) HOFA}
-    \end{minipage}\hfill
-    \begin{minipage}[t]{0.33\textwidth}
+      \caption{HOFA}
+    \end{subfigure}\hfill
+    \begin{subfigure}[t]{0.33\textwidth}
       \centering
       \raisebox{-\height}{\includegraphics[width=\linewidth]{px4_x.png}}
-      \caption*{(b) PID}
-    \end{minipage}\hfill
-    \begin{minipage}[t]{0.33\textwidth}
+      \caption{PID}
+    \end{subfigure}\hfill
+    \begin{subfigure}[t]{0.33\textwidth}
       \centering
       \raisebox{-\height}{\includegraphics[width=\linewidth]{so3_x.png}}
-      \caption*{(c) SO(3)}
-    \end{minipage}
+      \caption{SO(3)}
+    \end{subfigure}
     \caption{三轴位置跟踪效果对比}
     \label{matlab_x}
 \end{figure}
 
 \begin{figure}[h]
   \centering
-  \begin{minipage}[t]{0.33\textwidth}
+  \begin{subfigure}[t]{0.33\textwidth}
     \centering
     \raisebox{-\height}{\includegraphics[width=\linewidth]{hofa_rad.png}}
-    \caption*{(a) HOFA}
-  \end{minipage}\hfill
-  \begin{minipage}[t]{0.33\textwidth}
+    \caption{HOFA}
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.33\textwidth}
     \centering
     \raisebox{-\height}{\includegraphics[width=\linewidth]{px4_angle.png}}
-    \caption*{(b) PID}
-  \end{minipage}\hfill
-  \begin{minipage}[t]{0.33\textwidth}
+    \caption{PID}
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.33\textwidth}
     \centering
     \raisebox{-\height}{\includegraphics[width=\linewidth]{so3_angle.png}}
-    \caption*{(c) SO(3)}
-  \end{minipage}
+    \caption{SO(3)}
+  \end{subfigure}
   \caption{三轴姿态角跟踪效果对比}
   \label{matlab_angle}
 \end{figure}
@@ -283,21 +283,21 @@ $$x_d = \begin{matrix}[5\sin(\frac{t}{2}), & 5\cos(\frac{t}{2})\sin(\frac{t}{2})
 在实践中，执行器的能力存在上限，并且轨迹中的不连续点会引起微分冲击，因此在控制器中必然要做限幅处理以避免极端大的控制量对系统造成不良影响。而限幅的具体数值也要根据控制器的输出做调整。从图\ref{matlab_fM}可知，除了在开头的阶跃处，当飞行进入稳定阶段时，期望的力矩非常小，远远不会达到设定的上限。
 \begin{figure}[h]
   \centering
-  \begin{minipage}[t]{0.33\textwidth}
+  \begin{subfigure}[t]{0.33\textwidth}
     \centering
     \raisebox{-\height}{\includegraphics[width=\linewidth]{hofa_fM.png}}
-    \caption*{(a) HOFA}
-  \end{minipage}\hfill
-  \begin{minipage}[t]{0.33\textwidth}
+    \caption{HOFA}
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.33\textwidth}
     \centering
     \raisebox{-\height}{\includegraphics[width=\linewidth]{px4_fM.png}}
-    \caption*{(b) PID}
-  \end{minipage}\hfill
-  \begin{minipage}[t]{0.33\textwidth}
+    \caption{PID}
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.33\textwidth}
     \centering
     \raisebox{-\height}{\includegraphics[width=\linewidth]{so3_fM.png}}
-    \caption*{(c) SO(3)}
-  \end{minipage}
+    \caption{SO(3)}
+  \end{subfigure}
   \caption{期望拉力与力矩对比}
   \label{matlab_fM}
 \end{figure}
@@ -305,18 +305,18 @@ $$x_d = \begin{matrix}[5\sin(\frac{t}{2}), & 5\cos(\frac{t}{2})\sin(\frac{t}{2})
 % %%
 % \begin{figure}[h]
 %   \centering
-%   \begin{minipage}[t]{0.33\textwidth}
+%   \begin{subfigure}[t]{0.33\textwidth}
 %     \centering
 %     \raisebox{-\height}{\includegraphics[width=\linewidth]{hofa_f1234.png}}
-%   \end{minipage}\hfill
-%   \begin{minipage}[t]{0.33\textwidth}
+%   \end{subfigure}\hfill
+%   \begin{subfigure}[t]{0.33\textwidth}
 %     \centering
 %     \raisebox{-\height}{\includegraphics[width=\linewidth]{px4_f1234.png}}
-%   \end{minipage}\hfill
-%   \begin{minipage}[t]{0.33\textwidth}
+%   \end{subfigure}\hfill
+%   \begin{subfigure}[t]{0.33\textwidth}
 %     \centering
 %     \raisebox{-\height}{\includegraphics[width=\linewidth]{so3_f1234.png}}
-%   \end{minipage}
+%   \end{subfigure}
 %   \caption{电机期望拉力对比：HOFA，PX4，SO(3)}
 %   \label{matlab_f1234}
 % \end{figure}

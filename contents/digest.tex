@@ -1,47 +1,40 @@
 % !TEX root = ../main.tex
 
 \begin{digest}
-  An imperial edict issued in 1896 by Emperor Guangxu, established Nanyang
-  Public School in Shanghai. The normal school, school of foreign studies,
-  middle school and a high school were established. Sheng Xuanhuai, the person
-  responsible for proposing the idea to the emperor, became the first president
-  and is regarded as the founder of the university.
+  This study delves into the high-precision motion control issues of quadrotor UAVs in dynamically varying environments, with a particular focus on the application of high-order fully actuated (HOFA) system theory. As UAV technology rapidly advances, quadrotor UAVs are increasingly playing crucial roles in various sectors due to their exceptional maneuverability and wide application prospects, including agricultural pest control, emergency rescue, entertainment aerial photography, and numerous scientific and industrial fields. However, their complex dynamics, high nonlinearity, and sensitivity to environmental noise make achieving high-precision motion control a highly challenging task.
 
-  During the 1930s, the university gained a reputation of nurturing top
-  engineers. After the foundation of People's Republic, some faculties were
-  transferred to other universities. A significant amount of its faculty were
-  sent in 1956, by the national government, to Xi'an to help build up Xi'an Jiao
-  Tong University in western China. Afterwards, the school was officially
-  renamed Shanghai Jiao Tong University.
+  To address this challenge, this research systematically reviews foundational knowledge including UAV modeling, rigid body attitude description methods, and Lie group algebra theory, aiming to provide a solid theoretical basis and a clear conceptual framework for subsequent studies. In UAV modeling, we thoroughly explored two critical steps: rigid body dynamics and power distribution. Accurate description of rigid body attitude is key to effective motion control, directly affecting the UAV's stability and maneuverability; power distribution is crucial for ensuring stability and accuracy when the UAV performs tasks. Although power distribution holds significant importance in UAV motion control, this study primarily focuses on innovating and optimizing motion control algorithms; therefore, mature approaches will be adopted for simplification in this aspect.
+  
+  Building on this foundation, we propose a control strategy based on high-order fully actuated (HOFA) system theory, tailored to address the high nonlinearity and environmental sensitivity of quadrotor UAVs. The HOFA system theory, known for its unique ability to handle nonlinearity and robustness, offers new perspectives and methods for solving quadrotor UAV motion control issues. Compared to traditional control strategies, this approach designs controllers directly based on nonlinear models without needing to overly simplify or approximate the system, thus preserving the system's original characteristics and dynamic performance. We aim to develop an efficient, robust, and easy-to-implement quadrotor UAV motion control strategy. This strategy not only aims to enhance the precision and response speed of UAV motion control but also seeks to reduce system complexity and costs, providing strong support for autonomous flight in complex environments.
+  
+  
+  Simulation experiments play a crucial role in verifying the effectiveness of quadrotor UAV motion control strategies. In this study, we use both Matlab and ROS platforms for simulations, with the Matlab portion focused on testing control algorithm performance in an idealized environment. In Matlab, we built a simulation model of the quadrotor UAV using s-functions and the Simulink package. This model considers the UAV's dynamics and simulates environmental noise and disturbances to closely mirror real flight scenarios. Through s-functions, we can flexibly implement the HOFA control strategy and compare it with traditional control methods.
+  
+  
+  In the experimental design of this chapter, we selected the classic SO(3) control and the widely used four-loop PID control in PX4 (referred to as PID) for comparison. By establishing the same simulation environment, we tested the performance of HOFA, SO(3), and PID control strategies in quadrotor UAV motion control. Firstly, under unit step and unit ramp signal inputs, we compared the response speed and tracking performance of the three control methods. The experimental results show that the HOFA control strategy has a faster convergence speed under unit step input, allowing the system to stabilize in a shorter time. Under unit ramp signal input, HOFA also demonstrates excellent tracking performance, closely following the ramp signal changes without significant lag or overshoot.
+  
+  
+  To further verify the performance of the HOFA control strategy in complex trajectory tracking, we designed a comprehensive test with a "figure 8" trajectory. In this test, we used HOFA, SO(3), and PID control strategies for trajectory tracking of the quadrotor UAV and recorded the error data during the tracking process. The experimental results indicate that the HOFA control strategy shows higher tracking accuracy and stability in "figure 8" trajectory tracking. In terms of trajectory smoothness and tracking error, HOFA outperforms the SO(3) and PID control methods.
+  
+  
+  Moreover, we optimized the HOFA control strategy using a Linear Quadratic Regulator (LQR). By adjusting the weight matrix of LQR, we were able to improve control precision and response speed while ensuring system stability. The optimized HOFA control strategy exhibited even more outstanding performance in simulation experiments.
+  
+  
+  In summary, the Matlab simulation experiments verified the superiority of the HOFA control strategy in quadrotor UAV motion control. Whether under unit step and ramp signal inputs or in complex trajectory tracking, HOFA demonstrated higher control precision, faster response speed, and better stability. These experimental results provide strong support for our subsequent research and practical applications.
+  
+  In the ROS (Robot Operating System) framework, we conducted a series of simulation experiments on motion control strategies for quadrotor UAVs. These experiments included Software-In-The-Loop (SITL) simulations, semi-physical Hardware-In-The-Loop (HITL) simulations (although not detailed in this summary), and offboard trajectory tracking comparison experiments under SITL. These experiments provided crucial insights into the performance and robustness of our control strategies in practical applications.
 
-  Since the reform and opening up policy in China, SJTU has taken the lead in
-  management reform of institutions for higher education, regaining its vigor
-  and vitality with an unprecedented momentum of growth. SJTU includes five
-  beautiful campuses, Xuhui, Minhang, Luwan Qibao, and Fahua, taking up an area
-  of about \qty{3225833}{\square\metre}. A number of disciplines have been
-  advancing towards the top echelon internationally, and a batch of burgeoning
-  branches of learning have taken an important position domestically.
+In the SITL simulations, we modified the motion control code of the PX4 firmware and conducted simulations in the ROS+Gazebo environment. Gazebo's highly realistic physics engine simulates the flight dynamics and sensor data of UAVs, providing a testing environment close to actual flight conditions. By running offboard control programs, we observed that the performance of the HOFA control strategy in SITL differed from the Matlab simulation results. Although HOFA performed excellently in Matlab, its performance was not as good under the ROS framework.
 
-  Today SJTU has 31 schools (departments), 63 undergraduate programs, 250
-  masters-degree programs, 203 Ph.D. programs, 28 post-doctorate programs, and
-  11 state key laboratories and national engineering research centers.
+To explore the reasons for this discrepancy, we conducted an in-depth analysis of the variables in the simulations. We found that although the feedback signals were the same in both simulation environments, the methods for generating desired angular velocities and angular accelerations differed. In particular, the second-order derivatives of desired angular accelerations might have amplified the impact of noise. Additionally, the feedforward terms in the HOFA control strategy, especially those involving squared terms of angular velocity and desired angular velocity, might have led to amplified effects of delays and noise.
 
-  SJTU boasts a large number of famous scientists and professors, including 35
-  academics of the Academy of Sciences and Academy of Engineering, 95 accredited
-  professors and chair professors of the ``Cheung Kong Scholars Program'' and
-  more than \num{2000} professors and associate professors.
+Addressing the performance degradation of HOFA in SITL, we implemented two engineering improvements. First, we set angular accelerations to zero to eliminate their potential adverse effects. Second, we retained only the feedback term \(M^*\), simplifying the control strategy and reducing the amplification of noise effects. Both of these modifications significantly improved the performance of HOFA, both in terms of position tracking and attitude tracking.
 
-  Its total enrollment of students amounts to \num{35929}, of which \num{1564}
-  are international students. There are \num{16802} undergraduates, and
-  \num{17563} masters and Ph.D. candidates. After more than a century of
-  operation, Jiao Tong University has inherited the old tradition of ``high
-  starting points, solid foundation, strict requirements and extensive
-  practice.'' Students from SJTU have won top prizes in various competitions,
-  including ACM International Collegiate Programming Contest, International
-  Mathematical Contest in Modeling and Electronics Design Contests. Famous
-  alumni include Jiang Zemin, Lu Dingyi, Ding Guangen, Wang Daohan, Qian Xuesen,
-  Wu Wenjun, Zou Taofen, Mao Yisheng, Cai Er, Huang Yanpei, Shao Lizi, Wang An
-  and many more. More than 200 of the academics of the Chinese Academy of
-  Sciences and Chinese Academy of Engineering are alumni of Jiao Tong
-  University.
+Additionally, this research also involved setting up a real-flight platform and verifying the UAV's remote-control flight capabilities under outdoor GPS positioning, confirming its power sufficiency for subsequent payload increases. Subsequently, in an indoor environment, we used a motion capture system for external positioning and transmitted pose information and control commands through an onboard computer. In this phase, we still employed PX4's four-loop PID control algorithm, verifying the UAV's flight stability and trajectory tracking capabilities in an indoor setting.
+
+Despite the satisfactory results obtained in simulation environments, the real-world experimental outcomes have not yet met expectations due to time constraints and a range of engineering implementation issues. In response to these challenges, this study conducted a thorough analysis and proposed corresponding solutions. Firstly, considering the engineering practicalities of noise amplification introduced by second-order differentiation, adjustments and trade-offs might be necessary in the design. Secondly, issues with high-frequency angular velocity fluctuations could be mitigated by optimizing the strength of the arms and filtering post-system identification. Finally, concerning thread management issues during PX4 firmware modifications, future research will focus on optimizing the control architecture to increase control frequency.
+
+Theoretically, this study also suggested further research directions. For instance, exploring control methods beyond LQR to better match the system characteristics and investigating the impact of inaccurate state estimation on system performance and finding effective avoidance strategies.
+
+Overall, the control strategy for quadrotor UAVs based on high-order fully actuated system theory demonstrated its superiority in simulation environments, offering new approaches and methods for precise motion control of quadrotor UAVs. Although challenges remain in practical applications, ongoing research and improvements are expected to achieve high-precision, high-response-speed motion control of quadrotor UAVs in complex environments.
 \end{digest}
