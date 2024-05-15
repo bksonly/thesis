@@ -19,6 +19,1322 @@
 
 \refsection{0}
   \datalist[entry]{none/global//global/global}
+    \entry{tokekar2016agricluture}{article}{}
+      \name{author}{4}{}{%
+        {{hash=202a74e07c41169655eeaa41286db545}{%
+           family={Tokekar},
+           familyi={T\bibinitperiod},
+           given={Pratap},
+           giveni={P\bibinitperiod}}}%
+        {{hash=8a43a55c417f9b2e7cfd0fb7480a171f}{%
+           family={Vander\bibnamedelima Hook},
+           familyi={V\bibinitperiod\bibinitdelim H\bibinitperiod},
+           given={Joshua},
+           giveni={J\bibinitperiod}}}%
+        {{hash=d6106db8c5de62625c86732f3e243274}{%
+           family={Mulla},
+           familyi={M\bibinitperiod},
+           given={David},
+           giveni={D\bibinitperiod}}}%
+        {{hash=87b8d080b88aecea246d4901006d26ea}{%
+           family={Isler},
+           familyi={I\bibinitperiod},
+           given={Volkan},
+           giveni={V\bibinitperiod}}}%
+      }
+      \name{namea}{4}{}{%
+        {{hash=202a74e07c41169655eeaa41286db545}{%
+           family={Tokekar},
+           familyi={T\bibinitperiod},
+           given={Pratap},
+           giveni={P\bibinitperiod}}}%
+        {{hash=8a43a55c417f9b2e7cfd0fb7480a171f}{%
+           family={Vander\bibnamedelima Hook},
+           familyi={V\bibinitperiod\bibinitdelim H\bibinitperiod},
+           given={Joshua},
+           giveni={J\bibinitperiod}}}%
+        {{hash=d6106db8c5de62625c86732f3e243274}{%
+           family={Mulla},
+           familyi={M\bibinitperiod},
+           given={David},
+           giveni={D\bibinitperiod}}}%
+        {{hash=87b8d080b88aecea246d4901006d26ea}{%
+           family={Isler},
+           familyi={I\bibinitperiod},
+           given={Volkan},
+           giveni={V\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {english}%
+      }
+      \list{publisher}{1}{%
+        {IEEE}%
+      }
+      \strng{namehash}{1d0878b6afcbdebd9f00dd045e2b1031}
+      \strng{fullhash}{ee5ad4be73410590bf673e1d1928261b}
+      \strng{bibnamehash}{c39258ce2eec5b0aa594002f9103fdfb}
+      \strng{authorbibnamehash}{c39258ce2eec5b0aa594002f9103fdfb}
+      \strng{authornamehash}{1d0878b6afcbdebd9f00dd045e2b1031}
+      \strng{authorfullhash}{ee5ad4be73410590bf673e1d1928261b}
+      \strng{nameabibnamehash}{c39258ce2eec5b0aa594002f9103fdfb}
+      \strng{nameanamehash}{1d0878b6afcbdebd9f00dd045e2b1031}
+      \strng{nameafullhash}{ee5ad4be73410590bf673e1d1928261b}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE transactions on robotics}
+      \field{langid}{english}
+      \field{languageid}{english}
+      \field{lansortorder}{4}
+      \field{number}{6}
+      \field{title}{Sensor planning for a symbiotic UAV and UGV system for precision agriculture}
+      \field{usera}{J}
+      \field{userd}{english}
+      \field{userf}{english}
+      \field{volume}{32}
+      \field{year}{2016}
+      \field{dateera}{ce}
+      \field{pages}{1498\bibrangedash 1511}
+      \range{pages}{14}
+      \keyw{tokekar2016agricluture}
+    \endentry
+    \entry{tomic2012}{article}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{3}{}{%
+        {{hash=06d4249edf9fc0babe5ccc208f325391}{%
+           family={Tomic},
+           familyi={T\bibinitperiod},
+           given={T},
+           giveni={T\bibinitperiod}}}%
+        {{hash=6397855162cfc4375b416c09a52454f4}{%
+           family={Schmid},
+           familyi={S\bibinitperiod},
+           given={K},
+           giveni={K\bibinitperiod}}}%
+        {{hash=d1559ffe1dabcaf101d8606b894bd4a6}{%
+           family={Lutz},
+           familyi={L\bibinitperiod},
+           given={P},
+           giveni={P\bibinitperiod}}}%
+      }
+      \true{morenamea}
+      \name{namea}{3}{}{%
+        {{hash=06d4249edf9fc0babe5ccc208f325391}{%
+           family={Tomic},
+           familyi={T\bibinitperiod},
+           given={T},
+           giveni={T\bibinitperiod}}}%
+        {{hash=6397855162cfc4375b416c09a52454f4}{%
+           family={Schmid},
+           familyi={S\bibinitperiod},
+           given={K},
+           giveni={K\bibinitperiod}}}%
+        {{hash=d1559ffe1dabcaf101d8606b894bd4a6}{%
+           family={Lutz},
+           familyi={L\bibinitperiod},
+           given={P},
+           giveni={P\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {english}%
+      }
+      \strng{namehash}{117e2339f2f0f1fdad9c9649631de97c}
+      \strng{fullhash}{169216a782b362fa1be557b312b165ef}
+      \strng{bibnamehash}{169216a782b362fa1be557b312b165ef}
+      \strng{authorbibnamehash}{169216a782b362fa1be557b312b165ef}
+      \strng{authornamehash}{117e2339f2f0f1fdad9c9649631de97c}
+      \strng{authorfullhash}{169216a782b362fa1be557b312b165ef}
+      \strng{nameabibnamehash}{169216a782b362fa1be557b312b165ef}
+      \strng{nameanamehash}{117e2339f2f0f1fdad9c9649631de97c}
+      \strng{nameafullhash}{169216a782b362fa1be557b312b165ef}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE Robotics \& Automation Magazine}
+      \field{langid}{english}
+      \field{languageid}{english}
+      \field{lansortorder}{4}
+      \field{number}{3}
+      \field{title}{Toward a fully autonomous UAV: Research platform for indoor and outdoor urban search and rescue}
+      \field{usera}{J}
+      \field{userd}{english}
+      \field{userf}{english}
+      \field{volume}{19}
+      \field{year}{2012}
+      \field{dateera}{ce}
+      \field{pages}{46\bibrangedash 56}
+      \range{pages}{11}
+      \keyw{tomic2012}
+    \endentry
+    \entry{survey}{article}{}
+      \name{author}{2}{}{%
+        {{hash=2b9f09f76c5d59f1b1f880d30ee77e52}{%
+           family={Nascimento},
+           familyi={N\bibinitperiod},
+           given={Tiago\bibnamedelima P},
+           giveni={T\bibinitperiod\bibinitdelim P\bibinitperiod}}}%
+        {{hash=bf219f96a5ef126a473bacf7e7ce5aa2}{%
+           family={Saska},
+           familyi={S\bibinitperiod},
+           given={Martin},
+           giveni={M\bibinitperiod}}}%
+      }
+      \name{namea}{2}{}{%
+        {{hash=2b9f09f76c5d59f1b1f880d30ee77e52}{%
+           family={Nascimento},
+           familyi={N\bibinitperiod},
+           given={Tiago\bibnamedelima P},
+           giveni={T\bibinitperiod\bibinitdelim P\bibinitperiod}}}%
+        {{hash=bf219f96a5ef126a473bacf7e7ce5aa2}{%
+           family={Saska},
+           familyi={S\bibinitperiod},
+           given={Martin},
+           giveni={M\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {english}%
+      }
+      \list{publisher}{1}{%
+        {Elsevier}%
+      }
+      \strng{namehash}{9bad34efe0005786d297ea0e82e4d5b8}
+      \strng{fullhash}{6c1094bd01a5e9ebaa7c8448442310ee}
+      \strng{bibnamehash}{6c1094bd01a5e9ebaa7c8448442310ee}
+      \strng{authorbibnamehash}{6c1094bd01a5e9ebaa7c8448442310ee}
+      \strng{authornamehash}{9bad34efe0005786d297ea0e82e4d5b8}
+      \strng{authorfullhash}{6c1094bd01a5e9ebaa7c8448442310ee}
+      \strng{nameabibnamehash}{6c1094bd01a5e9ebaa7c8448442310ee}
+      \strng{nameanamehash}{9bad34efe0005786d297ea0e82e4d5b8}
+      \strng{nameafullhash}{6c1094bd01a5e9ebaa7c8448442310ee}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Annual Reviews in Control}
+      \field{langid}{english}
+      \field{languageid}{english}
+      \field{lansortorder}{4}
+      \field{title}{Position and attitude control of multi-rotor aerial vehicles: A survey}
+      \field{usera}{J}
+      \field{userd}{english}
+      \field{userf}{english}
+      \field{volume}{48}
+      \field{year}{2019}
+      \field{dateera}{ce}
+      \field{pages}{129\bibrangedash 146}
+      \range{pages}{18}
+      \keyw{survey}
+    \endentry
+    \entry{La2018}{article}{}
+      \name{author}{3}{}{%
+        {{hash=f342e2fc486eabb38a91c8c7a16ab548}{%
+           family={L'afflitto},
+           familyi={L\bibinitperiod},
+           given={Andrea},
+           giveni={A\bibinitperiod}}}%
+        {{hash=a04421b097c77327fb895caa06bbcb68}{%
+           family={Anderson},
+           familyi={A\bibinitperiod},
+           given={Robert\bibnamedelima B},
+           giveni={R\bibinitperiod\bibinitdelim B\bibinitperiod}}}%
+        {{hash=e667b817aeee134c05385d5f30f35334}{%
+           family={Mohammadi},
+           familyi={M\bibinitperiod},
+           given={Keyvan},
+           giveni={K\bibinitperiod}}}%
+      }
+      \name{namea}{3}{}{%
+        {{hash=f342e2fc486eabb38a91c8c7a16ab548}{%
+           family={L'afflitto},
+           familyi={L\bibinitperiod},
+           given={Andrea},
+           giveni={A\bibinitperiod}}}%
+        {{hash=a04421b097c77327fb895caa06bbcb68}{%
+           family={Anderson},
+           familyi={A\bibinitperiod},
+           given={Robert\bibnamedelima B},
+           giveni={R\bibinitperiod\bibinitdelim B\bibinitperiod}}}%
+        {{hash=e667b817aeee134c05385d5f30f35334}{%
+           family={Mohammadi},
+           familyi={M\bibinitperiod},
+           given={Keyvan},
+           giveni={K\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {english}%
+      }
+      \list{publisher}{1}{%
+        {IEEE}%
+      }
+      \strng{namehash}{0d3d878f5a9957d3ee2094da954aace8}
+      \strng{fullhash}{d12458f8bc26d69ababcdf891a66f618}
+      \strng{bibnamehash}{d12458f8bc26d69ababcdf891a66f618}
+      \strng{authorbibnamehash}{d12458f8bc26d69ababcdf891a66f618}
+      \strng{authornamehash}{0d3d878f5a9957d3ee2094da954aace8}
+      \strng{authorfullhash}{d12458f8bc26d69ababcdf891a66f618}
+      \strng{nameabibnamehash}{d12458f8bc26d69ababcdf891a66f618}
+      \strng{nameanamehash}{0d3d878f5a9957d3ee2094da954aace8}
+      \strng{nameafullhash}{d12458f8bc26d69ababcdf891a66f618}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE Control Systems Magazine}
+      \field{langid}{english}
+      \field{languageid}{english}
+      \field{lansortorder}{4}
+      \field{number}{3}
+      \field{title}{An introduction to nonlinear robust control for unmanned quadrotor aircraft: How to design control algorithms for quadrotors using sliding mode control and adaptive control techniques [focus on education]}
+      \field{usera}{J}
+      \field{userd}{english}
+      \field{userf}{english}
+      \field{volume}{38}
+      \field{year}{2018}
+      \field{dateera}{ce}
+      \field{pages}{102\bibrangedash 121}
+      \range{pages}{20}
+      \keyw{La2018}
+    \endentry
+    \entry{boua2007}{report}{}
+      \name{author}{1}{}{%
+        {{hash=8194dcd7e32b23c65f083bac76ced3dd}{%
+           family={Bouabdallah},
+           familyi={B\bibinitperiod},
+           given={Samir},
+           giveni={S\bibinitperiod}}}%
+      }
+      \name{namea}{1}{}{%
+        {{hash=8194dcd7e32b23c65f083bac76ced3dd}{%
+           family={Bouabdallah},
+           familyi={B\bibinitperiod},
+           given={Samir},
+           giveni={S\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {Epfl}%
+      }
+      \list{language}{1}{%
+        {english}%
+      }
+      \list{publisher}{1}{%
+        {Epfl}%
+      }
+      \strng{namehash}{8194dcd7e32b23c65f083bac76ced3dd}
+      \strng{fullhash}{8194dcd7e32b23c65f083bac76ced3dd}
+      \strng{bibnamehash}{8194dcd7e32b23c65f083bac76ced3dd}
+      \strng{authorbibnamehash}{8194dcd7e32b23c65f083bac76ced3dd}
+      \strng{authornamehash}{8194dcd7e32b23c65f083bac76ced3dd}
+      \strng{authorfullhash}{8194dcd7e32b23c65f083bac76ced3dd}
+      \strng{nameabibnamehash}{8194dcd7e32b23c65f083bac76ced3dd}
+      \strng{nameanamehash}{8194dcd7e32b23c65f083bac76ced3dd}
+      \strng{nameafullhash}{8194dcd7e32b23c65f083bac76ced3dd}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{langid}{english}
+      \field{languageid}{english}
+      \field{lansortorder}{4}
+      \field{title}{Design and control of quadrotors with application to autonomous flying}
+      \field{usera}{R}
+      \field{userd}{english}
+      \field{userf}{english}
+      \field{year}{2007}
+      \field{dateera}{ce}
+      \keyw{boua2007}
+    \endentry
+    \entry{boua2005}{inproceedings}{}
+      \name{author}{2}{}{%
+        {{hash=8194dcd7e32b23c65f083bac76ced3dd}{%
+           family={Bouabdallah},
+           familyi={B\bibinitperiod},
+           given={Samir},
+           giveni={S\bibinitperiod}}}%
+        {{hash=6ee8958bbf32527489012d8ca7c95ee3}{%
+           family={Siegwart},
+           familyi={S\bibinitperiod},
+           given={Roland},
+           giveni={R\bibinitperiod}}}%
+      }
+      \name{namea}{2}{}{%
+        {{hash=8194dcd7e32b23c65f083bac76ced3dd}{%
+           family={Bouabdallah},
+           familyi={B\bibinitperiod},
+           given={Samir},
+           giveni={S\bibinitperiod}}}%
+        {{hash=6ee8958bbf32527489012d8ca7c95ee3}{%
+           family={Siegwart},
+           familyi={S\bibinitperiod},
+           given={Roland},
+           giveni={R\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {english}%
+      }
+      \list{organization}{1}{%
+        {IEEE}%
+      }
+      \strng{namehash}{a0e6103b5d9eba9b1535b88ff714fd77}
+      \strng{fullhash}{e05a12443a562d0ff9b73ce098a67132}
+      \strng{bibnamehash}{e05a12443a562d0ff9b73ce098a67132}
+      \strng{authorbibnamehash}{e05a12443a562d0ff9b73ce098a67132}
+      \strng{authornamehash}{a0e6103b5d9eba9b1535b88ff714fd77}
+      \strng{authorfullhash}{e05a12443a562d0ff9b73ce098a67132}
+      \strng{nameabibnamehash}{e05a12443a562d0ff9b73ce098a67132}
+      \strng{nameanamehash}{a0e6103b5d9eba9b1535b88ff714fd77}
+      \strng{nameafullhash}{e05a12443a562d0ff9b73ce098a67132}
+      \field{extraname}{1}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the 2005 IEEE international conference on robotics and automation}
+      \field{langid}{english}
+      \field{languageid}{english}
+      \field{lansortorder}{4}
+      \field{title}{Backstepping and sliding-mode techniques applied to an indoor micro quadrotor}
+      \field{usera}{C}
+      \field{userd}{english}
+      \field{userf}{english}
+      \field{year}{2005}
+      \field{dateera}{ce}
+      \field{pages}{2247\bibrangedash 2252}
+      \range{pages}{6}
+      \keyw{boua2005}
+    \endentry
+    \entry{bouabdallah2007full}{inproceedings}{}
+      \name{author}{2}{}{%
+        {{hash=8194dcd7e32b23c65f083bac76ced3dd}{%
+           family={Bouabdallah},
+           familyi={B\bibinitperiod},
+           given={Samir},
+           giveni={S\bibinitperiod}}}%
+        {{hash=6ee8958bbf32527489012d8ca7c95ee3}{%
+           family={Siegwart},
+           familyi={S\bibinitperiod},
+           given={Roland},
+           giveni={R\bibinitperiod}}}%
+      }
+      \name{namea}{2}{}{%
+        {{hash=8194dcd7e32b23c65f083bac76ced3dd}{%
+           family={Bouabdallah},
+           familyi={B\bibinitperiod},
+           given={Samir},
+           giveni={S\bibinitperiod}}}%
+        {{hash=6ee8958bbf32527489012d8ca7c95ee3}{%
+           family={Siegwart},
+           familyi={S\bibinitperiod},
+           given={Roland},
+           giveni={R\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {english}%
+      }
+      \list{organization}{1}{%
+        {Ieee}%
+      }
+      \strng{namehash}{a0e6103b5d9eba9b1535b88ff714fd77}
+      \strng{fullhash}{e05a12443a562d0ff9b73ce098a67132}
+      \strng{bibnamehash}{e05a12443a562d0ff9b73ce098a67132}
+      \strng{authorbibnamehash}{e05a12443a562d0ff9b73ce098a67132}
+      \strng{authornamehash}{a0e6103b5d9eba9b1535b88ff714fd77}
+      \strng{authorfullhash}{e05a12443a562d0ff9b73ce098a67132}
+      \strng{nameabibnamehash}{e05a12443a562d0ff9b73ce098a67132}
+      \strng{nameanamehash}{a0e6103b5d9eba9b1535b88ff714fd77}
+      \strng{nameafullhash}{e05a12443a562d0ff9b73ce098a67132}
+      \field{extraname}{2}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{2007 IEEE/RSJ international conference on intelligent robots and systems}
+      \field{langid}{english}
+      \field{languageid}{english}
+      \field{lansortorder}{4}
+      \field{title}{Full control of a quadrotor}
+      \field{usera}{C}
+      \field{userd}{english}
+      \field{userf}{english}
+      \field{year}{2007}
+      \field{dateera}{ce}
+      \field{pages}{153\bibrangedash 158}
+      \range{pages}{6}
+      \keyw{bouabdallah2007full}
+    \endentry
+    \entry{Lee2010}{inproceedings}{}
+      \name{author}{3}{}{%
+        {{hash=86bc5919d49028a59b2e0a8cf7ffc3c4}{%
+           family={Lee},
+           familyi={L\bibinitperiod},
+           given={Taeyoung},
+           giveni={T\bibinitperiod}}}%
+        {{hash=d0d728702b3b5068eeb3ccb10586143f}{%
+           family={Leok},
+           familyi={L\bibinitperiod},
+           given={Melvin},
+           giveni={M\bibinitperiod}}}%
+        {{hash=6b74c41e27a494f9efc20fe6a8402acc}{%
+           family={McClamroch},
+           familyi={M\bibinitperiod},
+           given={N.\bibnamedelimi Harris},
+           giveni={N\bibinitperiod\bibinitdelim H\bibinitperiod}}}%
+      }
+      \name{namea}{3}{}{%
+        {{hash=86bc5919d49028a59b2e0a8cf7ffc3c4}{%
+           family={Lee},
+           familyi={L\bibinitperiod},
+           given={Taeyoung},
+           giveni={T\bibinitperiod}}}%
+        {{hash=d0d728702b3b5068eeb3ccb10586143f}{%
+           family={Leok},
+           familyi={L\bibinitperiod},
+           given={Melvin},
+           giveni={M\bibinitperiod}}}%
+        {{hash=6b74c41e27a494f9efc20fe6a8402acc}{%
+           family={McClamroch},
+           familyi={M\bibinitperiod},
+           given={N.\bibnamedelimi Harris},
+           giveni={N\bibinitperiod\bibinitdelim H\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {english}%
+      }
+      \strng{namehash}{ab9cb6d4791a163c9f18ea77573fa2de}
+      \strng{fullhash}{ebe487b1ea3f73c983b23d6d08c7b614}
+      \strng{bibnamehash}{ebe487b1ea3f73c983b23d6d08c7b614}
+      \strng{authorbibnamehash}{ebe487b1ea3f73c983b23d6d08c7b614}
+      \strng{authornamehash}{ab9cb6d4791a163c9f18ea77573fa2de}
+      \strng{authorfullhash}{ebe487b1ea3f73c983b23d6d08c7b614}
+      \strng{nameabibnamehash}{ebe487b1ea3f73c983b23d6d08c7b614}
+      \strng{nameanamehash}{ab9cb6d4791a163c9f18ea77573fa2de}
+      \strng{nameafullhash}{ebe487b1ea3f73c983b23d6d08c7b614}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{49th IEEE Conference on Decision and Control (CDC)}
+      \field{langid}{english}
+      \field{languageid}{english}
+      \field{lansortorder}{4}
+      \field{title}{Geometric tracking control of a quadrotor UAV on SE(3)}
+      \field{usera}{C}
+      \field{userd}{english}
+      \field{userf}{english}
+      \field{year}{2010}
+      \field{dateera}{ce}
+      \field{pages}{5420\bibrangedash 5425}
+      \range{pages}{6}
+      \verb{doi}
+      \verb 10.1109/CDC.2010.5717652
+      \endverb
+      \keyw{Unmanned aerial vehicles;Stability analysis;Attitude control;Asymptotic stability;Propellers;Trajectory;Rotors}
+    \endentry
+    \entry{brescianini2013nonlinear}{report}{}
+      \name{author}{3}{}{%
+        {{hash=5cec9e201acadb35ef106474b6f25ffb}{%
+           family={Brescianini},
+           familyi={B\bibinitperiod},
+           given={Dario},
+           giveni={D\bibinitperiod}}}%
+        {{hash=5d1325e2f4add5cfb02ed6d609d78cce}{%
+           family={Hehn},
+           familyi={H\bibinitperiod},
+           given={Markus},
+           giveni={M\bibinitperiod}}}%
+        {{hash=ed6aac3f87d9f74d066c55f4124be7f4}{%
+           family={D'Andrea},
+           familyi={D\bibinitperiod},
+           given={Raffaello},
+           giveni={R\bibinitperiod}}}%
+      }
+      \name{namea}{3}{}{%
+        {{hash=5cec9e201acadb35ef106474b6f25ffb}{%
+           family={Brescianini},
+           familyi={B\bibinitperiod},
+           given={Dario},
+           giveni={D\bibinitperiod}}}%
+        {{hash=5d1325e2f4add5cfb02ed6d609d78cce}{%
+           family={Hehn},
+           familyi={H\bibinitperiod},
+           given={Markus},
+           giveni={M\bibinitperiod}}}%
+        {{hash=ed6aac3f87d9f74d066c55f4124be7f4}{%
+           family={D'Andrea},
+           familyi={D\bibinitperiod},
+           given={Raffaello},
+           giveni={R\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {ETH Zurich}%
+      }
+      \list{language}{1}{%
+        {english}%
+      }
+      \list{publisher}{1}{%
+        {ETH Zurich}%
+      }
+      \strng{namehash}{0c41d534be1a241c27f9eb1a3d8c9343}
+      \strng{fullhash}{19adc2d6c1055435d84735b51cee043a}
+      \strng{bibnamehash}{19adc2d6c1055435d84735b51cee043a}
+      \strng{authorbibnamehash}{19adc2d6c1055435d84735b51cee043a}
+      \strng{authornamehash}{0c41d534be1a241c27f9eb1a3d8c9343}
+      \strng{authorfullhash}{19adc2d6c1055435d84735b51cee043a}
+      \strng{nameabibnamehash}{19adc2d6c1055435d84735b51cee043a}
+      \strng{nameanamehash}{0c41d534be1a241c27f9eb1a3d8c9343}
+      \strng{nameafullhash}{19adc2d6c1055435d84735b51cee043a}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{langid}{english}
+      \field{languageid}{english}
+      \field{lansortorder}{4}
+      \field{title}{Nonlinear quadrocopter attitude control: Technical report}
+      \field{usera}{R}
+      \field{userd}{english}
+      \field{userf}{english}
+      \field{year}{2013}
+      \field{dateera}{ce}
+      \keyw{brescianini2013nonlinear}
+    \endentry
+    \entry{satici2013robust}{article}{}
+      \name{author}{3}{}{%
+        {{hash=593800d46976c4923727e2cd85839054}{%
+           family={Satici},
+           familyi={S\bibinitperiod},
+           given={Aykut\bibnamedelima C},
+           giveni={A\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
+        {{hash=7843dc7c78c27e2b5502ba79fd7ed580}{%
+           family={Poonawala},
+           familyi={P\bibinitperiod},
+           given={Hasan},
+           giveni={H\bibinitperiod}}}%
+        {{hash=1e0c4c9e500fcb5128a2bb73fbbe891a}{%
+           family={Spong},
+           familyi={S\bibinitperiod},
+           given={Mark\bibnamedelima W},
+           giveni={M\bibinitperiod\bibinitdelim W\bibinitperiod}}}%
+      }
+      \name{namea}{3}{}{%
+        {{hash=593800d46976c4923727e2cd85839054}{%
+           family={Satici},
+           familyi={S\bibinitperiod},
+           given={Aykut\bibnamedelima C},
+           giveni={A\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
+        {{hash=7843dc7c78c27e2b5502ba79fd7ed580}{%
+           family={Poonawala},
+           familyi={P\bibinitperiod},
+           given={Hasan},
+           giveni={H\bibinitperiod}}}%
+        {{hash=1e0c4c9e500fcb5128a2bb73fbbe891a}{%
+           family={Spong},
+           familyi={S\bibinitperiod},
+           given={Mark\bibnamedelima W},
+           giveni={M\bibinitperiod\bibinitdelim W\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {english}%
+      }
+      \list{publisher}{1}{%
+        {IEEE}%
+      }
+      \strng{namehash}{b9adcf428c44b622ef990b913b82a232}
+      \strng{fullhash}{8eb19f6bca12b709e78575591eac569f}
+      \strng{bibnamehash}{8eb19f6bca12b709e78575591eac569f}
+      \strng{authorbibnamehash}{8eb19f6bca12b709e78575591eac569f}
+      \strng{authornamehash}{b9adcf428c44b622ef990b913b82a232}
+      \strng{authorfullhash}{8eb19f6bca12b709e78575591eac569f}
+      \strng{nameabibnamehash}{8eb19f6bca12b709e78575591eac569f}
+      \strng{nameanamehash}{b9adcf428c44b622ef990b913b82a232}
+      \strng{nameafullhash}{8eb19f6bca12b709e78575591eac569f}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE Access}
+      \field{langid}{english}
+      \field{languageid}{english}
+      \field{lansortorder}{4}
+      \field{title}{Robust optimal control of quadrotor UAVs}
+      \field{usera}{J}
+      \field{userd}{english}
+      \field{userf}{english}
+      \field{volume}{1}
+      \field{year}{2013}
+      \field{dateera}{ce}
+      \field{pages}{79\bibrangedash 93}
+      \range{pages}{15}
+      \keyw{satici2013robust}
+    \endentry
+    \entry{o2022neural}{article}{}
+      \name{author}{7}{}{%
+        {{hash=7065b16268e3c00151b74aaa39d379ab}{%
+           family={O’Connell},
+           familyi={O\bibinitperiod},
+           given={Michael},
+           giveni={M\bibinitperiod}}}%
+        {{hash=a65e0dcf7d61134ee634d3a12fbc6fc9}{%
+           family={Shi},
+           familyi={S\bibinitperiod},
+           given={Guanya},
+           giveni={G\bibinitperiod}}}%
+        {{hash=db0a3a4fd450f87943871229801a9329}{%
+           family={Shi},
+           familyi={S\bibinitperiod},
+           given={Xichen},
+           giveni={X\bibinitperiod}}}%
+        {{hash=3648b51d63e1ae389e46f87296d4c89a}{%
+           family={Azizzadenesheli},
+           familyi={A\bibinitperiod},
+           given={Kamyar},
+           giveni={K\bibinitperiod}}}%
+        {{hash=bd4a2be6ede169a3c794a1cd7e3fb9a2}{%
+           family={Anandkumar},
+           familyi={A\bibinitperiod},
+           given={Anima},
+           giveni={A\bibinitperiod}}}%
+        {{hash=d433272a8da287e7d9b17c3f80798a3f}{%
+           family={Yue},
+           familyi={Y\bibinitperiod},
+           given={Yisong},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=8de03c6b2bc4ef299e6ab88b3b91e0c6}{%
+           family={Chung},
+           familyi={C\bibinitperiod},
+           given={Soon-Jo},
+           giveni={S\bibinithyphendelim J\bibinitperiod}}}%
+      }
+      \name{namea}{7}{}{%
+        {{hash=7065b16268e3c00151b74aaa39d379ab}{%
+           family={O’Connell},
+           familyi={O\bibinitperiod},
+           given={Michael},
+           giveni={M\bibinitperiod}}}%
+        {{hash=a65e0dcf7d61134ee634d3a12fbc6fc9}{%
+           family={Shi},
+           familyi={S\bibinitperiod},
+           given={Guanya},
+           giveni={G\bibinitperiod}}}%
+        {{hash=db0a3a4fd450f87943871229801a9329}{%
+           family={Shi},
+           familyi={S\bibinitperiod},
+           given={Xichen},
+           giveni={X\bibinitperiod}}}%
+        {{hash=3648b51d63e1ae389e46f87296d4c89a}{%
+           family={Azizzadenesheli},
+           familyi={A\bibinitperiod},
+           given={Kamyar},
+           giveni={K\bibinitperiod}}}%
+        {{hash=bd4a2be6ede169a3c794a1cd7e3fb9a2}{%
+           family={Anandkumar},
+           familyi={A\bibinitperiod},
+           given={Anima},
+           giveni={A\bibinitperiod}}}%
+        {{hash=d433272a8da287e7d9b17c3f80798a3f}{%
+           family={Yue},
+           familyi={Y\bibinitperiod},
+           given={Yisong},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=8de03c6b2bc4ef299e6ab88b3b91e0c6}{%
+           family={Chung},
+           familyi={C\bibinitperiod},
+           given={Soon-Jo},
+           giveni={S\bibinithyphendelim J\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {english}%
+      }
+      \list{publisher}{1}{%
+        {American Association for the Advancement of Science}%
+      }
+      \strng{namehash}{021a3bd0824595464473b064ae2a2cc3}
+      \strng{fullhash}{e00edb59b27f15859eeca895305cf8e4}
+      \strng{bibnamehash}{43ef64cc66e34a09a546e3cbea801842}
+      \strng{authorbibnamehash}{43ef64cc66e34a09a546e3cbea801842}
+      \strng{authornamehash}{021a3bd0824595464473b064ae2a2cc3}
+      \strng{authorfullhash}{e00edb59b27f15859eeca895305cf8e4}
+      \strng{nameabibnamehash}{43ef64cc66e34a09a546e3cbea801842}
+      \strng{nameanamehash}{021a3bd0824595464473b064ae2a2cc3}
+      \strng{nameafullhash}{e00edb59b27f15859eeca895305cf8e4}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Science Robotics}
+      \field{langid}{english}
+      \field{languageid}{english}
+      \field{lansortorder}{4}
+      \field{number}{66}
+      \field{title}{Neural-fly enables rapid learning for agile flight in strong winds}
+      \field{usera}{J}
+      \field{userd}{english}
+      \field{userf}{english}
+      \field{volume}{7}
+      \field{year}{2022}
+      \field{dateera}{ce}
+      \field{pages}{eabm6597}
+      \range{pages}{-1}
+      \keyw{o2022neural}
+    \endentry
+    \entry{duan1}{article}{}
+      \name{author}{1}{}{%
+        {{hash=5b7d1bce9ebeabc2bd9bfc40e67a875c}{%
+           family={Duan},
+           familyi={D\bibinitperiod},
+           given={Guangren},
+           giveni={G\bibinitperiod}}}%
+      }
+      \name{namea}{1}{}{%
+        {{hash=5b7d1bce9ebeabc2bd9bfc40e67a875c}{%
+           family={Duan},
+           familyi={D\bibinitperiod},
+           given={Guangren},
+           giveni={G\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {english}%
+      }
+      \list{publisher}{1}{%
+        {Taylor \& Francis}%
+      }
+      \strng{namehash}{5b7d1bce9ebeabc2bd9bfc40e67a875c}
+      \strng{fullhash}{5b7d1bce9ebeabc2bd9bfc40e67a875c}
+      \strng{bibnamehash}{5b7d1bce9ebeabc2bd9bfc40e67a875c}
+      \strng{authorbibnamehash}{5b7d1bce9ebeabc2bd9bfc40e67a875c}
+      \strng{authornamehash}{5b7d1bce9ebeabc2bd9bfc40e67a875c}
+      \strng{authorfullhash}{5b7d1bce9ebeabc2bd9bfc40e67a875c}
+      \strng{nameabibnamehash}{5b7d1bce9ebeabc2bd9bfc40e67a875c}
+      \strng{nameanamehash}{5b7d1bce9ebeabc2bd9bfc40e67a875c}
+      \strng{nameafullhash}{5b7d1bce9ebeabc2bd9bfc40e67a875c}
+      \field{extraname}{1}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{International Journal of Systems Science}
+      \field{langid}{english}
+      \field{languageid}{english}
+      \field{lansortorder}{4}
+      \field{number}{2}
+      \field{title}{High-order fully actuated system approaches: Part I. Models and basic procedure}
+      \field{usera}{J}
+      \field{userd}{english}
+      \field{userf}{english}
+      \field{volume}{52}
+      \field{year}{2021}
+      \field{dateera}{ce}
+      \field{pages}{422\bibrangedash 435}
+      \range{pages}{14}
+      \keyw{duan1}
+    \endentry
+    \entry{duan2}{article}{}
+      \name{author}{1}{}{%
+        {{hash=5b7d1bce9ebeabc2bd9bfc40e67a875c}{%
+           family={Duan},
+           familyi={D\bibinitperiod},
+           given={Guangren},
+           giveni={G\bibinitperiod}}}%
+      }
+      \name{namea}{1}{}{%
+        {{hash=5b7d1bce9ebeabc2bd9bfc40e67a875c}{%
+           family={Duan},
+           familyi={D\bibinitperiod},
+           given={Guangren},
+           giveni={G\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {english}%
+      }
+      \list{publisher}{1}{%
+        {Taylor \& Francis}%
+      }
+      \strng{namehash}{5b7d1bce9ebeabc2bd9bfc40e67a875c}
+      \strng{fullhash}{5b7d1bce9ebeabc2bd9bfc40e67a875c}
+      \strng{bibnamehash}{5b7d1bce9ebeabc2bd9bfc40e67a875c}
+      \strng{authorbibnamehash}{5b7d1bce9ebeabc2bd9bfc40e67a875c}
+      \strng{authornamehash}{5b7d1bce9ebeabc2bd9bfc40e67a875c}
+      \strng{authorfullhash}{5b7d1bce9ebeabc2bd9bfc40e67a875c}
+      \strng{nameabibnamehash}{5b7d1bce9ebeabc2bd9bfc40e67a875c}
+      \strng{nameanamehash}{5b7d1bce9ebeabc2bd9bfc40e67a875c}
+      \strng{nameafullhash}{5b7d1bce9ebeabc2bd9bfc40e67a875c}
+      \field{extraname}{2}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{International Journal of Systems Science}
+      \field{langid}{english}
+      \field{languageid}{english}
+      \field{lansortorder}{4}
+      \field{number}{3}
+      \field{title}{High-order fully actuated system approaches: Part II. Generalized strict-feedback systems}
+      \field{usera}{J}
+      \field{userd}{english}
+      \field{userf}{english}
+      \field{volume}{52}
+      \field{year}{2021}
+      \field{dateera}{ce}
+      \field{pages}{437\bibrangedash 454}
+      \range{pages}{18}
+      \keyw{duan2}
+    \endentry
+    \entry{duan3}{article}{}
+      \name{author}{1}{}{%
+        {{hash=5b7d1bce9ebeabc2bd9bfc40e67a875c}{%
+           family={Duan},
+           familyi={D\bibinitperiod},
+           given={Guangren},
+           giveni={G\bibinitperiod}}}%
+      }
+      \name{namea}{1}{}{%
+        {{hash=5b7d1bce9ebeabc2bd9bfc40e67a875c}{%
+           family={Duan},
+           familyi={D\bibinitperiod},
+           given={Guangren},
+           giveni={G\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {english}%
+      }
+      \list{publisher}{1}{%
+        {Taylor \& Francis}%
+      }
+      \strng{namehash}{5b7d1bce9ebeabc2bd9bfc40e67a875c}
+      \strng{fullhash}{5b7d1bce9ebeabc2bd9bfc40e67a875c}
+      \strng{bibnamehash}{5b7d1bce9ebeabc2bd9bfc40e67a875c}
+      \strng{authorbibnamehash}{5b7d1bce9ebeabc2bd9bfc40e67a875c}
+      \strng{authornamehash}{5b7d1bce9ebeabc2bd9bfc40e67a875c}
+      \strng{authorfullhash}{5b7d1bce9ebeabc2bd9bfc40e67a875c}
+      \strng{nameabibnamehash}{5b7d1bce9ebeabc2bd9bfc40e67a875c}
+      \strng{nameanamehash}{5b7d1bce9ebeabc2bd9bfc40e67a875c}
+      \strng{nameafullhash}{5b7d1bce9ebeabc2bd9bfc40e67a875c}
+      \field{extraname}{3}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{International Journal of Systems Science}
+      \field{langid}{english}
+      \field{languageid}{english}
+      \field{lansortorder}{4}
+      \field{number}{5}
+      \field{title}{High-order fully actuated system approaches: Part III. Robust control and high-order backstepping}
+      \field{usera}{J}
+      \field{userd}{english}
+      \field{userf}{english}
+      \field{volume}{52}
+      \field{year}{2021}
+      \field{dateera}{ce}
+      \field{pages}{952\bibrangedash 971}
+      \range{pages}{20}
+      \keyw{duan3}
+    \endentry
+    \entry{duan4}{article}{}
+      \name{author}{1}{}{%
+        {{hash=5b7d1bce9ebeabc2bd9bfc40e67a875c}{%
+           family={Duan},
+           familyi={D\bibinitperiod},
+           given={Guangren},
+           giveni={G\bibinitperiod}}}%
+      }
+      \name{namea}{1}{}{%
+        {{hash=5b7d1bce9ebeabc2bd9bfc40e67a875c}{%
+           family={Duan},
+           familyi={D\bibinitperiod},
+           given={Guangren},
+           giveni={G\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {english}%
+      }
+      \list{publisher}{1}{%
+        {Taylor \& Francis}%
+      }
+      \strng{namehash}{5b7d1bce9ebeabc2bd9bfc40e67a875c}
+      \strng{fullhash}{5b7d1bce9ebeabc2bd9bfc40e67a875c}
+      \strng{bibnamehash}{5b7d1bce9ebeabc2bd9bfc40e67a875c}
+      \strng{authorbibnamehash}{5b7d1bce9ebeabc2bd9bfc40e67a875c}
+      \strng{authornamehash}{5b7d1bce9ebeabc2bd9bfc40e67a875c}
+      \strng{authorfullhash}{5b7d1bce9ebeabc2bd9bfc40e67a875c}
+      \strng{nameabibnamehash}{5b7d1bce9ebeabc2bd9bfc40e67a875c}
+      \strng{nameanamehash}{5b7d1bce9ebeabc2bd9bfc40e67a875c}
+      \strng{nameafullhash}{5b7d1bce9ebeabc2bd9bfc40e67a875c}
+      \field{extraname}{4}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{International Journal of Systems Science}
+      \field{langid}{english}
+      \field{languageid}{english}
+      \field{lansortorder}{4}
+      \field{number}{5}
+      \field{title}{High-order fully actuated system approaches: Part IV. Adaptive control and high-order backstepping}
+      \field{usera}{J}
+      \field{userd}{english}
+      \field{userf}{english}
+      \field{volume}{52}
+      \field{year}{2021}
+      \field{dateera}{ce}
+      \field{pages}{972\bibrangedash 989}
+      \range{pages}{18}
+      \keyw{duan4}
+    \endentry
+    \entry{duan5}{article}{}
+      \name{author}{1}{}{%
+        {{hash=5b7d1bce9ebeabc2bd9bfc40e67a875c}{%
+           family={Duan},
+           familyi={D\bibinitperiod},
+           given={Guangren},
+           giveni={G\bibinitperiod}}}%
+      }
+      \name{namea}{1}{}{%
+        {{hash=5b7d1bce9ebeabc2bd9bfc40e67a875c}{%
+           family={Duan},
+           familyi={D\bibinitperiod},
+           given={Guangren},
+           giveni={G\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {english}%
+      }
+      \list{publisher}{1}{%
+        {Taylor \& Francis}%
+      }
+      \strng{namehash}{5b7d1bce9ebeabc2bd9bfc40e67a875c}
+      \strng{fullhash}{5b7d1bce9ebeabc2bd9bfc40e67a875c}
+      \strng{bibnamehash}{5b7d1bce9ebeabc2bd9bfc40e67a875c}
+      \strng{authorbibnamehash}{5b7d1bce9ebeabc2bd9bfc40e67a875c}
+      \strng{authornamehash}{5b7d1bce9ebeabc2bd9bfc40e67a875c}
+      \strng{authorfullhash}{5b7d1bce9ebeabc2bd9bfc40e67a875c}
+      \strng{nameabibnamehash}{5b7d1bce9ebeabc2bd9bfc40e67a875c}
+      \strng{nameanamehash}{5b7d1bce9ebeabc2bd9bfc40e67a875c}
+      \strng{nameafullhash}{5b7d1bce9ebeabc2bd9bfc40e67a875c}
+      \field{extraname}{5}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{International Journal of Systems Science}
+      \field{langid}{english}
+      \field{languageid}{english}
+      \field{lansortorder}{4}
+      \field{number}{10}
+      \field{title}{High-order fully actuated system approaches: Part V. Robust adaptive control}
+      \field{usera}{J}
+      \field{userd}{english}
+      \field{userf}{english}
+      \field{volume}{52}
+      \field{year}{2021}
+      \field{dateera}{ce}
+      \field{pages}{2129\bibrangedash 2143}
+      \range{pages}{15}
+      \keyw{duan5}
+    \endentry
+    \entry{段1}{article}{}
+      \name{author}{1}{}{%
+        {{hash=1bd436cce6cdcd96296674448dbb016f}{%
+           family={段广仁},
+           familyi={段\bibinitperiod}}}%
+      }
+      \name{namea}{1}{}{%
+        {{hash=1bd436cce6cdcd96296674448dbb016f}{%
+           family={段广仁},
+           familyi={段\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {chinese}%
+      }
+      \strng{namehash}{1bd436cce6cdcd96296674448dbb016f}
+      \strng{fullhash}{1bd436cce6cdcd96296674448dbb016f}
+      \strng{bibnamehash}{1bd436cce6cdcd96296674448dbb016f}
+      \strng{authorbibnamehash}{1bd436cce6cdcd96296674448dbb016f}
+      \strng{authornamehash}{1bd436cce6cdcd96296674448dbb016f}
+      \strng{authorfullhash}{1bd436cce6cdcd96296674448dbb016f}
+      \strng{nameabibnamehash}{1bd436cce6cdcd96296674448dbb016f}
+      \strng{nameanamehash}{1bd436cce6cdcd96296674448dbb016f}
+      \strng{nameafullhash}{1bd436cce6cdcd96296674448dbb016f}
+      \field{extraname}{1}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{自动化学报}
+      \field{langid}{english}
+      \field{languageid}{chinese}
+      \field{lansortorder}{1}
+      \field{number}{7}
+      \field{title}{高阶系统方法——I全驱系统与参数化设计}
+      \field{usera}{J}
+      \field{userd}{chinese}
+      \field{userf}{chinese}
+      \field{volume}{46}
+      \field{year}{2020}
+      \field{dateera}{ce}
+      \field{pages}{13}
+      \range{pages}{1}
+      \keyw{段1}
+    \endentry
+    \entry{段2}{article}{}
+      \name{author}{1}{}{%
+        {{hash=1bd436cce6cdcd96296674448dbb016f}{%
+           family={段广仁},
+           familyi={段\bibinitperiod}}}%
+      }
+      \name{namea}{1}{}{%
+        {{hash=1bd436cce6cdcd96296674448dbb016f}{%
+           family={段广仁},
+           familyi={段\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {chinese}%
+      }
+      \strng{namehash}{1bd436cce6cdcd96296674448dbb016f}
+      \strng{fullhash}{1bd436cce6cdcd96296674448dbb016f}
+      \strng{bibnamehash}{1bd436cce6cdcd96296674448dbb016f}
+      \strng{authorbibnamehash}{1bd436cce6cdcd96296674448dbb016f}
+      \strng{authornamehash}{1bd436cce6cdcd96296674448dbb016f}
+      \strng{authorfullhash}{1bd436cce6cdcd96296674448dbb016f}
+      \strng{nameabibnamehash}{1bd436cce6cdcd96296674448dbb016f}
+      \strng{nameanamehash}{1bd436cce6cdcd96296674448dbb016f}
+      \strng{nameafullhash}{1bd436cce6cdcd96296674448dbb016f}
+      \field{extraname}{2}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{自动化学报}
+      \field{langid}{english}
+      \field{languageid}{chinese}
+      \field{lansortorder}{1}
+      \field{number}{8}
+      \field{title}{高阶系统方法——Ⅱ.能控性与全驱性}
+      \field{usera}{J}
+      \field{userd}{chinese}
+      \field{userf}{chinese}
+      \field{volume}{46}
+      \field{year}{2020}
+      \field{dateera}{ce}
+      \field{pages}{11}
+      \range{pages}{1}
+      \keyw{段2}
+    \endentry
+    \entry{H}{article}{}
+      \name{author}{4}{}{%
+        {{hash=a77e6f140c2c6410e0f1fc31413e89d0}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Haibo},
+           giveni={H\bibinitperiod}}}%
+        {{hash=80c88b1c7cc92f9bcb33605a25e00dab}{%
+           family={Li},
+           familyi={L\bibinitperiod},
+           given={Zheng},
+           giveni={Z\bibinitperiod}}}%
+        {{hash=377dc3706ae3956c58192093781c8b72}{%
+           family={Xiong},
+           familyi={X\bibinitperiod},
+           given={Hongyun},
+           giveni={H\bibinitperiod}}}%
+        {{hash=cbe1a863b73fcac9598fe7e6e9712e30}{%
+           family={Nian},
+           familyi={N\bibinitperiod},
+           given={Xiaohong},
+           giveni={X\bibinitperiod}}}%
+      }
+      \name{namea}{4}{}{%
+        {{hash=a77e6f140c2c6410e0f1fc31413e89d0}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Haibo},
+           giveni={H\bibinitperiod}}}%
+        {{hash=80c88b1c7cc92f9bcb33605a25e00dab}{%
+           family={Li},
+           familyi={L\bibinitperiod},
+           given={Zheng},
+           giveni={Z\bibinitperiod}}}%
+        {{hash=377dc3706ae3956c58192093781c8b72}{%
+           family={Xiong},
+           familyi={X\bibinitperiod},
+           given={Hongyun},
+           giveni={H\bibinitperiod}}}%
+        {{hash=cbe1a863b73fcac9598fe7e6e9712e30}{%
+           family={Nian},
+           familyi={N\bibinitperiod},
+           given={Xiaohong},
+           giveni={X\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {english}%
+      }
+      \list{publisher}{1}{%
+        {Elsevier}%
+      }
+      \strng{namehash}{25c9bf850fc5d5e02144c86c16553745}
+      \strng{fullhash}{9fcaec4a3c6f3ae43436ccec43d58534}
+      \strng{bibnamehash}{8d8e419aa875765ac3ca3d2d7aa4d612}
+      \strng{authorbibnamehash}{8d8e419aa875765ac3ca3d2d7aa4d612}
+      \strng{authornamehash}{25c9bf850fc5d5e02144c86c16553745}
+      \strng{authorfullhash}{9fcaec4a3c6f3ae43436ccec43d58534}
+      \strng{nameabibnamehash}{8d8e419aa875765ac3ca3d2d7aa4d612}
+      \strng{nameanamehash}{25c9bf850fc5d5e02144c86c16553745}
+      \strng{nameafullhash}{9fcaec4a3c6f3ae43436ccec43d58534}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{ISA transactions}
+      \field{langid}{english}
+      \field{languageid}{english}
+      \field{lansortorder}{4}
+      \field{title}{Robust H∞ attitude tracking control of a quadrotor UAV on SO (3) via variation-based linearization and interval matrix approach}
+      \field{usera}{J}
+      \field{userd}{english}
+      \field{userf}{english}
+      \field{volume}{87}
+      \field{year}{2019}
+      \field{dateera}{ce}
+      \field{pages}{10\bibrangedash 16}
+      \range{pages}{7}
+      \keyw{H}
+    \endentry
+    \entry{MPC}{article}{}
+      \name{author}{2}{}{%
+        {{hash=80ec4a9b8ccbb0af61e4883f5122fbea}{%
+           family={Chikasha},
+           familyi={C\bibinitperiod},
+           given={Piwai},
+           giveni={P\bibinitperiod}}}%
+        {{hash=ebd87702814a5f841f0efbbf71c06898}{%
+           family={Dube},
+           familyi={D\bibinitperiod},
+           given={Chioniso},
+           giveni={C\bibinitperiod}}}%
+      }
+      \name{namea}{2}{}{%
+        {{hash=80ec4a9b8ccbb0af61e4883f5122fbea}{%
+           family={Chikasha},
+           familyi={C\bibinitperiod},
+           given={Piwai},
+           giveni={P\bibinitperiod}}}%
+        {{hash=ebd87702814a5f841f0efbbf71c06898}{%
+           family={Dube},
+           familyi={D\bibinitperiod},
+           given={Chioniso},
+           giveni={C\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {english}%
+      }
+      \strng{namehash}{855e2ea93fd1585e7b51a40c03027012}
+      \strng{fullhash}{fb0ea758bb4bf691591a84d3716613f5}
+      \strng{bibnamehash}{fb0ea758bb4bf691591a84d3716613f5}
+      \strng{authorbibnamehash}{fb0ea758bb4bf691591a84d3716613f5}
+      \strng{authornamehash}{855e2ea93fd1585e7b51a40c03027012}
+      \strng{authorfullhash}{fb0ea758bb4bf691591a84d3716613f5}
+      \strng{nameabibnamehash}{fb0ea758bb4bf691591a84d3716613f5}
+      \strng{nameanamehash}{855e2ea93fd1585e7b51a40c03027012}
+      \strng{nameafullhash}{fb0ea758bb4bf691591a84d3716613f5}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IFAC-PapersOnLine}
+      \field{langid}{english}
+      \field{languageid}{english}
+      \field{lansortorder}{4}
+      \field{title}{Adaptive Model Predictive Control of a Quadrotor}
+      \field{usera}{J}
+      \field{userd}{english}
+      \field{userf}{english}
+      \field{volume}{50}
+      \field{year}{2017}
+      \field{dateera}{ce}
+      \field{pages}{157\bibrangedash 162}
+      \range{pages}{6}
+      \verb{urlraw}
+      \verb https://api.semanticscholar.org/CorpusID:67084990
+      \endverb
+      \verb{url}
+      \verb https://api.semanticscholar.org/CorpusID:67084990
+      \endverb
+      \keyw{MPC}
+    \endentry
+    \entry{sliding}{article}{}
+      \name{author}{3}{}{%
+        {{hash=e7ee6d533ab3bbf361f8c1a99ff1dfea}{%
+           family={Kirchengast},
+           familyi={K\bibinitperiod},
+           given={Martin},
+           giveni={M\bibinitperiod}}}%
+        {{hash=e103ada5c94c081edd1bcaaad383bdb3}{%
+           family={Steinberger},
+           familyi={S\bibinitperiod},
+           given={Martin},
+           giveni={M\bibinitperiod}}}%
+        {{hash=893fc9db206bf8a7f54b88b15becab49}{%
+           family={Horn},
+           familyi={H\bibinitperiod},
+           given={Martin},
+           giveni={M\bibinitperiod}}}%
+      }
+      \name{namea}{3}{}{%
+        {{hash=e7ee6d533ab3bbf361f8c1a99ff1dfea}{%
+           family={Kirchengast},
+           familyi={K\bibinitperiod},
+           given={Martin},
+           giveni={M\bibinitperiod}}}%
+        {{hash=e103ada5c94c081edd1bcaaad383bdb3}{%
+           family={Steinberger},
+           familyi={S\bibinitperiod},
+           given={Martin},
+           giveni={M\bibinitperiod}}}%
+        {{hash=893fc9db206bf8a7f54b88b15becab49}{%
+           family={Horn},
+           familyi={H\bibinitperiod},
+           given={Martin},
+           giveni={M\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {english}%
+      }
+      \strng{namehash}{59c34f4fe4b5fd68753ffeea0a85a9cb}
+      \strng{fullhash}{9bd22587901cea9094df6b712e74bf59}
+      \strng{bibnamehash}{9bd22587901cea9094df6b712e74bf59}
+      \strng{authorbibnamehash}{9bd22587901cea9094df6b712e74bf59}
+      \strng{authornamehash}{59c34f4fe4b5fd68753ffeea0a85a9cb}
+      \strng{authorfullhash}{9bd22587901cea9094df6b712e74bf59}
+      \strng{nameabibnamehash}{9bd22587901cea9094df6b712e74bf59}
+      \strng{nameanamehash}{59c34f4fe4b5fd68753ffeea0a85a9cb}
+      \strng{nameafullhash}{9bd22587901cea9094df6b712e74bf59}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IFAC-PapersOnLine}
+      \field{langid}{english}
+      \field{languageid}{english}
+      \field{lansortorder}{4}
+      \field{title}{Control Allocation under Actuator Saturation: An Experimental Evaluation}
+      \field{usera}{J}
+      \field{userd}{english}
+      \field{userf}{english}
+      \field{volume}{51}
+      \field{year}{2018}
+      \field{dateera}{ce}
+      \field{pages}{48\bibrangedash 54}
+      \range{pages}{7}
+      \verb{urlraw}
+      \verb https://api.semanticscholar.org/CorpusID:125122962
+      \endverb
+      \verb{url}
+      \verb https://api.semanticscholar.org/CorpusID:125122962
+      \endverb
+      \keyw{sliding}
+    \endentry
     \entry{attitude}{article}{}
       \name{author}{3}{}{%
         {{hash=e94344d415af3f824ea9a9d2911343ac}{%
@@ -66,8 +1382,8 @@
       \strng{nameabibnamehash}{2d1cd95237c3c56398ec9edb508fdc99}
       \strng{nameanamehash}{e694eec477e32746efe3cdd89a8a20c1}
       \strng{nameafullhash}{2d1cd95237c3c56398ec9edb508fdc99}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{IEEE Control Systems Magazine}
@@ -180,8 +1496,8 @@
       \strng{nameabibnamehash}{fb929a44f1315d6cca063ec0c3ee8a98}
       \strng{nameanamehash}{b18b56093d4f1a7a7957810c7e126ebc}
       \strng{nameafullhash}{fb929a44f1315d6cca063ec0c3ee8a98}
-      \field{sortinit}{3}
-      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{langid}{english}
@@ -221,8 +1537,8 @@
       \strng{nameabibnamehash}{5fd61355f90f727f2135330fa8c80a12}
       \strng{nameanamehash}{5fd61355f90f727f2135330fa8c80a12}
       \strng{nameafullhash}{5fd61355f90f727f2135330fa8c80a12}
-      \field{sortinit}{4}
-      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{langid}{english}
@@ -273,8 +1589,8 @@
       \strng{nameabibnamehash}{72bbc1fa1a8b92df0ac44dfe896cd436}
       \strng{nameanamehash}{a0517cdaba5a3a598b944651fa03c29d}
       \strng{nameafullhash}{72bbc1fa1a8b92df0ac44dfe896cd436}
-      \field{sortinit}{5}
-      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{booktitle}{2011 IEEE International Conference on Robotics and Automation}
@@ -293,118 +1609,6 @@
       \verb 10.1109/ICRA.2011.5980409
       \endverb
       \keyw{Trajectory;Angular velocity;Acceleration;Rotors;Aerodynamics;Force;Optimization}
-    \endentry
-    \entry{duan1}{article}{}
-      \name{author}{1}{}{%
-        {{hash=5b7d1bce9ebeabc2bd9bfc40e67a875c}{%
-           family={Duan},
-           familyi={D\bibinitperiod},
-           given={Guangren},
-           giveni={G\bibinitperiod}}}%
-      }
-      \name{namea}{1}{}{%
-        {{hash=5b7d1bce9ebeabc2bd9bfc40e67a875c}{%
-           family={Duan},
-           familyi={D\bibinitperiod},
-           given={Guangren},
-           giveni={G\bibinitperiod}}}%
-      }
-      \list{language}{1}{%
-        {english}%
-      }
-      \strng{namehash}{5b7d1bce9ebeabc2bd9bfc40e67a875c}
-      \strng{fullhash}{5b7d1bce9ebeabc2bd9bfc40e67a875c}
-      \strng{bibnamehash}{5b7d1bce9ebeabc2bd9bfc40e67a875c}
-      \strng{authorbibnamehash}{5b7d1bce9ebeabc2bd9bfc40e67a875c}
-      \strng{authornamehash}{5b7d1bce9ebeabc2bd9bfc40e67a875c}
-      \strng{authorfullhash}{5b7d1bce9ebeabc2bd9bfc40e67a875c}
-      \strng{nameabibnamehash}{5b7d1bce9ebeabc2bd9bfc40e67a875c}
-      \strng{nameanamehash}{5b7d1bce9ebeabc2bd9bfc40e67a875c}
-      \strng{nameafullhash}{5b7d1bce9ebeabc2bd9bfc40e67a875c}
-      \field{sortinit}{6}
-      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{journaltitle}{International Journal of Systems Science}
-      \field{langid}{english}
-      \field{languageid}{english}
-      \field{lansortorder}{4}
-      \field{title}{High-order fully actuated system approaches: Part I. Models and basic procedure}
-      \field{usera}{J}
-      \field{userd}{english}
-      \field{userf}{english}
-      \field{volume}{52}
-      \field{year}{2021}
-      \field{dateera}{ce}
-      \keyw{duan1}
-    \endentry
-    \entry{Lee2010}{inproceedings}{}
-      \name{author}{3}{}{%
-        {{hash=86bc5919d49028a59b2e0a8cf7ffc3c4}{%
-           family={Lee},
-           familyi={L\bibinitperiod},
-           given={Taeyoung},
-           giveni={T\bibinitperiod}}}%
-        {{hash=d0d728702b3b5068eeb3ccb10586143f}{%
-           family={Leok},
-           familyi={L\bibinitperiod},
-           given={Melvin},
-           giveni={M\bibinitperiod}}}%
-        {{hash=6b74c41e27a494f9efc20fe6a8402acc}{%
-           family={McClamroch},
-           familyi={M\bibinitperiod},
-           given={N.\bibnamedelimi Harris},
-           giveni={N\bibinitperiod\bibinitdelim H\bibinitperiod}}}%
-      }
-      \name{namea}{3}{}{%
-        {{hash=86bc5919d49028a59b2e0a8cf7ffc3c4}{%
-           family={Lee},
-           familyi={L\bibinitperiod},
-           given={Taeyoung},
-           giveni={T\bibinitperiod}}}%
-        {{hash=d0d728702b3b5068eeb3ccb10586143f}{%
-           family={Leok},
-           familyi={L\bibinitperiod},
-           given={Melvin},
-           giveni={M\bibinitperiod}}}%
-        {{hash=6b74c41e27a494f9efc20fe6a8402acc}{%
-           family={McClamroch},
-           familyi={M\bibinitperiod},
-           given={N.\bibnamedelimi Harris},
-           giveni={N\bibinitperiod\bibinitdelim H\bibinitperiod}}}%
-      }
-      \list{language}{1}{%
-        {english}%
-      }
-      \strng{namehash}{ab9cb6d4791a163c9f18ea77573fa2de}
-      \strng{fullhash}{ebe487b1ea3f73c983b23d6d08c7b614}
-      \strng{bibnamehash}{ebe487b1ea3f73c983b23d6d08c7b614}
-      \strng{authorbibnamehash}{ebe487b1ea3f73c983b23d6d08c7b614}
-      \strng{authornamehash}{ab9cb6d4791a163c9f18ea77573fa2de}
-      \strng{authorfullhash}{ebe487b1ea3f73c983b23d6d08c7b614}
-      \strng{nameabibnamehash}{ebe487b1ea3f73c983b23d6d08c7b614}
-      \strng{nameanamehash}{ab9cb6d4791a163c9f18ea77573fa2de}
-      \strng{nameafullhash}{ebe487b1ea3f73c983b23d6d08c7b614}
-      \field{sortinit}{7}
-      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{booktitle}{49th IEEE Conference on Decision and Control (CDC)}
-      \field{langid}{english}
-      \field{languageid}{english}
-      \field{lansortorder}{4}
-      \field{title}{Geometric tracking control of a quadrotor UAV on SE(3)}
-      \field{usera}{C}
-      \field{userd}{english}
-      \field{userf}{english}
-      \field{year}{2010}
-      \field{dateera}{ce}
-      \field{pages}{5420\bibrangedash 5425}
-      \range{pages}{6}
-      \verb{doi}
-      \verb 10.1109/CDC.2010.5717652
-      \endverb
-      \keyw{Unmanned aerial vehicles;Stability analysis;Attitude control;Asymptotic stability;Propellers;Trajectory;Rotors}
     \endentry
     \entry{fishros}{misc}{}
       \name{author}{1}{}{%
@@ -429,11 +1633,11 @@
       \strng{nameabibnamehash}{a1aa08b677f196888c462ef91fc69209}
       \strng{nameanamehash}{a1aa08b677f196888c462ef91fc69209}
       \strng{nameafullhash}{a1aa08b677f196888c462ef91fc69209}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{howpublished}{https://fishros.org.cn/forum/topic/20/\%E5\%B0\%8F\%E9\%B1\%BC\%E7\%9A\%84\%E4\%B8\%80\%E9\%94\%AE\%E5\%AE\%89\%E8\%A3\%85\%E7\%B3\%BB\%E5\%88\%97}
+      \field{howpublished}{https://fishros.org.cn}
       \field{langid}{english}
       \field{languageid}{chinese}
       \field{lansortorder}{1}
@@ -469,8 +1673,8 @@
       \strng{nameanamehash}{0ec61a7346db3f45000aa2534c9ae669}
       \strng{nameafullhash}{0ec61a7346db3f45000aa2534c9ae669}
       \field{extraname}{1}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{howpublished}{\url{https://github.com/PX4/PX4-SITL_gazebo-classic/tree/da7206e057703cc645770f02437013358b71e1c0/models/iris}}
@@ -509,8 +1713,8 @@
       \strng{nameanamehash}{0ec61a7346db3f45000aa2534c9ae669}
       \strng{nameafullhash}{0ec61a7346db3f45000aa2534c9ae669}
       \field{extraname}{2}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{howpublished}{\url{https://docs.px4.io/main/zh/concept/architecture.html}}
@@ -549,8 +1753,8 @@
       \strng{nameanamehash}{0ec61a7346db3f45000aa2534c9ae669}
       \strng{nameafullhash}{0ec61a7346db3f45000aa2534c9ae669}
       \field{extraname}{3}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{howpublished}{\url{https://docs.px4.io/main/zh/simulation/hitl.html\#compatible_airframe}}
@@ -589,8 +1793,8 @@
       \strng{nameanamehash}{0ec61a7346db3f45000aa2534c9ae669}
       \strng{nameafullhash}{0ec61a7346db3f45000aa2534c9ae669}
       \field{extraname}{4}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{howpublished}{\url{https://docs.px4.io/main/zh/ros/mavros_offboard_cpp.html}}
@@ -628,8 +1832,8 @@
       \strng{nameabibnamehash}{c40004fe32aa39c9151868d472bdca1c}
       \strng{nameanamehash}{c40004fe32aa39c9151868d472bdca1c}
       \strng{nameafullhash}{c40004fe32aa39c9151868d472bdca1c}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{howpublished}{\url{https://uav-cn.tmotor.com/html/2023/Motor_0719/1309.html}}
@@ -667,8 +1871,8 @@
       \strng{nameabibnamehash}{f4dd1fbedd6188fa7220a46077b32ac8}
       \strng{nameanamehash}{f4dd1fbedd6188fa7220a46077b32ac8}
       \strng{nameafullhash}{f4dd1fbedd6188fa7220a46077b32ac8}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{howpublished}{\url{https://www.chingmu.com/}}
@@ -707,8 +1911,8 @@
       \strng{nameanamehash}{0ec61a7346db3f45000aa2534c9ae669}
       \strng{nameafullhash}{0ec61a7346db3f45000aa2534c9ae669}
       \field{extraname}{5}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{howpublished}{\url{https://docs.px4.io/main/zh/ros/external_position_estimation.html}}
@@ -761,8 +1965,8 @@
       \strng{nameabibnamehash}{0bedf0e12ac2b5c4fd8052dbc4a4e918}
       \strng{nameanamehash}{f3c836c1a6c35600f56d0d3a478605c6}
       \strng{nameafullhash}{0bedf0e12ac2b5c4fd8052dbc4a4e918}
-      \field{sortinit}{2}
-      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{langid}{english}

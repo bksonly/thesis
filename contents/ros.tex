@@ -13,7 +13,7 @@ ROS框架下的仿真实验，控制器和被控对象都会更贴近现实，�
 \section{软件在环仿真}
 Matlab仿真只是初步验证了HOFA方法的有效性，既没有考虑实际的飞控固件中异步的采样周期、进程管理等因素，也没有考虑内部和外部传感器信息融合的因素。而在ROS+gazebo下的软件在环仿真会考虑以上因素，进一步贴近实际情况。
 
-\subsection{环境配置}
+\subsection*{环境配置}
 由于当前ROS2适配的各种依赖库包括PX4的版本都还在不停迭代，因此目前还是选择更为稳定、资料更多的ROS1。在ubuntu20.04中安装ROS1 noetic以及配套的gazebo11 classic（使用鱼香ROS一键安装\cite{fishros}时会同步安装），然后从GitHub上clone最近的发行版PX4 v1.14.0，注意要使用递归将所有子项目克隆下来。
 \begin{codeblock}[language=C]
   git clone -b v1.14.0 https://github.com/PX4/PX4-Autopilot.git --recursive
@@ -109,14 +109,14 @@ Matlab仿真只是初步验证了HOFA方法的有效性，既没有考虑实际�
   \label{sitlrqt}
 \end{figure}
 
- \subsection{HOFA算法植入}
+ \subsection*{HOFA算法植入}
 在环境配置完成后，接下来就要在PX4源码的基础上修改多旋翼运动控制部分的代码，将其原本的“位置-速度-角度-角速度”四环PID控制 \cite{px4控制}改为HOFA控制。
 
 PX4是一个适用于固定翼、直升机、四旋翼、地面车辆乃至于船舶等多种形式机器人的自动驾驶仪，既可以进行软件仿真，也能将固件烧写到硬件中进行实机实验，其架构十分复杂。在多旋翼部分中，就包含多渠道的传感器信息订阅和融合、多个节点间信息的传递，支持实时在地面站修改各种控制参数，支持包含自稳、高度、位置和offboard等多种飞行模式。因此PX4拥有庞大的规模和错综复杂的上层架构，因此在算法植入时，我们将尽可能不改动上层架构，在相应的包内尽量保持输入输出接口不变，避免引起未知的错误。
 
 PX4运行在嵌入式系统上，通常使用Nuttx操作系统，这是一个实时操作系统（RTOS），专为微控制器设计。由于不同类型的传感器采样周期不同，不同环节的控制器周期也不同，PX4采用异步的线程管理方法以尽量减少时延。传感器采样并处理得到估计后，标记更新，轮询的控制器进程判断数据已经更新过，就进入控制，发布新的控制量到下一环节：姿态环在姿态更新后控制，位置环在位置更新后控制。因此控制频率的上限取决于传感器的采样频率，设定值（setpoint）的更新频率不会制约控制频率，在下一个设定值更新前，将沿用之前的设定值。
 
-\textbf{位置环}
+\subsubsection*{位置环}
 
 如理论设计一章末尾所提到的，PX4原本的位置环不需要做任何更改，只需要在地面站中调节相应的参数数值就能实现我提出的位置环控制方法。以下对位置环软件包做简单介绍：
 
@@ -133,7 +133,7 @@ PX4的多旋翼位置环控制位于src/modules/mc\_pos\_control包中，包内�
 
 位置环的输出除了期望的推力矢量，还有根据期望推力矢量和期望偏航角生成的期望姿态，这部分函数在ControlMath.cpp中。PX4这部分算法的逻辑与HOFA中的完全一致。
 
-\textbf{姿态环}
+\subsubsection*{姿态环}
 
 PX4的多旋翼姿态环控制分别在mc\_att\_control和mc\_rate\_control两个包内，两者间通信的管道是mc\_att\_control向mc\_rate\_control发布期望的角速度“rate\_setpoint”，为了尽量不更改架构，我们接下来也将沿用这一通信管道。
 
@@ -145,7 +145,7 @@ PX4的多旋翼姿态环控制分别在mc\_att\_control和mc\_rate\_control两�
 
 进一步在mc\_rate\_control阅读代码，发现包内的MulticopterRateControl.cpp主要做了线程管理和消息更新的工作，真正的控制算法在其Run()函数中调用的RateControl::update()中，这个类函数位于src/lib/rate\_control/rate\_control.cpp。然后就在这个函数中略加修改，完成整个HOFA算法的植入。
 
-\textbf{总结}
+\subsubsection*{总结}
 
 总共在五个代码文件中做了修改，分别是：
 \begin{itemize}
@@ -162,7 +162,7 @@ PX4的多旋翼姿态环控制分别在mc\_att\_control和mc\_rate\_control两�
 \section{硬件在环仿真}
 硬件在环仿真的主要目的在于，在gazebo仿真环境中初步测试生成的固件代码，防止直接进行实机实验可能出现的破坏性故障。硬件在环仿真也要首先配置环境，用PX4的发行版跑通流程；然后向飞控刷入植入HOFA的固件，进行硬件在环仿真。
 
-\textbf{环境配置}
+\subsection*{环境配置}
 
 硬件在环仿真在软件在环仿真已经跑通的基础上并不困难，PX4的官方文档也提供了相对全面的流程\cite{px4hitl}。
 
@@ -203,7 +203,7 @@ Tools/simulation/gazebo-classic/sitl\_gazebo-classic/models/iris\_hitl/iris\_hit
 
 在飞控接有遥控接收机时，也可以使用遥控器对gazebo中的虚拟飞机进行操控。
 
-\textbf{固件烧写}
+\subsection*{固件烧写}
 
 在环境配置完成后，将HOFA版本的固件编译并烧写进飞控硬件中，只需要执行以下命令：
 \begin{codeblock}[language=C]
@@ -338,7 +338,7 @@ HOFA在SITL中远远不如PX4，这与Matlab仿真中的结果完全颠倒。对
 
 
 
-\textbf{HOFA工程改进}
+\subsection*{HOFA工程改进}
 
 根据上述分析，对HOFA做两种工程上的改进：一，将角加速度置零；二，仅保留反馈项$M^*$。
 
@@ -438,4 +438,4 @@ $$e_d=\frac{\sum_0^{T}||x-x_d||}{T} \quad e_{angle}=\frac{\sum_0^{T}|\phi-\phi_d
 \newpage
 
 \section{本章小结}
-本章节搭建了SITL、HITL和Offboard控制的环境，并且在SITL中对HOFA和PX4进行了轨迹跟踪效果的对比。分析了HOFA性能劣化的原因后进行了两种工程改良，取得了良好的进步，并且对下一步的优化方向进行了讨论。
+本章节详细描述了基于ROS+gazebo的软件在环仿真和半实物硬件在环仿真的环境配置过程。在软件在环仿真，通过offboard控制程序，对HOFA和PX4进行了轨迹跟踪效果的对比。我们通过分析数据发现不做任何工程适应的HOFA在轨迹跟踪的效果相较数值仿真有很大劣化。我们分析了HOFA性能劣化的原因，并且有针对性地提出了两种工程改良方法，都取得了良好的效果，整体表现与PX4接近。

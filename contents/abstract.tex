@@ -2,10 +2,22 @@
 
 \begin{abstract}[zh]
 
-  本论文针对四旋翼无人机的运动控制问题，提出了基于高阶全驱系统理论的控制策略。四旋翼无人机因其高度机动性，在农业、救援及娱乐等多个领域得到了广泛应用。尽管如此，其系统的高度非线性以及对环境噪声的敏感性使得精确运动控制成为一大挑战。传统控制策略往往涉及复杂的非线性模型或需简化系统，这可能导致丢失关键动态特性。本研究采用高阶全驱系统理论，直接在非线性模型基础上设计控制器，致力于提升控制精度与响应速度。通过Matlab和基于ROS的仿真实验验证了该控制策略的有效性，并通过搭建实机飞行平台及PX4原生固件的轨迹跟踪实验，为本方法的进一步实机应用提供了重要数据支持。
-
+  四旋翼无人机因其高机动性、易于部署、低成本等优势，在农业、救援及娱乐等多个领域得到了广泛应用。尽管如此，其系统的高度非线性以及对环境噪声的敏感性使得精确运动控制成为一大挑战。传统控制策略往往涉及复杂的非线性模型或需简化系统，这可能导致丢失关键动态特性。
+  
+  本研究基于旋转矩阵对四旋翼进行动力学建模，在此基础上将欠驱动的四旋翼分解成姿态环路和位置环路，对具有全驱特性的姿态环路应用高阶全驱系统理论，通过对控制量加入非线性补偿项，使姿态环路从非线性系统转化为线性系统，随即对转化出的线性系统应用LQR控制。在理论设计后展开数值仿真，与经典的飞行控制器对比，分析其在多种输入下的收敛速度和跟踪精度，数值实验结果说明了高阶全驱方法在较理想的仿真环境下的优越性。
+  
+  在数值仿真的基础上，进一步进行了基于ROS的软件在环仿真。在加入了一些工程上的调整后，高阶全驱方法能在更真实的仿真环境中，与主流的开源飞控取得相近的控制效果。随后编译生成高阶全驱飞控固件，并烧写进飞控板，进行半实物的硬件在环仿真，验证了飞控固件的有效性。
+  
+  搭建实机飞行平台，进行了开源飞控下的轨迹跟踪实验。但高阶全驱飞控在面对真实世界的非理想因素时还有工程上的欠缺，尚无法取得理想的控制效果。但实机实验积累的真实数据为本方法的进一步实机应用提供了重要支持，本文基于以上所有的实验结果，提出了切实的改进思路。在适当的工程改进后，高阶全驱方法有望在现实中取得更好的控制效果。
+  
 \end{abstract}
 
 \begin{abstract}[en]
-  This thesis addresses the motion control issues of quadrotor UAVs by proposing a control strategy based on the high-order fully actuated (HOFA) system theory. Due to their high mobility, quadrotor UAVs are widely utilized in various fields such as agriculture, rescue operations, and entertainment. Nevertheless, the significant nonlinearity of their systems and sensitivity to environmental noise pose major challenges to achieving precise motion control. Traditional control strategies often involve complex nonlinear models or necessitate simplifying the system, which may result in the loss of critical dynamic features. This study employs the HOFA system theory to design controllers directly based on nonlinear models, aiming to improve control accuracy and response speed. The effectiveness of the proposed control strategy was validated through simulations in Matlab and ROS-based environments. Additionally, real-world flight platforms were constructed, and trajectory tracking experiments using PX4 native firmware were conducted, providing essential data for further real-world applications of this method.
+Quadrotor drones are widely used in various fields such as agriculture, rescue operations, and entertainment, due to their high maneuverability, ease of deployment, and low cost. Despite these advantages, the highly nonlinear nature of their systems and sensitivity to environmental noise present significant challenges for precise motion control. Traditional control strategies often involve complex nonlinear models or necessitate system simplifications, potentially leading to the loss of key dynamic characteristics.
+
+This study employs rotation matrices for the dynamical modeling of quadrotors and decomposes the underactuated system into attitude and position loops. For the fully actuated attitude loop, the study applies high-order fully actuated system theory, incorporating nonlinear compensation into the control inputs, transforming the nonlinear system into a linear one. Subsequently, LQR control is applied to the linearized system. Numerical simulations were conducted following the theoretical design, comparing its convergence speed and tracking precision against classical flight controllers under various inputs. The results demonstrate the superiority of the high-order fully actuated approach in an ideal simulation environment.
+
+Based on numerical simulations, further software-in-the-loop simulations using ROS were conducted. After implementing several engineering adjustments, the high-order fully actuated method achieved control performance comparable to mainstream open-source flight controllers in a more realistic simulation environment. The method was then compiled into high-order fully actuated flight control firmware, which was flashed onto a flight control board for semi-physical hardware-in-the-loop simulations, validating the firmware's effectiveness.
+
+A real aircraft flight platform was set up, and trajectory tracking experiments under open-source flight control were conducted. However, the high-order fully actuated flight control still falls short in handling real-world imperfections. Despite these shortcomings, the real flight experiments provided valuable data for further real-world applications of this method. Based on all experimental results, this paper proposes practical improvement strategies. With appropriate engineering enhancements, the high-order fully actuated method is expected to achieve better control performance in real-world applications.
 \end{abstract}
