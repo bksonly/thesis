@@ -1,30 +1,30 @@
 % !TeX root = ../main.tex
 \chapter{基于ROS的软件在环仿真与半实物硬件在环仿真}
-本章分为基于ROS（robot operating system）的软件在环仿真下的offboard轨迹跟踪对比实验，和半实物的硬件在环仿真实验。ROS框架下的仿真实验，控制器和被控对象都会更贴近现实，会有来自传感器的噪声等影响，控制器的控制周期也不再是Matlab中理想的同步固定周期，而是要依赖多个异步异周期的反馈信号，还会受到计算速度波动的影响。
+本章分为基于ROS（robot operating system）的软件在环仿真下的offboard轨迹跟踪对比实验，和半实物的硬件在环仿真实验。ROS框架下的仿真实验，控制器和被控对象都会更贴近现实，会受到传感器噪声等影响，控制器的控制周期也不再是Matlab中理想的同步固定周期，而是要依赖多个异步异周期的反馈信号，还会受到计算速度波动的影响。
 
 软件在环仿真（SITL，software in the loop）的软件是基于PX4固件改动其运动控制部分的代码后编译而来的。仿真在ROS+gazebo环境中进行，支持通过offboard控制程序向无人机发布一连串的期待位置，与PX4原生固件对比控制效果。
 
-硬件在环仿真（HITL，hardware in the loop）是将上一阶段修改后的PX4固件烧写到pixhawk飞控板中，使得控制器从仿真变为实物（也是后续实机实验的真实控制器）。接入gazebo仿真环境，验证固件在飞控板的nuttx实时操作系统中能否正常运行。但需要说明的是，HITL并不支持接入ROS，那么也就不能进行offboard控制，这一步只能通过仿真动画做定性验证。
+硬件在环仿真（HITL，hardware in the loop）是将上一阶段修改后的PX4固件烧写到pixhawk飞控板中，使得控制器从仿真变为实物（也是后续实机实验的真实控制器）。接入gazebo仿真环境，验证固件在飞控板的nuttx实时操作系统中能否正常运行。但需要说明的是，HITL并不支持接入ROS，所以不能进行offboard控制，这一步只能通过仿真动画做定性验证。
 
 \section{基于ROS的软件在环仿真环境配置}
 Matlab仿真只是初步验证了HOFA方法的有效性，既没有考虑实际的飞控固件中异步的采样周期、进程管理等因素，也没有考虑内部和外部传感器信息融合的因素。而在ROS+gazebo下的软件在环仿真会考虑以上因素，进一步贴近实际情况。
 由于当前ROS2适配的各种依赖库包括PX4的版本都还在不停迭代，因此目前还是选择更为稳定、资料更多的ROS1。接下来简单介绍环境配置的相关步骤。
 
-在ubuntu20.04中安装ROS1 noetic以及配套的gazebo11 classic（使用鱼香ROS一键安装\cite{fishros}时会同步安装），然后从GitHub上clone最近的发行版PX4 v1.14.0，注意要使用递归将所有子项目克隆下来。
+在ubuntu20.04中安装ROS1 noetic以及配套的gazebo11 classic（使用鱼香ROS一键安装\cite{fishros}时会同步安装），然后从GitHub上clone最近的发行版PX4 v1.14.0。
 \begin{codeblock}[language=C]
   git clone -b v1.14.0 https://github.com/PX4/PX4-Autopilot.git --recursive
 \end{codeblock}
-然后运行以下命令以解决依赖。
+然后运行以下命令以解决依赖：
 \begin{codeblock}[language=C]
   Bash Tools/setup/ubuntu.sh
 \end{codeblock}
-最后运行软件在环仿真命令
+最后运行软件在环仿真命令：
 \begin{codeblock}[language=C]
   make px4_sitl gazebo-classic
 \end{codeblock}
 
 运行成功后会进入gazebo仿真界面，打开QGC会自动连接地面站，在地面站中可以方便地看到回传的位姿信息并且发布起飞和指点飞行命令，如图 \ref{sitl}。在使用gazebo仿真时，需要安装显卡驱动，否则画面渲染将完全使用CPU，这会导致严重的卡顿。
-\begin{figure}[h]
+\begin{figure}[t]
   \centering
      \begin{subfigure}[c]{0.45\textwidth}
       \centering
@@ -37,7 +37,7 @@ Matlab仿真只是初步验证了HOFA方法的有效性，既没有考虑实际�
    \caption{SITL gazebo界面以及QGC指点控制}
    \label{sitl}
  \end{figure}
- 这里默认使用的是内置的iris无人机模型，有关该模型的具体参数可以在源码\cite{px4}中查到。由于SDF文件的特殊性，不建议修改iris模型参数去匹配控制器中的设定，而是修改控制算法中的参数来匹配iris模型。HOFA算法对于转动惯量参数有一定鲁棒性，但如果有数量级的差距还是会导致严重问题。
+ 这里默认使用的是内置的iris无人机模型，有关该模型的具体参数可以在源码\cite{px4}中查到。由于SDF文件的特殊性，不建议修改iris模型参数去匹配控制器中的设定，而是修改控制算法中的参数来匹配iris模型。HOFA算法对于转动惯量参数有一定鲁棒性，但如果误差过大，使得估计值和实际值不在一个数量级还是会导致严重问题。
  \begin{codeblock}[language=C]
   <inertial>
     <pose>0 0 0 0 0 0</pose>
@@ -57,7 +57,7 @@ Matlab仿真只是初步验证了HOFA方法的有效性，既没有考虑实际�
 </box>
  \end{codeblock}
 
-到此为止完成了gazebo下的仿真，但还没有接入ROS框架，也就无法使用rostopic等命令进行进一步调试。接入ROS框架还需要运行一系列命令以安装mavros包并运行官方的bash文件解决依赖；重新编译SITL固件（命令与gazebo中有细微差别，但生成的build文件名相同）。
+至此完成了gazebo下的仿真，但尚未接入ROS框架，也就无法使用rostopic等命令进行进一步调试。接入ROS框架还需要运行一系列命令以安装mavros包并运行官方的bash文件解决依赖；重新编译SITL固件。
 \begin{codeblock}
   sudo apt-get install ros-noetic-mavros ros-noetic-mavros-extras
 
@@ -76,7 +76,7 @@ Matlab仿真只是初步验证了HOFA方法的有效性，既没有考虑实际�
 
   roslaunch px4 mavros_posix_sitl.launch
 \end{codeblock}
-成功运行后可以用rqt\_graph命令看到节点和消息，如图\ref{sitlrqt}所示。mavros将整个飞控虚拟化为一个节点，我们可以通过mavlink stream命令修改imu等数据发布的频率。但是，这不是飞控内部的控制频率，仅仅是通过mavros向外部发送信息的频率。所以，无法直接用该命令改变控制周期。
+成功运行后可以用rqt\_graph命令看到节点和消息，如图\ref{sitlrqt}所示。mavros将整个飞控虚拟化为一个节点，我们可以通过mavlink stream命令修改imu等数据发布的频率。但这不是飞控内部的控制频率，而仅仅是通过mavros向外部发送信息的频率。所以，无法直接用该命令改变控制周期。
 \begin{figure}[!h]
   \centering
   \includegraphics[width=0.6\textwidth]{sitlrqt.png}
@@ -107,7 +107,7 @@ PX4的多旋翼位置环控制位于src/modules/mc\_pos\_control包中，Multico
 
 
 \subsection*{姿态环}
-姿态环是我们真正要要做改动的部分。
+姿态环是我们真正要做改动的部分。
 PX4的多旋翼姿态环控制分别在mc\_att\_control和mc\_rate\_control两个包内，两者间通信的管道是mc\_att\_control向mc\_rate\_control发布期望的角速度“rate\_setpoint”，为了尽量不更改架构，我们接下来也将沿用这一通信管道。
 
 原本的控制算法不需要前一时刻的期望姿态，因此首先要在AttitudeControl.hpp中定义新的变量，包括前一时刻的期望姿态，以及期望姿态生成时的时间（包含在期望姿态结构体中）。原本的mc\_att\_control不需要角速度信息，因此需要额外添加uORB::SubscriptionCallbackWorkItem函数订阅角速度信息。
@@ -170,12 +170,12 @@ offboard\_run\_node.cpp就是Offboard控制的核心，PX4官网提供了基础�
 \begin{figure}[H]
   \centering
   \begin{subfigure}[b]{0.49\linewidth}
-      \includegraphics[width=\linewidth]{sitl_px4_3d.png}
+      \includegraphics[width=\linewidth]{sitl_px4_3d.eps}
       \caption{PX4}
   \end{subfigure}
   \hfill % 在图片之间添加一些空间
   \begin{subfigure}[b]{0.49\linewidth}
-      \includegraphics[width=\linewidth]{sitl_hofa_3d.png}
+      \includegraphics[width=\linewidth]{sitl_hofa_3d.eps}
       \caption{HOFA}
   \end{subfigure}
   \caption{SITL三维轨迹跟踪效果对比}
@@ -184,12 +184,12 @@ offboard\_run\_node.cpp就是Offboard控制的核心，PX4官网提供了基础�
   \begin{figure}[H]
     \centering
   \begin{subfigure}[b]{0.49\linewidth}
-      \includegraphics[width=\linewidth]{sitl_px4_xyz.png}
+      \includegraphics[width=\linewidth]{sitl_px4_xyz.eps}
       \caption{PX4}
   \end{subfigure}
   \hfill
   \begin{subfigure}[b]{0.49\linewidth}
-      \includegraphics[width=\linewidth]{sitl_hofa_xyz.png}
+      \includegraphics[width=\linewidth]{sitl_hofa_xyz.eps}
       \caption{HOFA}
   \end{subfigure}
   \caption{SITL位置跟踪效果对比}
@@ -199,12 +199,12 @@ offboard\_run\_node.cpp就是Offboard控制的核心，PX4官网提供了基础�
 \begin{figure}[H]
   \centering
 \begin{subfigure}[b]{0.49\linewidth}
-    \includegraphics[width=\linewidth]{sitl_px4_R.png}
+    \includegraphics[width=\linewidth]{sitl_px4_R.eps}
     \caption{PX4}
 \end{subfigure}
 \hfill
 \begin{subfigure}[b]{0.49\linewidth}
-    \includegraphics[width=\linewidth]{sitl_hofa_R.png}
+    \includegraphics[width=\linewidth]{sitl_hofa_R.eps}
     \caption{HOFA}
 \end{subfigure}
 \caption{SITL姿态跟踪效果}
@@ -214,12 +214,12 @@ offboard\_run\_node.cpp就是Offboard控制的核心，PX4官网提供了基础�
 \begin{figure}[H]
   \centering
 \begin{subfigure}[b]{0.49\linewidth}
-    \includegraphics[width=\linewidth]{sitl_px4_w.png}
+    \includegraphics[width=\linewidth]{sitl_px4_w.eps}
     \caption{PX4}
 \end{subfigure}
 \hfill
 \begin{subfigure}[b]{0.49\linewidth}
-    \includegraphics[width=\linewidth]{sitl_hofa_w.png}
+    \includegraphics[width=\linewidth]{sitl_hofa_w.eps}
     \caption{HOFA}
 \end{subfigure}
 \caption{SITL角速度曲线}
@@ -230,12 +230,12 @@ offboard\_run\_node.cpp就是Offboard控制的核心，PX4官网提供了基础�
 \begin{figure}[H]
   \centering
 \begin{subfigure}[b]{0.49\linewidth}
-    \includegraphics[width=\linewidth]{sitl_px4_M.png}
+    \includegraphics[width=\linewidth]{sitl_px4_M.eps}
     \caption{PX4}
 \end{subfigure}
 \hfill
 \begin{subfigure}[b]{0.49\linewidth}
-    \includegraphics[width=\linewidth]{sitl_hofa_M.png}
+    \includegraphics[width=\linewidth]{sitl_hofa_M.eps}
     \caption{HOFA}
 \end{subfigure}
 \caption{SITL期望力矩曲线}
@@ -250,12 +250,12 @@ offboard\_run\_node.cpp就是Offboard控制的核心，PX4官网提供了基础�
 \begin{figure}[H]
   \centering
   \begin{subfigure}[b]{0.49\linewidth}
-      \includegraphics[width=\linewidth]{sitl_hofadwd_3d.png}
+      \includegraphics[width=\linewidth]{sitl_hofadwd_3d.eps}
       \caption{$\dot \omega_d =0$}
   \end{subfigure}
   \hfill % 在图片之间添加一些空间
   \begin{subfigure}[b]{0.49\linewidth}
-      \includegraphics[width=\linewidth]{sitl_hofa0_3d.png}
+      \includegraphics[width=\linewidth]{sitl_hofa0_3d.eps}
       \caption{$M^*$}
   \end{subfigure}
   \caption{SITL三维轨迹跟踪效果对比:HOFA改进}
@@ -264,12 +264,12 @@ offboard\_run\_node.cpp就是Offboard控制的核心，PX4官网提供了基础�
   \begin{figure}[H]
     \centering
   \begin{subfigure}[b]{0.49\linewidth}
-      \includegraphics[width=\linewidth]{sitl_hofadwd_xyz.png}
+      \includegraphics[width=\linewidth]{sitl_hofadwd_xyz.eps}
       \caption{$\dot \omega_d =0$}
   \end{subfigure}
   \hfill
   \begin{subfigure}[b]{0.49\linewidth}
-      \includegraphics[width=\linewidth]{sitl_hofa0_xyz.png}
+      \includegraphics[width=\linewidth]{sitl_hofa0_xyz.eps}
       \caption{$M^*$}
   \end{subfigure}
   \caption{SITL位置跟踪效果对比:HOFA改进}
@@ -278,12 +278,12 @@ offboard\_run\_node.cpp就是Offboard控制的核心，PX4官网提供了基础�
 \begin{figure}[H]
   \centering
 \begin{subfigure}[b]{0.49\linewidth}
-    \includegraphics[width=\linewidth]{sitl_hofadwd_R.png}
+    \includegraphics[width=\linewidth]{sitl_hofadwd_R.eps}
     \caption{$\dot \omega_d =0$}
 \end{subfigure}
 \hfill
 \begin{subfigure}[b]{0.49\linewidth}
-    \includegraphics[width=\linewidth]{sitl_hofa0_R.png}
+    \includegraphics[width=\linewidth]{sitl_hofa0_R.eps}
     \caption{$M^*$}
 \end{subfigure}
 \caption{SITL姿态跟踪效果:HOFA改进}
@@ -292,12 +292,12 @@ offboard\_run\_node.cpp就是Offboard控制的核心，PX4官网提供了基础�
 \begin{figure}[H]
   \centering
 \begin{subfigure}[b]{0.49\linewidth}
-    \includegraphics[width=\linewidth]{sitl_hofadwd_w.png}
+    \includegraphics[width=\linewidth]{sitl_hofadwd_w.eps}
     \caption{$\dot \omega_d =0$}
 \end{subfigure}
 \hfill
 \begin{subfigure}[b]{0.49\linewidth}
-    \includegraphics[width=\linewidth]{sitl_hofa0_w.png}
+    \includegraphics[width=\linewidth]{sitl_hofa0_w.eps}
     \caption{$M^*$}
 \end{subfigure}
 \caption{SITL角速度曲线:HOFA改进}
@@ -306,12 +306,12 @@ offboard\_run\_node.cpp就是Offboard控制的核心，PX4官网提供了基础�
 \begin{figure}[H]
   \centering
 \begin{subfigure}[b]{0.49\linewidth}
-    \includegraphics[width=\linewidth]{sitl_hofadwd_M.png}
+    \includegraphics[width=\linewidth]{sitl_hofadwd_M.eps}
     \caption{$\dot \omega_d =0$}
 \end{subfigure}
 \hfill
 \begin{subfigure}[b]{0.49\linewidth}
-    \includegraphics[width=\linewidth]{sitl_hofa0_M.png}
+    \includegraphics[width=\linewidth]{sitl_hofa0_M.eps}
     \caption{$M^*$}
 \end{subfigure}
 \caption{SITL期望力矩曲线:HOFA改进}
