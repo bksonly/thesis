@@ -2,7 +2,7 @@
 \chapter{基于高阶全驱系统理论的四旋翼控制器理论设计与数值仿真}  
 本章将详细介绍基于高阶全驱系统理论的四旋翼控制器理论设计过程，并开展数值仿真，与经典的四旋翼飞行控制器对比以证明其在控制性能上的优越性。首先，在对比了主要的几种姿态表示方法后，我们选择基于旋转矩阵的姿态表示来建立四旋翼的动力学模型。然后，将欠驱动的四旋翼分解成姿态环路和位置环路，对具有全驱特性的姿态环路应用高阶全驱系统理论，使其从非线性系统转化为线性系统，随即应用LQR控制。最后，在Matlab中展开数值仿真，与经典的SO(3)控制和PX4中的四环PID控制（后简称PID）进行对比。
 
-\section{四旋翼建模}
+\section{四旋翼动力学模型和动力分配}
 四旋翼的建模可以分成两个部分：一是动力学部分，以作用其上的力和力矩为输入，得到质心加速度和角加速度；二是动力分配部分，以四个电机的控制命令（如pwm占空比）为输入，得到会产生的作用力和力矩。第一部分是理想的物理模型，将四旋翼视作一个刚体，得到普通的刚体动力学模型。第二部分涉及到电机、电调的动态过程，电机转速通过螺旋桨形成推力和反向力矩的过程，以及电池电压对动力套件性能的影响，是实际且工程的，无法用理想的模型去精确地描述。
 
 在理论推导阶段，我们只会用到第一部分的动力学模型，在此之上应用高阶全驱方法设计控制器。而在后续的数值仿真环节中，为了更贴近现实，考虑动力套件的动态过程，我们会这样加入动力分配的环节：将电机转速近似为一阶惯性环节，推力和反向力矩与电机转速的平方近似成正比。
@@ -358,17 +358,17 @@ $$R(0)=I , \quad \omega(0)=[0,0,0].$$
   \centering
   \begin{subfigure}[t]{0.49\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{hofa_1.png}
+    \includegraphics[width=\linewidth]{hofa_1.eps}
     \caption{HOFA}
   \end{subfigure}\hfill
   \begin{subfigure}[t]{0.49\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{px4_1.png}
+    \includegraphics[width=\linewidth]{px4_1.eps}
     \caption{PID}
   \end{subfigure}\hfill
   \begin{subfigure}[t]{0.49\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{so3_1.png}
+    \includegraphics[width=\linewidth]{so3_1.eps}
     \caption{SO(3)}
   \end{subfigure}
   \caption{x轴位置单位阶跃响应对比}
@@ -398,17 +398,17 @@ $$R(0)=I , \quad \omega(0)=[0,0,0].$$
   \centering
   \begin{subfigure}[t]{0.49\textwidth}
     \centering
-    \raisebox{-\height}{\includegraphics[width=\linewidth]{hofa_t.png}}
+    \raisebox{-\height}{\includegraphics[width=\linewidth]{hofa_t.eps}}
     \caption{HOFA}
   \end{subfigure}\hfill
   \begin{subfigure}[t]{0.49\textwidth}
     \centering
-    \raisebox{-\height}{\includegraphics[width=\linewidth]{px4_t.png}}
+    \raisebox{-\height}{\includegraphics[width=\linewidth]{px4_t.eps}}
     \caption{PID}
   \end{subfigure}\hfill
   \begin{subfigure}[t]{0.49\textwidth}
     \centering
-    \raisebox{-\height}{\includegraphics[width=\linewidth]{so3_t.png}}
+    \raisebox{-\height}{\includegraphics[width=\linewidth]{so3_t.eps}}
     \caption{SO(3)}
   \end{subfigure}
   \caption{x轴位置单位斜坡响应对比}
@@ -440,17 +440,17 @@ $$R(0)=I , \quad \omega(0)=[0,0,0].$$
       \centering
       \begin{subfigure}[t]{0.33\textwidth}
         \centering
-        \raisebox{-\height}{\includegraphics[width=\linewidth]{hofa_3d.png}}
+        \raisebox{-\height}{\includegraphics[width=\linewidth]{hofa_3d.eps}}
         \caption{HOFA}
       \end{subfigure}\hfill
       \begin{subfigure}[t]{0.33\textwidth}
         \centering
-        \raisebox{-\height}{\includegraphics[width=\linewidth]{px4_3d.png}}
+        \raisebox{-\height}{\includegraphics[width=\linewidth]{px4_3d.eps}}
         \caption{PID}
       \end{subfigure}\hfill
       \begin{subfigure}[t]{0.33\textwidth}
         \centering
-        \raisebox{-\height}{\includegraphics[width=\linewidth]{so3_3d.png}}
+        \raisebox{-\height}{\includegraphics[width=\linewidth]{so3_3d.eps}}
         \caption{SO(3)}
       \end{subfigure}
       \caption{三维轨迹跟踪效果对比}
@@ -461,17 +461,17 @@ $$R(0)=I , \quad \omega(0)=[0,0,0].$$
     \centering
     \begin{subfigure}[t]{0.33\textwidth}
       \centering
-      \raisebox{-\height}{\includegraphics[width=\linewidth]{hofa_x.png}}
+      \raisebox{-\height}{\includegraphics[width=\linewidth]{hofa_x.eps}}
       \caption{HOFA}
     \end{subfigure}\hfill
     \begin{subfigure}[t]{0.33\textwidth}
       \centering
-      \raisebox{-\height}{\includegraphics[width=\linewidth]{px4_x.png}}
+      \raisebox{-\height}{\includegraphics[width=\linewidth]{px4_x.eps}}
       \caption{PID}
     \end{subfigure}\hfill
     \begin{subfigure}[t]{0.33\textwidth}
       \centering
-      \raisebox{-\height}{\includegraphics[width=\linewidth]{so3_x.png}}
+      \raisebox{-\height}{\includegraphics[width=\linewidth]{so3_x.eps}}
       \caption{SO(3)}
     \end{subfigure}
     \caption{三轴位置跟踪效果对比}
@@ -482,17 +482,17 @@ $$R(0)=I , \quad \omega(0)=[0,0,0].$$
   \centering
   \begin{subfigure}[t]{0.33\textwidth}
     \centering
-    \raisebox{-\height}{\includegraphics[width=\linewidth]{hofa_rad.png}}
+    \raisebox{-\height}{\includegraphics[width=\linewidth]{hofa_angle.eps}}
     \caption{HOFA}
   \end{subfigure}\hfill
   \begin{subfigure}[t]{0.33\textwidth}
     \centering
-    \raisebox{-\height}{\includegraphics[width=\linewidth]{px4_angle.png}}
+    \raisebox{-\height}{\includegraphics[width=\linewidth]{px4_angle.eps}}
     \caption{PID}
   \end{subfigure}\hfill
   \begin{subfigure}[t]{0.33\textwidth}
     \centering
-    \raisebox{-\height}{\includegraphics[width=\linewidth]{so3_angle.png}}
+    \raisebox{-\height}{\includegraphics[width=\linewidth]{so3_angle.eps}}
     \caption{SO(3)}
   \end{subfigure}
   \caption{三轴姿态角跟踪效果对比}
@@ -527,17 +527,17 @@ $$R(0)=I , \quad \omega(0)=[0,0,0].$$
   \centering
   \begin{subfigure}[t]{0.33\textwidth}
     \centering
-    \raisebox{-\height}{\includegraphics[width=\linewidth]{hofa_fM.png}}
+    \raisebox{-\height}{\includegraphics[width=\linewidth]{hofa_fM.eps}}
     \caption{HOFA}
   \end{subfigure}\hfill
   \begin{subfigure}[t]{0.33\textwidth}
     \centering
-    \raisebox{-\height}{\includegraphics[width=\linewidth]{px4_fM.png}}
+    \raisebox{-\height}{\includegraphics[width=\linewidth]{px4_fM.eps}}
     \caption{PID}
   \end{subfigure}\hfill
   \begin{subfigure}[t]{0.33\textwidth}
     \centering
-    \raisebox{-\height}{\includegraphics[width=\linewidth]{so3_fM.png}}
+    \raisebox{-\height}{\includegraphics[width=\linewidth]{so3_fM.eps}}
     \caption{SO(3)}
   \end{subfigure}
   \caption{期望拉力与力矩对比}
