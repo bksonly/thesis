@@ -4,13 +4,13 @@
 \label{chap:symb}
 
 \begin{longtable}{ll}
-  $R \in SO(3)$                            & 机身姿态到地面系的旋转矩阵     \\
-  $R_d \in SO(3)$                          & 期望姿态（desire）到地面系的旋转矩阵   \\
-  $J\in \mathbb{R}^{3 \times 3}$           & 机身的转动惯量矩阵           \\
-  $\omega \in \mathbb{R}^{3}$              & 机身在自身坐标系的角速度         \\
-  $\omega_d \in \mathbb{R}^{3}$            & 自身坐标系下的期望姿态角速度 \\
+  $R \in \text{SO}(3)$                            & 机身坐标系到世界坐标系的旋转矩阵     \\
+  $R_d \in \text{SO}(3)$                          & 期望姿态到世界坐标系的旋转矩阵   \\
+  $J\in \mathbb{R}^{3 \times 3}$           & 机体的转动惯量矩阵           \\
+  $\omega \in \mathbb{R}^{3}$              & 机体在自身坐标系下的角速度         \\
+  $\omega_d \in \mathbb{R}^{3}$            & 机身坐标系下的期望姿态角速度 \\
   $\Omega  \in  \mathbb{R}^{3 \times 3}$   & $\Omega=\widehat \omega $   \\
-  $\widehat{}$ &
+  $\widehat \omega$ &
   $\widehat \omega =\begin{bmatrix}
     0 &-\omega_3  &\omega_2  \\
     \omega_3 & 0 & -\omega_1 \\
@@ -19,10 +19,10 @@
 
     ${}^\vee$ & $\widehat{} \quad$的逆运算 \\
   $\Omega_d  \in  \mathbb{R}^{3 \times 3}$ & $\Omega_d=\widehat \omega_d$     \\
-  $M$                                      & body系下力矩                 \\  
-  $x$ & 机身质心在地面系下的坐标\\
-  $v$ & 机身质心在地面系下的速度\\
-  $f_i$ & 第i个旋翼产生的拉力 \\
+  $M\in \mathbb{R}^{3}$       & 机身坐标系下作用在四旋翼上的力矩                 \\  
+  $x\in \mathbb{R}^{3}$ & 机身质心在世界坐标系下的坐标\\
+  $v\in \mathbb{R}^{3}$ & 机身质心在世界坐标系下的速度\\
+  $f_i$ & 第$i$个旋翼产生的拉力 \\
   $f$  & 四个旋翼产生的总拉力，$f=\sum_{1}^{4} f_i$\\
   $d$ & 旋翼到质心的距离 \\
 \end{longtable}
