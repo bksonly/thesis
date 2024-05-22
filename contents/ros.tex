@@ -96,7 +96,7 @@ PX4运行在嵌入式系统上，通常使用NuttX操作系统，这是一个实
 如第二章末尾所提到的，PX4原本的位置环不需要做任何更改，只需要在地面站中调节相应的参数数值就能实现本文提出的位置环控制方法。
 
 以下对位置环软件包做简单介绍：
-PX4的多旋翼位置环控制位于src/modules/mc\_pos\_control包中，MulticopterPositionControl.cpp和MulticopterPositionControl.hpp主要负责与外部的消息传递，用其Run()函数启动一个位置环（包括位置和速度）控制的进程，其真正的控制代码在mc\_pos\_control/PositionControl/PositionControl.cpp以及其对应的头文件中。而位置和速度的控制律，也就是LQR解算得到的K（只在对角线有非零值），可以借MPC\_XY\_P、MPC\_Z\_P、MPC\_XY\_VEL\_P\_ACC、MPC\_Z\_VEL\_P\_ACC这四个参数作为变量载体。由于实机的前后和左右也基本对称，xy轴可以使用同样的参数。可以在地面站对这些参数进行实时的调整。位置环的输出除了期望的推力矢量，还有根据期望推力矢量和期望偏航角生成的期望姿态，这部分函数在ControlMath.cpp中。PX4这部分算法的逻辑与HOFA中的完全一致。
+PX4的多旋翼位置环控制位于mc\_pos\_control包中，MulticopterPositionControl.cpp和MulticopterPositionControl.hpp主要负责与外部的消息传递，用其Run()函数启动一个位置环（包括位置和速度）控制的进程，其真正的控制代码在mc\_pos\_control/PositionControl/PositionControl.cpp以及其对应的头文件中。而位置和速度的控制律，也就是LQR解算得到的K（只在对角线有非零值），可以借MPC\_XY\_P、MPC\_Z\_P、MPC\_XY\_VEL\_P\_ACC、MPC\_Z\_VEL\_P\_ACC这四个参数作为变量载体。由于实机的前后和左右也基本对称，xy轴可以使用同样的参数。可以在地面站对这些参数进行实时的调整。位置环的输出除了期望的推力矢量，还有根据期望推力矢量和期望偏航角生成的期望姿态，这部分函数在ControlMath.cpp中。PX4这部分算法的逻辑与HOFA中的完全一致。
 
 % \begin{figure}[!h]
 %   \centering

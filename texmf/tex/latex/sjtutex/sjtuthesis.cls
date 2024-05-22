@@ -615,6 +615,18 @@
     headsep       = 0.5 cm,
     footskip      = 1.0 cm
   }
+% \geometry
+  % {
+  %   top           = 3.9 cm,
+  %   bottom        = 3.8 cm,
+  %   left          = 2.5 cm,
+  %   right         = 2.5 cm,
+  %   bindingoffset = 0.5 cm,
+  %   headheight    = 1.5 cm,
+  %   headsep       = 1.5 cm,
+  %   footskip      = 1.0 cm
+  % }
+
 \AtEndOfClass { \raggedbottom }
 \pagestyle { fancy }
 \fancyhf { }

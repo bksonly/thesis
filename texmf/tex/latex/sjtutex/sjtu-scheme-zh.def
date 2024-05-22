@@ -39,17 +39,17 @@
     index         = { 索 \quad 引 } ,
     appendix      = { 附录 } ,
     proof         = { 证明 } ,
-    bib           = { 参考文献 } ,
+    bib           = { 参\quad 考\quad 文\quad 献 } ,
     figure*       = { Figure } ,
     table*        = { Table } ,
     algorithm     = { 算法 } ,
     listalgorithm = { 算 \quad 法 } ,
     abbr          = { 缩略语对照表 } ,
     nom           = { 符号对照表 } ,
-    ack           = { 致 \quad 谢 } ,
+    ack           = { 致 \qquad 谢 } ,
     resume        = { 个人简历 } ,
     digest        = { 大摘要 } ,
-    achv          = { 学术论文和科研成果目录 }
+    achv          = { 攻读学位期间学术论文和科研成果目录}
   }
 \keys_set_known:nn { ctex / chapter }
   {

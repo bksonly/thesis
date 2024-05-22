@@ -35,7 +35,7 @@
   }
 \__sjtu_define_name_from_clist:nnnn { en }
   { degree_level_possessive } { \g__sjtu_thesis_type_int }
-  { Bachelor's, Master's, Doctoral }
+  { Bachelor,  Master's, Doctoral }
 \clist_map_inline:nn
   {
     { univ             } { Shanghai~ Jiao~ Tong~ University } ,

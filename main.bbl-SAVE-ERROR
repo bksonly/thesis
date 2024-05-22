@@ -433,6 +433,9 @@
       \list{language}{1}{%
         {english}%
       }
+      \list{location}{1}{%
+        {Barcelona, Spain}%
+      }
       \list{organization}{1}{%
         {IEEE}%
       }
@@ -491,6 +494,9 @@
       }
       \list{language}{1}{%
         {english}%
+      }
+      \list{location}{1}{%
+        {San Diego, CA, USA}%
       }
       \list{organization}{1}{%
         {IEEE}%
@@ -560,6 +566,9 @@
       }
       \list{language}{1}{%
         {english}%
+      }
+      \list{location}{1}{%
+        {Atlanta, GA, USA}%
       }
       \strng{namehash}{ab9cb6d4791a163c9f18ea77573fa2de}
       \strng{fullhash}{ebe487b1ea3f73c983b23d6d08c7b614}
@@ -724,8 +733,8 @@
     \endentry
     \entry{o2022neural}{article}{}
       \name{author}{7}{}{%
-        {{hash=7065b16268e3c00151b74aaa39d379ab}{%
-           family={O’Connell},
+        {{hash=28eea9cf57c0d76f79017f1a95268de2}{%
+           family={O'Connell},
            familyi={O\bibinitperiod},
            given={Michael},
            giveni={M\bibinitperiod}}}%
@@ -761,8 +770,8 @@
            giveni={S\bibinithyphendelim J\bibinitperiod}}}%
       }
       \name{namea}{7}{}{%
-        {{hash=7065b16268e3c00151b74aaa39d379ab}{%
-           family={O’Connell},
+        {{hash=28eea9cf57c0d76f79017f1a95268de2}{%
+           family={O'Connell},
            familyi={O\bibinitperiod},
            given={Michael},
            giveni={M\bibinitperiod}}}%
@@ -800,15 +809,15 @@
       \list{language}{1}{%
         {english}%
       }
-      \strng{namehash}{021a3bd0824595464473b064ae2a2cc3}
-      \strng{fullhash}{e00edb59b27f15859eeca895305cf8e4}
-      \strng{bibnamehash}{43ef64cc66e34a09a546e3cbea801842}
-      \strng{authorbibnamehash}{43ef64cc66e34a09a546e3cbea801842}
-      \strng{authornamehash}{021a3bd0824595464473b064ae2a2cc3}
-      \strng{authorfullhash}{e00edb59b27f15859eeca895305cf8e4}
-      \strng{nameabibnamehash}{43ef64cc66e34a09a546e3cbea801842}
-      \strng{nameanamehash}{021a3bd0824595464473b064ae2a2cc3}
-      \strng{nameafullhash}{e00edb59b27f15859eeca895305cf8e4}
+      \strng{namehash}{87a703d7d57ec38eedc00ca35f9e891b}
+      \strng{fullhash}{5dc869e8be66c9b9678e3e66aea6373d}
+      \strng{bibnamehash}{019616b654593177f026a817c26aa26e}
+      \strng{authorbibnamehash}{019616b654593177f026a817c26aa26e}
+      \strng{authornamehash}{87a703d7d57ec38eedc00ca35f9e891b}
+      \strng{authorfullhash}{5dc869e8be66c9b9678e3e66aea6373d}
+      \strng{nameabibnamehash}{019616b654593177f026a817c26aa26e}
+      \strng{nameanamehash}{87a703d7d57ec38eedc00ca35f9e891b}
+      \strng{nameafullhash}{5dc869e8be66c9b9678e3e66aea6373d}
       \field{sortinit}{1}
       \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
       \field{labelnamesource}{author}
@@ -1461,6 +1470,8 @@
       \field{userf}{chinese}
       \field{year}{2018}
       \field{dateera}{ce}
+      \field{pages}{118\bibrangedash 120}
+      \range{pages}{3}
       \keyw{quanbook}
     \endentry
     \entry{minimumsnap}{inproceedings}{}
@@ -1490,6 +1501,9 @@
       }
       \list{language}{1}{%
         {english}%
+      }
+      \list{location}{1}{%
+        {Shanghai, China}%
       }
       \strng{namehash}{a0517cdaba5a3a598b944651fa03c29d}
       \strng{fullhash}{72bbc1fa1a8b92df0ac44dfe896cd436}
@@ -1556,7 +1570,7 @@
       \range{pages}{61}
       \keyw{Rodrigues1840}
     \endentry
-    \entry{Liegroup}{article}{}
+    \entry{Liegroup}{online}{}
       \name{author}{3}{}{%
         {{hash=e082ff94720eff98805e9e08ca921bcc}{%
            family={Solà},
@@ -1607,19 +1621,26 @@
       \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{journaltitle}{arXiv preprint arXiv:1812.01537}
+      \field{howpublished}{[EB/OL]}
       \field{langid}{english}
       \field{languageid}{english}
       \field{lansortorder}{4}
+      \field{note}{[Online; accessed 2024-05-17]}
       \field{title}{A micro Lie theory for state estimation in robotics}
-      \field{usera}{J}
+      \field{usera}{EB}
       \field{userd}{english}
       \field{userf}{english}
-      \field{year}{2018}
-      \field{dateera}{ce}
+      \field{year}{2021-12-8}
+      \verb{urlraw}
+      \verb https://arxiv.org/abs/1812.01537
+      \endverb
+      \verb{url}
+      \verb https://arxiv.org/abs/1812.01537
+      \endverb
       \keyw{Liegroup}
+      \warn{\item online entry 'Liegroup' (refs.bib): Invalid format '2021-12-8' of date field 'date' - ignoring}
     \endentry
-    \entry{fishros}{misc}{}
+    \entry{fishros}{online}{}
       \name{author}{1}{}{%
         {{hash=a1aa08b677f196888c462ef91fc69209}{%
            family={fishros},
@@ -1646,19 +1667,25 @@
       \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{howpublished}{https://fishros.org.cn}
+      \field{howpublished}{[EB/OL]}
       \field{langid}{english}
       \field{languageid}{chinese}
       \field{lansortorder}{1}
       \field{title}{鱼香ros一键安装}
-      \field{usera}{Z}
+      \field{usera}{EB}
       \field{userd}{chinese}
       \field{userf}{english}
       \field{year}{2024}
       \field{dateera}{ce}
+      \verb{urlraw}
+      \verb https://fishros.org.cn
+      \endverb
+      \verb{url}
+      \verb https://fishros.org.cn
+      \endverb
       \keyw{fishros}
     \endentry
-    \entry{px4}{misc}{}
+    \entry{px4}{online}{}
       \name{author}{1}{}{%
         {{hash=0ec61a7346db3f45000aa2534c9ae669}{%
            family={PX4},
@@ -1685,19 +1712,25 @@
       \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{howpublished}{\url{https://docs.px4.io}}
+      \field{howpublished}{[EB/OL]}
       \field{langid}{english}
       \field{languageid}{english}
       \field{lansortorder}{4}
       \field{title}{PX4doc}
-      \field{usera}{Z}
+      \field{usera}{EB}
       \field{userd}{english}
       \field{userf}{english}
       \field{year}{2024}
       \field{dateera}{ce}
+      \verb{urlraw}
+      \verb https://docs.px4.io
+      \endverb
+      \verb{url}
+      \verb https://docs.px4.io
+      \endverb
       \keyw{px4}
     \endentry
-    \entry{Tmotor2023}{misc}{}
+    \entry{Tmotor2023}{online}{}
       \name{author}{1}{}{%
         {{hash=c40004fe32aa39c9151868d472bdca1c}{%
            family={{T-Motor}},
@@ -1724,19 +1757,25 @@
       \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{howpublished}{\url{https://uav-cn.tmotor.com/html/2023/Motor_0719/1309.html}}
+      \field{howpublished}{[EB/OL]}
       \field{langid}{english}
       \field{languageid}{chinese}
       \field{lansortorder}{1}
       \field{title}{电机性能参数表}
-      \field{usera}{Z}
+      \field{usera}{EB}
       \field{userd}{chinese}
       \field{userf}{english}
       \field{year}{2023}
       \field{dateera}{ce}
+      \verb{urlraw}
+      \verb https://uav-cn.tmotor.com/html/2023/Motor_0719/1309.html
+      \endverb
+      \verb{url}
+      \verb https://uav-cn.tmotor.com/html/2023/Motor_0719/1309.html
+      \endverb
       \keyw{Tmotor2023}
     \endentry
-    \entry{qingtong}{misc}{}
+    \entry{qingtong}{online}{}
       \name{author}{1}{}{%
         {{hash=f4dd1fbedd6188fa7220a46077b32ac8}{%
            family={chingmu},
@@ -1763,16 +1802,22 @@
       \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{howpublished}{\url{https://www.chingmu.com/}}
+      \field{howpublished}{[EB/OL]}
       \field{langid}{english}
       \field{languageid}{chinese}
       \field{lansortorder}{1}
       \field{title}{动作捕捉系统}
-      \field{usera}{Z}
+      \field{usera}{EB}
       \field{userd}{chinese}
       \field{userf}{english}
       \field{year}{2024}
       \field{dateera}{ce}
+      \verb{urlraw}
+      \verb https://www.chingmu.com/
+      \endverb
+      \verb{url}
+      \verb https://www.chingmu.com/
+      \endverb
       \keyw{qingtong}
     \endentry
     \entry{转动惯量}{patent}{}

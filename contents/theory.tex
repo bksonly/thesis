@@ -220,8 +220,8 @@ $$\begin{aligned}
         0_{3\times 3} \\ I_{3\times 3}
     \end{bmatrix} M^* ,$$
    其中$$x_\omega=\begin{bmatrix}
-        e \\ \dot e.
-    \end{bmatrix}$$
+        e \\ \dot e
+    \end{bmatrix}.$$
 在此基础上可以便利地采用任何线性系统控制器设计方法，进一步设计控制输入$M^*$，使得姿态误差具有合适的收敛性质。本文具体设计方法采用LQR控制器，得到$M^*=-kx_\omega$。结合式(\ref{M})，得到完整的控制律为
    $$ \begin{aligned}
         M=&-J R_B^{-1} [(R' \hat e_\Omega \Omega  -\Omega_d R' \hat e_\Omega -\dot \Omega_d R')-(R' \hat e_\Omega \Omega  -\Omega_d R' \hat e_\Omega -\dot \Omega_d R')^T]^\vee \\
@@ -286,14 +286,14 @@ $$
     0_{3\times 3} & 0_{3\times 3}
   \end{bmatrix} x_p+\begin{bmatrix}
     0_{3\times 3} \\ \frac{1}{m} I_{3\times 3}
-  \end{bmatrix} k_p x_p
+  \end{bmatrix} k_p x_p,
 \end{aligned}$$
 其中
 $$k_p=\begin{bmatrix}
   k_x(1) &0&0&k_v(1)&0&0\\
   0&k_x(2)&0&0&k_v(2)&0&\\
   0&0&k_x(3)&0&0&k_v(3)&
-\end{bmatrix}$$
+\end{bmatrix},$$
 $k_x(i)$是$k_x$的第$i$个元素，$k_v(i)$同理。接下来就可以运用LQR方法得到控制增益$k_p$。
 
 \section{数值仿真实验设计}

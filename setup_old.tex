@@ -15,8 +15,7 @@
     % 标题
     %
     zh / title           = {基于高阶全驱系统理论的\\四旋翼飞行器最优控制},
-    en / title           = {Optimal Control of Quadrotor Based on High-Order Fully Actuated System Theory
-},
+    en / title           = {Optimal Control of Quadrotor Based on High-Order Fully Actuated System Theory},
     %
     % 标题页标题
     %   可使用“\\”命令手动控制换行
@@ -32,12 +31,12 @@
     % 姓名
     %
     zh / author          = {赵泽源},
-    en / author          = {\textbf{Zhao Zeyuan}},
+    en / author          = {Zhao Zeyuan},
     %
     % 指导教师
     %
     zh / supervisor      = {李贤伟},
-    en / supervisor      = {\textbf{Li Xianwei}},
+    en / supervisor      = {Li Xianwei},
     %
     % 副指导教师
     %
@@ -51,7 +50,7 @@
     % 学位
     %   本科生不需要填写
     %
-    zh / degree          = {学士},
+    zh / degree          = {工学硕士},
     en / degree          = {Master of Engineering},
     %
     % 专业
@@ -67,12 +66,12 @@
     % 答辩日期
     %   使用 ISO 格式 (yyyy-mm-dd)；默认为当前时间
     %
-      date                 = {2024-05-28},
+    % date                 = {2023-05-18},
     %
     % 标题页显示日期
     %   覆盖对应标题页的日期显示，原样输出
     %
-    %  zh / display-date    = {20XX 年 XX 月},
+    % zh / display-date    = {2023 年 5 月},
     %
     % 资助基金
     %
@@ -101,15 +100,15 @@
     % bib             = {References},
     % ack             = {谢\hspace{\ccwd}辞},
     % achv            = {攻读学位期间完成的论文},
-    digest={},
   },
 }
 
 % 使用 BibLaTeX 处理参考文献
 %   biblatex-gb7714-2015 常用选项
-%     gbnamefmt=lowercase     姓名大小写由输入信息确定
+     
 %     gbpub=false             禁用出版信息缺失处理
 \usepackage[backend=biber,style=gb7714-2015,gbnamefmt=lowercase]{biblatex}
+
 % 文献表字体
 % \renewcommand{\bibfont}{\zihao{5}\fixedlineskip{15.6bp}}
 % 文献表条目间的间距
@@ -122,10 +121,11 @@
 
 % 定义图片文件目录与扩展名
 \graphicspath{{figures/}{matlab_figures/}{sitl_figure/}}
+
 \DeclareGraphicsExtensions{.pdf,.eps,.png,.jpg,.jpeg}
 
 % 确定浮动对象的位置，可以使用 [H]，强制将浮动对象放到这里（可能效果很差）
- \usepackage{float}
+\usepackage{float}
 
 % 固定宽度的表格
  \usepackage{tabularx}
@@ -197,6 +197,10 @@
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta, shapes.geometric}
 
+% 数据图表宏包
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+
 % 一些文档中用到的 logo
 \usepackage{hologo}
 \providecommand{\XeTeX}{\hologo{XeTeX}}
@@ -208,6 +212,9 @@
 
 % hyperref 宏包在最后调用
 \usepackage{hyperref}
+
+
+
 
 % E-mail
 \providecommand{\email}[1]{\href{mailto:#1}{\urlstyle{tt}\nolinkurl{#1}}}
