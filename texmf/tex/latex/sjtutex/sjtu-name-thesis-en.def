@@ -40,7 +40,7 @@
   {
     { univ             } { Shanghai~ Jiao~ Tong~ University } ,
     { address          } { Shanghai,~ P.R.~ China           } ,
-    { author           } { Author                           } ,
+    { author           } {\quad \quad \hspace*{0.3cm}  Author} ,
     { supervisor       } { Supervisor                       } ,
     { assoc_supervisor } { Assoc.~ Supervisor               } ,
     { co_supervisor    } { Co-supervisor                    } ,
