@@ -81,7 +81,7 @@
 
 
 由于相机通过扫场校准已知自身位置，多台相机的二维信息融合在一起就可以解算出目标的位置和姿态。
-相机在拍到反光小球后首先在内部做一次图像处理，提取反光点位置，然后通过网线传到动捕服务器上。所有的相机和东部服务器都通过网线连在一台交换机上，形成一个局域网。动捕服务器在汇总了所有信息后解算出目标刚体的位置和姿态，然后以固定的数据报协议在其所在的所有局域网内广播。动捕服务器在用网线连接交换机之外，还和机载电脑连接同一个WIFI，也就是说动捕服务器同时处在两个局域网中，而机载电脑也可以通过WIFI这个局域网收到位姿广播。
+相机在拍到反光小球后首先在内部做一次图像处理，提取反光点位置，然后通过网线传到动捕服务器上。所有的相机和动捕服务器都通过网线连在一台交换机上，形成一个局域网。动捕服务器在汇总了所有信息后解算出目标刚体的位置和姿态，然后以固定的数据报协议在其所在的所有局域网内广播。动捕服务器在用网线连接交换机之外，还和机载电脑连接同一个WIFI，也就是说动捕服务器同时处在两个局域网中，而机载电脑也可以通过WIFI这个局域网收到位姿广播。
 
 在ROS1的架构下，飞控和电脑需要存在有线连接才能通过运行MAVROS包下的px4.launch，经/dev/ttyACM0端口，将飞控虚拟化为一个ros节点。同时运行vrpn-client-ros包内的sample.launch，接受局域网内的位姿广播。最后运行topic-tools relay命令，将位姿信息转发到MAVROS节点下的vision-pose/pose话题。运行rqt-graph命令得到消息拓扑图\ref{rqt}。
 
@@ -220,37 +220,37 @@ MAVROS会通过WIFI与地面站连接，地面站的QGroundControl中就能方�
   \begin{subfigure}[b]{0.49\textwidth}
       \centering
       \includegraphics[width=\linewidth]{real_px4_w1.png}
-      \caption{$\omega_1$}
+      \caption{$\phi$}
   \end{subfigure}
   \hfill
   \begin{subfigure}[b]{0.49\textwidth}
       \centering
       \includegraphics[width=\linewidth]{real_px4_dw1.png}
-      \caption{$\dot \omega_1$}
+      \caption{$\omega_1$}
   \end{subfigure}
   
   \begin{subfigure}[b]{0.49\textwidth}
       \centering
       \includegraphics[width=\linewidth]{real_px4_w2.png}
-      \caption{$\omega_2$}
+      \caption{$\theta$}
   \end{subfigure}
   \hfill
   \begin{subfigure}[b]{0.49\textwidth}
       \centering
       \includegraphics[width=\linewidth]{real_px4_dw2.png}
-      \caption{$\dot \omega_2$}
+      \caption{$\omega_2$}
   \end{subfigure}
   
   \begin{subfigure}[b]{0.49\textwidth}
       \centering
       \includegraphics[width=\linewidth]{real_px4_w3.png}
-      \caption{$\omega_3$}
+      \caption{$\psi$}
   \end{subfigure}
   \hfill
   \begin{subfigure}[b]{0.49\textwidth}
       \centering
       \includegraphics[width=\linewidth]{real_px4_dw3.png}
-      \caption{$\dot \omega_3$}
+      \caption{$\omega_3$}
   \end{subfigure}
   \caption{PX4实飞角度和角速度曲线}
   \label{real_px4_wdw}
