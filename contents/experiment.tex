@@ -28,10 +28,10 @@
 \begin{figure}[!h]
   \centering
   \includegraphics[width=0.7\textwidth]{电机表.png}
-  \caption{Tmotor v2207 kv1950电机搭配51477-3螺旋桨 油门量与电流和推力关系图 \cite{Tmotor2023}}
+  \caption{Tmotor v2207 kv1950电机搭配51477-3螺旋桨 油门量与电流和推力关系图\protect\footnotemark[1]}
   \label{电机表}
 \end{figure}
-
+\footnotetext[1]{数据来源：\url{https://uav-cn.tmotor.com/html/2023/Motor_0719/1309.html}}
 在多次实验对比后，考虑到后续的机载电脑等载荷需要有足够的安装位置，我们选择了Holybro品牌的QAV250机架作为平台，以及配套的PM06电源及电调模块，TMOTOR v2207 kv1950电机和pixhawk 6c mini飞控。在装配和接线后，在QGroundControl地面站中对飞控烧写PX4 v1.14版本的固件，并进行传感器校正和遥控器设置。最后，在卫星信号良好的室外进行了遥控器控制下的飞行实验。无人机能够很好地执行遥控器发布的飞行指令，悬停稳定，前进后退自如，飞行效果如图 \ref{室外飞行}。
 \begin{figure}[!h]
   \centering
@@ -53,7 +53,8 @@
 
   \section{基于动捕定位的室内飞行}
 室内飞行与室外飞行的主要区别在于位置信息的获得方式。由于室内没有GPS信号，位置信息的获取方式主要有动作捕捉、UWB、自主深度视觉定位和激光雷达等，其中动作捕捉的精度和稳定性最高，并且不用在飞机上增加额外的载荷，所以我们采用了动作捕捉作为本课题的定位方法。
-共8台动捕相机吊装在实验场地上方四周，如图\ref{动捕}所示，实验场地的尺寸为5 m $\times$ 4.6 m $\times$ 2.6 m。在当前配置下，可以达到亚毫米的定位精度和400 Hz的采样频率\cite{qingtong}。
+共8台动捕相机吊装在实验场地上方四周，如图\ref{动捕}所示，实验场地的尺寸为5 m $\times$ 4.6 m $\times$ 2.6 m。在当前配置下，可以达到亚毫米的定位精度和400 Hz的采样频率\footnotemark[1]。
+\footnotetext[1]{数据来源：\url{https://www.chingmu.com/}}
 \begin{figure}[!h]
   \centering
   \includegraphics[width=0.6\textwidth]{动捕.jpg}
@@ -288,7 +289,7 @@ PX4的官方文档中称其位置环的控制频率为50Hz，姿态控制频率�
 \end{table}
 
 
-\section{本章小节}
+\section{本章小结}
 本章描述了实机飞行平台的完整搭建过程，从室外飞行，到室内基于动捕的飞行，到用Offboard程序发布轨迹。虽然HOFA的实机飞行由于时间有限，还有工程问题需要解决，但也通过PX4原生固件的飞行数据，结合前文的仿真结果，给出了分析和改进方法。当前实机HOFA飞行效果不佳的可能原因有以下三点：
 1）两阶微分求得的期望角加速度会放大噪声的延迟的不良影响；
 2）高频大幅度波动的角速度会被前馈补偿中的二次项放大

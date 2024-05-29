@@ -10,7 +10,8 @@
 MATLAB仿真只是初步验证了HOFA方法的有效性，既没有考虑实际的飞控固件中异步的采样周期、进程管理等因素，也没有考虑内部和外部传感器信息融合的因素。而在ROS+Gazebo下的软件在环仿真会考虑以上因素，进一步贴近实际情况。
 由于当前ROS2适配的各种依赖库包括PX4的版本都还在不停迭代，因此目前还是选择更为稳定、资料更多的ROS1。接下来简单介绍环境配置的相关步骤。
 
-在Ubuntu 20.04中安装ROS1 noetic以及配套的Gazebo11 classic（使用鱼香ROS一键安装\cite{fishros}时会同步安装），然后从GitHub上clone最近的发行版PX4 v1.14.0，注意要使用递归将所有子项目克隆下来:
+在Ubuntu 20.04中安装ROS1 noetic以及配套的Gazebo11 classic（使用鱼香ROS一键安装\footnotemark[1]时会同步安装），然后从GitHub上clone最近的发行版PX4 v1.14.0，注意要使用递归将所有子项目克隆下来:
+\footnotetext[1]{\url{https://fishros.org.cn}}
 \begin{codeblock}[language=C]
   git clone -b v1.14.0 https://github.com/PX4/PX4-Autopilot.git --recursive
 \end{codeblock}
@@ -110,7 +111,7 @@ PX4的多旋翼位置环控制位于mc\_pos\_control包中，MulticopterPosition
 
 
 \subsection*{姿态环}
-姿态环是我们真正要做改动的部分。
+姿态环是主要改动的部分。
 PX4的多旋翼姿态环控制分别在mc\_att\_control和mc\_rate\_control两个包内，两者间通信的管道是mc\_att\_control向mc\_rate\_control发布期望的角速度“rate\_setpoint”，为了尽量不更改架构，我们接下来也将沿用这一通信管道。
 
 原本的控制算法不需要前一时刻的期望姿态，因此首先要在AttitudeControl.hpp中定义新的变量，包括前一时刻的期望姿态，以及期望姿态生成时的时间（包含在期望姿态结构体中）。原本的mc\_att\_control不需要角速度信息，因此需要额外添加uORB::SubscriptionCallbackWorkItem函数订阅角速度信息。
@@ -342,7 +343,14 @@ $$e_d=\frac{\sum_0^{T}||x-x_d||}{T} ,\quad e_{angle}=\frac{\sum_0^{T}|\phi-\phi_
 \end{table}
 
 \section{半实物硬件在环仿真}
-硬件在环仿真的主要目的在于，在Gazebo仿真环境中初步测试生成的固件代码，防止直接进行实机实验可能出现的破坏性故障。硬件在环仿真也要首先配置环境，用PX4的发行版跑通流程；然后向飞控刷入植入HOFA的固件，进行硬件在环仿真。
+硬件在环指的是控制器是实际的飞控板，接入了控制回路，其架构如图\ref{hitl架构}所示，PX4运行在硬件实物上。硬件在环仿真的主要目的在于，在Gazebo仿真环境中初步测试生成的固件代码，防止直接进行实机实验可能出现的破坏性故障。硬件在环仿真也要首先配置环境，用PX4的发行版跑通流程；然后向飞控刷入植入HOFA的固件，进行硬件在环仿真。
+\begin{figure}[!h]
+  \centering
+  \includegraphics[width=0.5\textwidth]{px4_hitl.png}
+  \caption{硬件在环仿真架构图\protect\footnotemark[1]}
+  \label{hitl架构}
+\end{figure}
+\footnotetext[1]{图片来源：\url{https://docs.px4.io/main/zh/simulation/hitl.html}}
 \subsection*{环境配置}
 硬件在环仿真在软件在环仿真已经跑通的基础上并不困难，PX4的官方文档也提供了相对全面的流程\cite{px4}。
 首先用USB连上飞控，在QGroundControl中进行设置：机架选择HITL兼容的Generic Quadcopter，重启；使能HITL；在应用设置中的自动连接选项，仅选择UDP（这一步做完后，直接用USB连接飞控将无法自动连入地面站）。以上步骤做完后，断开飞控连接并关闭地面站。然后在PX4\_Autopilot包内做软件上的配置\cite{px4}，打开模型的sdf文件iris\_hitl.sdf，找到文件的mavlink\_interface plugin分区，将 serialEnabled 和 hil\_mode 参数更改为 true。最后，在确保QGroundControl关闭的情况下，不运行编译仿真固件。
